@@ -14,7 +14,7 @@ public class StateInfo {
     }
 
     public List<Position> getEnemiesPositions() {
-        // TODO
+        //return board.getTankPosition(tank);
         return null;
     }
 

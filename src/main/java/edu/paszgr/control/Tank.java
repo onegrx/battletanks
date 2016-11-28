@@ -7,18 +7,13 @@ import edu.paszgr.board.StateInfo;
 public class Tank {
     private final PlayStrategy strategy;
     private final StateInfo stateInfo;
+    private final String tankName;
 
-    // You should never use this - strategy and stateInfo must not be null during the game
-    private Tank() {
-        this.strategy = null;
-        stateInfo = null;
-    }
-
-    public Tank(PlayStrategy strategy, Board board) {
+    public Tank(PlayStrategy strategy, Board board, String tankName) {
         this.strategy = strategy;
         this.stateInfo = new StateInfo(this, board);
+        this.tankName = tankName;
     }
-
 
     public PlayStrategy getStrategy() {
         return strategy;

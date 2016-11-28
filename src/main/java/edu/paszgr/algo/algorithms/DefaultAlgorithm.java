@@ -12,6 +12,7 @@ import edu.paszgr.board.StateInfo;
 import java.util.List;
 
 public class DefaultAlgorithm implements PlayStrategy {
+
     @Override
     public String getStrategyName() {
         return "DefaultAlgorithm implementation for PlayStrategy";

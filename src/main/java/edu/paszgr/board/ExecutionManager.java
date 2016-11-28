@@ -1,5 +1,6 @@
 package edu.paszgr.board;
 
+import edu.paszgr.algo.Direction;
 import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
@@ -17,13 +18,25 @@ public class ExecutionManager implements TankActionExecutor {
 
     @Override
     public void executeMovement(Movement movement) {
-        System.out.println("Moved");
-        // TODO
+        Position oldPosition = board.getPositionOfTank(currentTank);
+        Position newPosition = getNewPosition(movement.getDirection(), oldPosition);
+        board.setTankPosition(currentTank, newPosition);
+        System.out.println("Tank " + currentTank + "has already moved to ("
+                + newPosition.getX() + ", " + newPosition.getY() + ")");
     }
 
     @Override
     public void executeWeaponFire(WeaponFire weaponFire) {
-        System.out.println("Fired");
-        // TODO
+        System.out.println("Tank " + currentTank + "has already fired.");
+    }
+
+    private Position getNewPosition(Direction direction, Position oldPosition) {
+        switch (direction) {
+            case DOWN: return new Position(oldPosition.getX() - 1, oldPosition.getY());
+            case UP: return new Position(oldPosition.getX() + 1, oldPosition.getY());
+            case LEFT: return new Position(oldPosition.getX(), oldPosition.getY() - 1);
+            case RIGHT: return new Position(oldPosition.getX(), oldPosition.getY() + 1);
+            default: return oldPosition; //should not happen todo fix in future
+        }
     }
 }
