@@ -23,7 +23,7 @@ public class StateInfo {
         return null;
     }
 
-    public Position getBoardSize() {
+    public BoardSize getBoardSize() {
         // TODO
         return null;
     }

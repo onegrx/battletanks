@@ -1,19 +1,18 @@
 package edu.paszgr.control;
 
 import edu.paszgr.board.Board;
-import edu.paszgr.board.managers.DefaultExecutionManager;
-import edu.paszgr.control.managers.DefaultTankManager;
+import edu.paszgr.board.ExecutionManager;
 
 public class GameExecutor {
     private TanksManager tanksManager;
     private RoundManager roundManager;
 
     public GameExecutor(Board board) {
-        this.tanksManager = new DefaultTankManager();
+        this.tanksManager = new TanksManager();
         this.roundManager = new RoundManager(
                 tanksManager.createTanks(board),
                 board,
-                new DefaultExecutionManager()
+                new ExecutionManager()
         );
     }
 
@@ -22,6 +21,7 @@ public class GameExecutor {
     }
 
     public void executeGame() {
+        // TODO
         while (!roundManager.gameEndReached()) {
             roundManager.executeNextRound();
         }

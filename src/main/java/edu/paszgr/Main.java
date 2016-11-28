@@ -5,12 +5,10 @@ import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
 import edu.paszgr.board.ExecutionManager;
-import edu.paszgr.board.TankActionExecutor;
-import edu.paszgr.board.managers.DefaultExecutionManager;
 
 public class Main {
     public static void main(String[] args) {
-        ExecutionManager executor = new DefaultExecutionManager();
+        ExecutionManager executor = new ExecutionManager();
         TankAction action1 = new Movement(Direction.DOWN);
         TankAction action2 = new WeaponFire(Direction.DOWN);
 
