@@ -22,4 +22,8 @@ public class Tank {
     public StateInfo getStateInfo() {
         return stateInfo;
     }
+
+    public String getTankName() {
+        return tankName;
+    }
 }

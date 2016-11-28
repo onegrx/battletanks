@@ -11,8 +11,8 @@ public class TanksManager {
 
     public List<Tank> createTanks(Board board) {
         List<Tank> tanks = new ArrayList<>();
-        tanks.add(new Tank(new OnlyMoveAlgorithm(), board, "Tank 1"));
-        tanks.add(new Tank(new OnlyMoveAlgorithm(), board, "Tank 2"));
+        tanks.add(new Tank(new OnlyMoveAlgorithm(), board, "M1 Abrams"));
+        tanks.add(new Tank(new OnlyMoveAlgorithm(), board, "Tiger"));
         return tanks;
     }
 

@@ -22,6 +22,7 @@ public class RoundManager {
 
     public void executeNextRound() {
         for(Tank tank: tanks) {
+            //executionManager.setCurrentTank(tank);
             TankActionList tankActions = tank.getStrategy().createTankActionList(tank.getStateInfo());
             List<TankAction> tankActionList = tankActions.getActions();
             tankActionList.forEach(tankAction -> executionManager.executeTankAction(tankAction, tank, board));

@@ -20,14 +20,14 @@ public class ExecutionManager implements TankActionExecutor {
     public void executeMovement(Movement movement) {
         Position oldPosition = board.getPositionOfTank(currentTank);
         Position newPosition = getNewPosition(movement.getDirection(), oldPosition);
-        board.setTankPosition(currentTank, newPosition);
-        System.out.println("Tank " + currentTank + "has already moved to ("
+        board.setNewTankPosition(currentTank, newPosition);
+        System.out.println("Tank " + currentTank.getTankName() + " has already moved to ("
                 + newPosition.getX() + ", " + newPosition.getY() + ")");
     }
 
     @Override
     public void executeWeaponFire(WeaponFire weaponFire) {
-        System.out.println("Tank " + currentTank + "has already fired.");
+        System.out.println("Tank " + currentTank.getTankName() + " has already fired.");
     }
 
     private Position getNewPosition(Direction direction, Position oldPosition) {
@@ -38,5 +38,13 @@ public class ExecutionManager implements TankActionExecutor {
             case RIGHT: return new Position(oldPosition.getX(), oldPosition.getY() + 1);
             default: return oldPosition; //should not happen todo fix in future
         }
+    }
+
+    public void setCurrentTank(Tank currentTank) {
+        this.currentTank = currentTank;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 }

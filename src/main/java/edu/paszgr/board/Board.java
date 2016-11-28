@@ -1,12 +1,8 @@
 package edu.paszgr.board;
 
-import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.control.Tank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -34,10 +30,36 @@ public class Board {
         return tankPositionMap.keySet().stream().collect(Collectors.toList());
     }
 
-    public void setTankPosition(Tank tank, Position newPosition) {
+    public void setNewTankPosition(Tank tank, Position newPosition) {
+
         Position oldPosition = getPositionOfTank(tank);
         tankPositionMap.put(tank, newPosition);
-        positionToTanksMap.get(oldPosition).remove(tank);
-        positionToTanksMap.get(newPosition).add(tank);
+
+        if(positionToTanksMap.containsKey(oldPosition)) {
+            positionToTanksMap.get(oldPosition).remove(tank);
+        }
+
+        if(positionToTanksMap.containsKey(newPosition)) {
+            positionToTanksMap.get(newPosition).add(tank);
+        } else {
+            List<Tank> tanks = new ArrayList<>();
+            tanks.add(tank);
+            positionToTanksMap.put(newPosition, tanks);
+        }
+
     }
+
+    public void putTankOnPosition(Tank tank, Position initialPosition) {
+        tankPositionMap.put(tank, initialPosition);
+
+        if(positionToTanksMap.containsKey(initialPosition)) {
+            positionToTanksMap.get(initialPosition).add(tank);
+        } else {
+            List<Tank> tanks = new ArrayList<>();
+            tanks.add(tank);
+            positionToTanksMap.put(initialPosition, tanks);
+        }
+
+    }
+
 }
