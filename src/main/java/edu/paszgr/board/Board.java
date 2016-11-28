@@ -1,44 +1,43 @@
 package edu.paszgr.board;
 
+import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.control.Tank;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
-    private BoardSize size;
-    private Map<Position, List<Tank>> postionTanksMap;
-    private Map<Tank, Position> tankPositionMap;
+//    private BoardSize boardSize;
+    private Map<Position, List<Tank>> positionToTanksMap = new HashMap<>();
+    private Map<Tank, Position> tankPositionMap = new HashMap<>();
 
     public void addTank(Tank tank, Position position) {
-        // TODO
+        List<Tank> currentTanks = positionToTanksMap.get(position);
+        currentTanks.add(tank);
+        positionToTanksMap.put(position, currentTanks);
+        tankPositionMap.put(tank, position);
     }
 
-    public void removeTank(Tank tank) {
-        // TODO
+    public List<Tank> getTanksListCopy(Position position) {
+        List<Tank> original = positionToTanksMap.get(position);
+        return new ArrayList<>(original);
     }
 
-    // !!! Important: Needs to return a copy of the internally stored list because the
-    // caller of that method may apply any modifications to the returned list
-    public List<Tank> getTanks(Position position) {
-        // TODO
-        return null;
+    public Position getPositionOfTank(Tank tank) {
+        return tankPositionMap.get(tank);
     }
 
-    public Position getTankPosition(Tank tank) {
-        // TODO
-        return null;
-    }
-
-    // !!! Important: Needs to return a copy of the internally stored list because the
-    // caller of that method may apply any modifications to the returned list
     public List<Tank> getAllTanks() {
-        // TODO
-        return null;
+        return tankPositionMap.keySet().stream().collect(Collectors.toList());
     }
 
-    public Position getSize() {
-        // TODO
-        return null;
+    public void setTankPosition(Tank tank, Position newPosition) {
+        Position oldPosition = getPositionOfTank(tank);
+        tankPositionMap.put(tank, newPosition);
+        positionToTanksMap.get(oldPosition).remove(tank);
+        positionToTanksMap.get(newPosition).add(tank);
     }
 }

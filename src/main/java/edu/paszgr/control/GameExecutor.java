@@ -4,26 +4,19 @@ import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
 
 public class GameExecutor {
-    private TanksManager tanksManager;
+    private TanksManager tanksManager = new TanksManager();
     private RoundManager roundManager;
 
     public GameExecutor(Board board) {
-        this.tanksManager = new TanksManager();
-        this.roundManager = new RoundManager(
-                tanksManager.createTanks(board),
-                board,
-                new ExecutionManager()
-        );
-    }
-
-    public void initializeGame() {
-        roundManager.initialize();
+        this.roundManager =
+                new RoundManager(tanksManager.createTanks(board), board, new ExecutionManager());
     }
 
     public void executeGame() {
-        // TODO
+        System.out.println("Starting game.");
         while (!roundManager.gameEndReached()) {
             roundManager.executeNextRound();
         }
+        System.out.println("Game ended");
     }
 }

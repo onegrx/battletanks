@@ -7,14 +7,8 @@ import edu.paszgr.board.TankActionExecutor;
 public class WeaponFire implements TankAction {
     private Direction direction;
 
-    private WeaponFire() {}
-
     public WeaponFire(Direction direction) {
         this.direction = direction;
-    }
-
-    public Direction getDirection() {
-        return direction;
     }
 
     @Override
