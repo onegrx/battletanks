@@ -43,7 +43,7 @@ public class ExecutionManager implements TankActionExecutor {
                 System.out.println("Tank " + tank.getTankName() + " fragged"));
 
         onTargetLine.forEach(tank -> tank.decreaseLifePoints(1));
-        onTargetLine.forEach(tank -> currentTank.getPlayer().currentRound().addKill());
+        currentTank.getPlayer().currentRound().addKill(onTargetLine.size());
         //Currently assuming each tank has 1 HP
         board.getAllTanks().removeAll(onTargetLine);
 

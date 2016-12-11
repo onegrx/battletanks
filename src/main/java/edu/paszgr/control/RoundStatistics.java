@@ -13,8 +13,8 @@ public class RoundStatistics {
     }
 
 
-    public void addKill() {
-        this.kills++;
+    public void addKill(int i) {
+        this.kills += i;
     }
 
     /**
