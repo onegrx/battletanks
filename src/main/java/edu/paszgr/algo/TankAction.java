@@ -8,4 +8,6 @@ public interface TankAction {
      * to it's appropriate execution method in TankActionExecutor
      * */
     void acceptExecutor(TankActionExecutor executor);
+
+    int getActionPointsCost();
 }

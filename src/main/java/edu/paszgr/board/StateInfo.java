@@ -5,8 +5,8 @@ import edu.paszgr.control.Tank;
 import java.util.List;
 
 public class StateInfo {
-    private Tank tank;
-    private Board board;
+    private final Tank tank;
+    private final Board board;
 
     public StateInfo(Tank tank, Board board) {
         this.tank = tank;
@@ -14,17 +14,15 @@ public class StateInfo {
     }
 
     public List<Position> getEnemiesPositions() {
-        //return board.getTankPosition(tank);
+        // TODO
         return null;
     }
 
     public Position getMyTankPosition() {
-        // TODO
-        return null;
+        return this.tank.getPosition();
     }
 
     public BoardSize getBoardSize() {
-        // TODO
-        return null;
+        return this.board.getBoardSize();
     }
 }

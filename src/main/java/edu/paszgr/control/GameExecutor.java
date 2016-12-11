@@ -1,35 +1,52 @@
 package edu.paszgr.control;
 
 import edu.paszgr.board.Board;
+import edu.paszgr.board.BoardSize;
 import edu.paszgr.board.ExecutionManager;
-import edu.paszgr.board.Position;
 
 import java.util.List;
-import java.util.Random;
 
 public class GameExecutor {
-    private TanksManager tanksManager = new TanksManager();
+    private TanksManager tanksManager;
     private RoundManager roundManager;
-    private Random rnd = new Random();
+    private PlayersManager playersManager;
+    private List<Player> players = null;
 
-    public GameExecutor(Board board) {
-        List<Tank> tanks = tanksManager.createTanks(board);
-
-        this.roundManager =
-                new RoundManager(tanks, board, new ExecutionManager());
-
-
-        tanks.forEach(tank ->
-                board.putTankOnPosition(tank, new Position(rnd.nextInt(10), rnd.nextInt(10)))
-        );
+    public GameExecutor(TanksManager tanksManager, PlayersManager playersManager) {
+        this.tanksManager = tanksManager;
+        this.playersManager = playersManager;
     }
 
-
-    public void executeGame() {
+    public void executeGame(ExecutionManager executionManager, BoardSize boardSize) {
         System.out.println("Starting game.");
-        while (!roundManager.gameEndReached()) {
+        this.players = playersManager.createPlayers();
+        Board board = new Board(boardSize, null);
+
+        this.roundManager = new RoundManager(
+                board,
+                executionManager
+        );
+
+        for (int roundNumber = 1; roundNumber <= 6; roundNumber ++) {
+            board.setTanks(
+                    tanksManager.createTanks(
+                            this.players,
+                            board
+                    )
+            );
+
             roundManager.executeNextRound();
+            this.presentRoundStatistics(roundNumber);
         }
         System.out.println("Game ended");
+        this.presentSummedUpStatistics();
+    }
+
+    private void presentRoundStatistics(int roundNumber) {
+        // TODO
+    }
+
+    private void presentSummedUpStatistics() {
+        // TODO
     }
 }

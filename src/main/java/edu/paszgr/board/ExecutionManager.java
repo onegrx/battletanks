@@ -18,33 +18,27 @@ public class ExecutionManager implements TankActionExecutor {
 
     @Override
     public void executeMovement(Movement movement) {
-        Position oldPosition = board.getPositionOfTank(currentTank);
-        Position newPosition = getNewPosition(movement.getDirection(), oldPosition);
-        board.setNewTankPosition(currentTank, newPosition);
-        System.out.println("Tank " + currentTank.getTankName() + " has already moved to ("
-                + newPosition.getX() + ", " + newPosition.getY() + ")");
+        // TODO
+//        Position oldPosition = board.getPositionOfTank(currentTank);
+//        Position newPosition = getNewPosition(movement.getDirection(), oldPosition);
+//        board.setNewTankPosition(currentTank, newPosition);
+//        System.out.println("Tank " + currentTank.getTankName() + " has already moved to ("
+//                + newPosition.getX() + ", " + newPosition.getY() + ")");
     }
 
     @Override
     public void executeWeaponFire(WeaponFire weaponFire) {
-        System.out.println("Tank " + currentTank.getTankName() + " has already fired.");
+        // TODO
+//        System.out.println("Tank " + currentTank.getTankName() + " has already fired.");
     }
 
-    private Position getNewPosition(Direction direction, Position oldPosition) {
-        switch (direction) {
-            case DOWN: return new Position(oldPosition.getX() - 1, oldPosition.getY());
-            case UP: return new Position(oldPosition.getX() + 1, oldPosition.getY());
-            case LEFT: return new Position(oldPosition.getX(), oldPosition.getY() - 1);
-            case RIGHT: return new Position(oldPosition.getX(), oldPosition.getY() + 1);
-            default: return oldPosition; //should not happen todo fix in future
-        }
-    }
-
-    public void setCurrentTank(Tank currentTank) {
-        this.currentTank = currentTank;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
+//    private Position getNewPosition(Direction direction, Position oldPosition) {
+//        switch (direction) {
+//            case DOWN: return new Position(oldPosition.getX() - 1, oldPosition.getY());
+//            case UP: return new Position(oldPosition.getX() + 1, oldPosition.getY());
+//            case LEFT: return new Position(oldPosition.getX(), oldPosition.getY() - 1);
+//            case RIGHT: return new Position(oldPosition.getX(), oldPosition.getY() + 1);
+//            default: return oldPosition; //should not happen todo fix in future
+//        }
+//    }
 }
