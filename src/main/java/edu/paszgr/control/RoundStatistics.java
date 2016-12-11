@@ -13,8 +13,8 @@ public class RoundStatistics {
     }
 
 
-    public void addKills(int killsCount) {
-        this.kills += killsCount;
+    public void addKill() {
+        this.kills++;
     }
 
     /**
@@ -25,6 +25,7 @@ public class RoundStatistics {
     }
 
     public void setLifePointsLeft(int lifePointsLeft) {
+
         this.lifePointsLeft = lifePointsLeft;
     }
 

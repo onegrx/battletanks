@@ -20,11 +20,15 @@ public class ExecutionManager implements TankActionExecutor {
     @Override
     public void executeMovement(Movement movement) {
         Position oldPosition = currentTank.getPosition();
+
+        currentTank.getPlayer().currentRound().addMove();
+
         Position newPosition = getNewPosition(movement.getDirection(), oldPosition, 1);
         currentTank.setPosition(newPosition);
 
         System.out.println("Tank " + currentTank.getTankName() + " has already moved to ("
                 + newPosition.getX() + ", " + newPosition.getY() + ")");
+
 
     }
 
@@ -33,13 +37,17 @@ public class ExecutionManager implements TankActionExecutor {
         Position position = currentTank.getPosition();
         List<Tank> onTargetLine = board.getTanksOnTargetLine(position, weaponFire.getDirection());
 
+
         System.out.println("Tank " + currentTank.getTankName() + " has already fired.");
         onTargetLine.forEach(tank ->
                 System.out.println("Tank " + tank.getTankName() + " fragged"));
 
         onTargetLine.forEach(tank -> tank.decreaseLifePoints(1));
+        onTargetLine.forEach(tank -> currentTank.getPlayer().currentRound().addKill());
         //Currently assuming each tank has 1 HP
         board.getAllTanks().removeAll(onTargetLine);
+
+        currentTank.getPlayer().currentRound().addShot();
     }
 
     private Position getNewPosition(Direction direction, Position oldPosition, int steps) {

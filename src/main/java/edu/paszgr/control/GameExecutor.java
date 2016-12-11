@@ -20,7 +20,7 @@ public class GameExecutor {
     public void executeGame(ExecutionManager executionManager, BoardSize boardSize) {
         System.out.println("Starting game.");
         this.players = playersManager.createPlayers();
-        Board board = new Board(boardSize, null);
+        Board board = new Board(boardSize);
 
         this.roundManager = new RoundManager(
                 board,

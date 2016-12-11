@@ -34,7 +34,9 @@ public class Tank {
     }
 
     public void decreaseLifePoints(int amount) {
+
         this.lifePoints -= amount;
+        player.currentRound().setLifePointsLeft(lifePoints);
     }
 
     public int getLifePoints() {

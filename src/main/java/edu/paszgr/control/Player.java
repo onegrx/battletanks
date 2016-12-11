@@ -23,7 +23,11 @@ public class Player {
 
     public RoundStatistics getRoundStatistics(int roundNumber) {
 
-        return statistics.get(roundNumber-1);
+        return statistics.get(roundNumber - 1);
+    }
+
+    public RoundStatistics currentRound(){
+        return statistics.get(statistics.size() - 1);
     }
 
     public PlayStrategy getPlayStrategy() {
