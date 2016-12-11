@@ -1,7 +1,6 @@
 package edu.paszgr.board;
 
 import edu.paszgr.algo.Direction;
-import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.algorithms.OnlyMoveAlgorithm;
 import edu.paszgr.control.Player;

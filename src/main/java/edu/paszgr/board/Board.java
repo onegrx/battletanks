@@ -10,9 +10,8 @@ public class Board {
     private final BoardSize boardSize;
     private List<Tank> tanks;
 
-    public Board(BoardSize boardSize, List<Tank> tanks) {
+    public Board(BoardSize boardSize) {
         this.boardSize = boardSize;
-        this.tanks = tanks;
     }
 
     public List<Tank> getTanksOnPosition(Position position) {
