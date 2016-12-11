@@ -1,22 +1,52 @@
 package edu.paszgr.control;
 
 import edu.paszgr.board.Board;
+import edu.paszgr.board.BoardSize;
 import edu.paszgr.board.ExecutionManager;
 
-public class GameExecutor {
-    private TanksManager tanksManager = new TanksManager();
-    private RoundManager roundManager;
+import java.util.List;
 
-    public GameExecutor(Board board) {
-        this.roundManager =
-                new RoundManager(tanksManager.createTanks(board), board, new ExecutionManager());
+public class GameExecutor {
+    private TanksManager tanksManager;
+    private RoundManager roundManager;
+    private PlayersManager playersManager;
+    private List<Player> players = null;
+
+    public GameExecutor(TanksManager tanksManager, PlayersManager playersManager) {
+        this.tanksManager = tanksManager;
+        this.playersManager = playersManager;
     }
 
-    public void executeGame() {
+    public void executeGame(ExecutionManager executionManager, BoardSize boardSize) {
         System.out.println("Starting game.");
-        while (!roundManager.gameEndReached()) {
+        this.players = playersManager.createPlayers();
+        Board board = new Board(boardSize, null);
+
+        this.roundManager = new RoundManager(
+                board,
+                executionManager
+        );
+
+        for (int roundNumber = 1; roundNumber <= 6; roundNumber ++) {
+            board.setTanks(
+                    tanksManager.createTanks(
+                            this.players,
+                            board
+                    )
+            );
+
             roundManager.executeNextRound();
+            this.presentRoundStatistics(roundNumber);
         }
         System.out.println("Game ended");
+        this.presentSummedUpStatistics();
+    }
+
+    private void presentRoundStatistics(int roundNumber) {
+        // TODO
+    }
+
+    private void presentSummedUpStatistics() {
+        // TODO
     }
 }

@@ -1,19 +1,23 @@
 package edu.paszgr.control;
 
-import edu.paszgr.algo.algorithms.DefaultAlgorithm;
-import edu.paszgr.algo.algorithms.OnlyMoveAlgorithm;
 import edu.paszgr.board.Board;
+import edu.paszgr.board.Position;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class TanksManager {
 
-    public List<Tank> createTanks(Board board) {
-        List<Tank> tanks = new ArrayList<>();
-        tanks.add(new Tank(new OnlyMoveAlgorithm(), board, "Tank 1"));
-        tanks.add(new Tank(new OnlyMoveAlgorithm(), board, "Tank 2"));
-        return tanks;
+    Random random = new Random();
+
+    public List<Tank> createTanks(List<Player> players, Board board) {
+        return players.stream()
+                .map(player -> this.createTank(player, board))
+                .collect(Collectors.toList());
     }
 
+    private Tank createTank(Player player, Board board) {
+        return new Tank(player, board, 1, new Position(random.nextInt(20), random.nextInt(20)));
+    }
 }

@@ -5,6 +5,7 @@ import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
 import edu.paszgr.control.Tank;
+import java.util.List;
 
 public class ExecutionManager implements TankActionExecutor {
     private Tank currentTank = null;
@@ -18,25 +19,36 @@ public class ExecutionManager implements TankActionExecutor {
 
     @Override
     public void executeMovement(Movement movement) {
-        Position oldPosition = board.getPositionOfTank(currentTank);
-        Position newPosition = getNewPosition(movement.getDirection(), oldPosition);
-        board.setTankPosition(currentTank, newPosition);
-        System.out.println("Tank " + currentTank + "has already moved to ("
+        Position oldPosition = currentTank.getPosition();
+        Position newPosition = getNewPosition(movement.getDirection(), oldPosition, 1);
+        currentTank.setPosition(newPosition);
+
+        System.out.println("Tank " + currentTank.getTankName() + " has already moved to ("
                 + newPosition.getX() + ", " + newPosition.getY() + ")");
+
     }
 
     @Override
     public void executeWeaponFire(WeaponFire weaponFire) {
-        System.out.println("Tank " + currentTank + "has already fired.");
+        Position position = currentTank.getPosition();
+        List<Tank> onTargetLine = board.getTanksOnTargetLine(position, weaponFire.getDirection());
+
+        System.out.println("Tank " + currentTank.getTankName() + " has already fired.");
+        onTargetLine.forEach(tank ->
+                System.out.println("Tank " + tank.getTankName() + " fragged"));
+
+        onTargetLine.forEach(tank -> tank.decreaseLifePoints(1));
+        //Currently assuming each tank has 1 HP
+        board.getAllTanks().removeAll(onTargetLine);
     }
 
-    private Position getNewPosition(Direction direction, Position oldPosition) {
+    private Position getNewPosition(Direction direction, Position oldPosition, int steps) {
         switch (direction) {
-            case DOWN: return new Position(oldPosition.getX() - 1, oldPosition.getY());
-            case UP: return new Position(oldPosition.getX() + 1, oldPosition.getY());
-            case LEFT: return new Position(oldPosition.getX(), oldPosition.getY() - 1);
-            case RIGHT: return new Position(oldPosition.getX(), oldPosition.getY() + 1);
-            default: return oldPosition; //should not happen todo fix in future
+            case DOWN: return new Position(oldPosition.getX() - steps, oldPosition.getY());
+            case UP: return new Position(oldPosition.getX() + steps, oldPosition.getY());
+            case LEFT: return new Position(oldPosition.getX(), oldPosition.getY() - steps);
+            case RIGHT: return new Position(oldPosition.getX(), oldPosition.getY() + steps);
+            default: return oldPosition;
         }
     }
 }

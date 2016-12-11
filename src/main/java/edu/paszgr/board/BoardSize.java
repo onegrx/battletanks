@@ -1,19 +1,19 @@
 package edu.paszgr.board;
 
 public class BoardSize {
-    private int xSize;
-    private int ySize;
+    private final int xSize;
+    private final int ySize;
 
     public BoardSize(int xSize, int ySize) {
         this.xSize = xSize;
         this.ySize = ySize;
     }
 
-    public int getxSize() {
+    public int getXSize() {
         return xSize;
     }
 
-    public int getySize() {
+    public int getYSize() {
         return ySize;
     }
 }
