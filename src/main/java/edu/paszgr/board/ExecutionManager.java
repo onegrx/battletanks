@@ -44,10 +44,10 @@ public class ExecutionManager implements TankActionExecutor {
 
     private Position getNewPosition(Direction direction, Position oldPosition, int steps) {
         switch (direction) {
-            case DOWN: return new Position(oldPosition.getX() - steps, oldPosition.getY());
-            case UP: return new Position(oldPosition.getX() + steps, oldPosition.getY());
-            case LEFT: return new Position(oldPosition.getX(), oldPosition.getY() - steps);
-            case RIGHT: return new Position(oldPosition.getX(), oldPosition.getY() + steps);
+            case DOWN: return new Position(oldPosition.getX(), oldPosition.getY() - steps);
+            case UP: return new Position(oldPosition.getX(), oldPosition.getY() + steps);
+            case LEFT: return new Position(oldPosition.getX() - steps, oldPosition.getY());
+            case RIGHT: return new Position(oldPosition.getX() + steps, oldPosition.getY());
             default: return oldPosition;
         }
     }
