@@ -4,10 +4,14 @@ public class RoundStatistics {
     private int kills = 0;
     private int lifePointsLeft = -1;
     private final int roundNumber;
+    private int shots;
+    private int moves;
+
 
     public RoundStatistics(int roundNumber) {
         this.roundNumber = roundNumber;
     }
+
 
     public void addKills(int killsCount) {
         this.kills += killsCount;
@@ -26,6 +30,22 @@ public class RoundStatistics {
 
     public int getKills() {
         return kills;
+    }
+
+    public int getShots() {
+        return shots;
+    }
+
+    public void addShot() {
+        this.shots++;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
+
+    public void addMove() {
+        this.moves++;
     }
 
     public int getRoundNumber() {

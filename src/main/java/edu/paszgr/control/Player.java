@@ -22,8 +22,8 @@ public class Player {
     }
 
     public RoundStatistics getRoundStatistics(int roundNumber) {
-        // TODO
-        return null;
+
+        return statistics.get(roundNumber-1);
     }
 
     public PlayStrategy getPlayStrategy() {
