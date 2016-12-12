@@ -68,11 +68,6 @@ public class Board {
         }
     }
 
-
-    public Position getPositionOfTank(Tank tank) {
-        return tank.getPosition();
-    }
-
     public List<Tank> getAllTanks() {
         return tanks;
     }
