@@ -5,15 +5,15 @@ import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.algorithms.OnlyMoveAlgorithm;
 import edu.paszgr.control.Player;
 import edu.paszgr.control.Tank;
-import org.junit.Test;
+import junit.framework.TestCase;
+import org.testng.annotations.Test;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 /**
  * Created by onegrx on 11.12.16.
  */
-public class ExecutionManagerTest {
+public class ExecutionManagerTest extends TestCase {
 
     ExecutionManager executionManager = new ExecutionManager();
     Board board = mock(Board.class);
