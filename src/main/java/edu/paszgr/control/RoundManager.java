@@ -18,7 +18,6 @@ public class RoundManager {
     }
 
     public void executeNextRound() {
-        // TODO - verify correctness
         System.out.println("Rount start");
         while(!this.roundEndReached()) {
             this.executeNextTurn();
@@ -44,9 +43,8 @@ public class RoundManager {
                     .createTankActionList(
                             tank.getStateInfo()
                     );
-            // TODO - execute tank action
             for (TankAction action: actions.getActions()) {
-                action.acceptExecutor(executionManager);
+                executionManager.executeTankAction(action, tank, board);
             }
         }
     }

@@ -7,9 +7,10 @@ import java.util.List;
 
 public class Player {
     private final PlayStrategy playStrategy;
-    private final String playerTankName;
-    private List<RoundStatistics> statistics = new ArrayList<>();
 
+    private final String playerTankName;
+
+    private List<RoundStatistics> statistics = new ArrayList<>();
     public Player(PlayStrategy playStrategy, String playerTankName) {
         this.playStrategy = playStrategy;
         this.playerTankName = playerTankName;
@@ -28,6 +29,10 @@ public class Player {
 
     public RoundStatistics currentRound(){
         return statistics.get(statistics.size() - 1);
+    }
+
+    public String getPlayerTankName() {
+        return playerTankName;
     }
 
     public PlayStrategy getPlayStrategy() {

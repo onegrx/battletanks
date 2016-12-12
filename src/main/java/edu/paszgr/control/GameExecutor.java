@@ -45,10 +45,36 @@ public class GameExecutor {
     }
 
     private void presentRoundStatistics(int roundNumber) {
-        // TODO
+        System.out.println(" In round " + roundNumber + ":");
+        for (Player player: players) {
+            System.out.println("Player: " + player.getPlayerTankName());
+            System.out.println("Kiled: " + player.getRoundStatistics(roundNumber).getKills() + " enemies");
+            System.out.println("Shot: " + player.getRoundStatistics(roundNumber).getShots() + " times");
+            System.out.println("Moved: " + player.getRoundStatistics(roundNumber).getMoves() + " times");
+            System.out.println("End with: " + player.getRoundStatistics(roundNumber).getLifePointsLeft() + " points of life left");
+            System.out.println("*************************************");
+        }
+
     }
 
     private void presentSummedUpStatistics() {
-        // TODO
+        System.out.println(" In round this game:");
+        for (Player player: players) {
+            List<RoundStatistics> statistics = player.getStatistics();
+            int allKills = 0;
+            int allShots = 0;
+            int allMoves = 0;
+            for (RoundStatistics roundStatistic: statistics) {
+                allKills+=roundStatistic.getKills();
+                allShots+=roundStatistic.getShots();
+                allMoves+=roundStatistic.getMoves();
+
+            }
+            System.out.println("Player: " + player.getPlayerTankName());
+            System.out.println("Kiled: " + allKills + " enemies");
+            System.out.println("Shot: " + allShots + " times");
+            System.out.println("Moved: " + allMoves + " times");
+            System.out.println("*************************************");
+        }
     }
 }
