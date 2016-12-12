@@ -26,7 +26,7 @@ public class Tank {
     }
 
     public String getTankName() {
-        return this.player.getPlayStrategy().getStrategyName();
+        return this.player.getPlayerTankName();
     }
 
     public void increaseLifePoints(int amount) {
