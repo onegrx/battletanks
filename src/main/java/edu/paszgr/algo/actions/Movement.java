@@ -26,5 +26,3 @@ public class Movement implements TankAction {
         return direction;
     }
 }
-
-//IMO powinnismy przekazywac movement a nie referencje na thisa
