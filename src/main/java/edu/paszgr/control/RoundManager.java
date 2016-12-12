@@ -41,6 +41,7 @@ public class RoundManager {
 
     private void executeNextTurn() {
         List<Tank> tanks = board.getAllTanks();
+        //Tu leci ConcurrentModificationException
         for (Tank tank : tanks) {
             tank.getPlayer().createRoundStatistics(currentRound);
             TankActionList actions = tank

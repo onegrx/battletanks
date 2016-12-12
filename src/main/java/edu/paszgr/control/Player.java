@@ -28,6 +28,7 @@ public class Player {
     }
 
     public RoundStatistics currentRound(){
+        //Tu leci ArrayIndexOutOfBoundsException
         return statistics.get(statistics.size() - 1);
     }
 
