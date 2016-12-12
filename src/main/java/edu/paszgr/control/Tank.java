@@ -43,6 +43,10 @@ public class Tank {
         return lifePoints;
     }
 
+    public boolean isAlive() {
+        return lifePoints > 0;
+    }
+
     public void setLifePoints(int lifePoints) {
         this.lifePoints = lifePoints;
     }
