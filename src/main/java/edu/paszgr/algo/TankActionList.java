@@ -9,7 +9,10 @@ public class TankActionList {
     private int remainingActionPoints = 10;
 
     public void addAction(TankAction action) {
-        // TODO
+        if (action.getActionPointsCost() <= remainingActionPoints){
+            actions.add(action);
+            remainingActionPoints -= action.getActionPointsCost();
+        }
     }
 
     public List<TankAction> getActions() {
