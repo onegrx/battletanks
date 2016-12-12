@@ -2,7 +2,7 @@ package edu.paszgr.control;
 
 public class RoundStatistics {
     private int kills = 0;
-    private int lifePointsLeft = -1;
+    private int lifePointsLeft = 1;
     private final int roundNumber;
     private int shots;
     private int moves;

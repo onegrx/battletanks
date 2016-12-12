@@ -58,7 +58,7 @@ public class GameExecutor {
     }
 
     private void presentSummedUpStatistics() {
-        System.out.println(" In round this game:");
+        System.out.println("In this game:");
         for (Player player: players) {
             List<RoundStatistics> statistics = player.getStatistics();
             int allKills = 0;

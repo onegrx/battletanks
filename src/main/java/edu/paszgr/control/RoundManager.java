@@ -10,6 +10,7 @@ import java.util.List;
 public class RoundManager {
     private final Board board;
     private ExecutionManager executionManager;
+    private int currentRound = 1;
 //    private int turnCount = 0;
 
     public RoundManager(Board board, ExecutionManager executionManager) {
@@ -31,12 +32,17 @@ public class RoundManager {
             if (tank.getLifePoints()!=0)
                 survivors++;
         }
-        return survivors==0;
+
+        if (survivors==0 || currentRound==10) return true;
+
+        currentRound++;
+        return false;
     }
 
     private void executeNextTurn() {
         List<Tank> tanks = board.getAllTanks();
         for (Tank tank : tanks) {
+            tank.getPlayer().createRoundStatistics(currentRound);
             TankActionList actions = tank
                     .getPlayer()
                     .getPlayStrategy()
