@@ -37,6 +37,9 @@ public class GameExecutor {
                     )
             );
 
+            for (Tank tank: board.getAllTanks()) {
+                tank.getPlayer().createRoundStatistics(roundNumber);
+            }
             roundManager.executeNextRound();
             this.presentRoundStatistics(roundNumber);
         }
