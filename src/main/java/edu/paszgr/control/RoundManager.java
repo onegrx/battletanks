@@ -1,5 +1,6 @@
 package edu.paszgr.control;
 
+import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.TankActionList;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
@@ -18,15 +19,20 @@ public class RoundManager {
 
     public void executeNextRound() {
         // TODO - verify correctness
+        System.out.println("Rount start");
         while(!this.roundEndReached()) {
             this.executeNextTurn();
         }
     }
 
     private boolean roundEndReached() {
-        // TODO
-//        return turnCount > 6;
-        return true;
+        int survivors = 0;
+        List<Tank> tanks = board.getAllTanks();
+        for (Tank tank : tanks) {
+            if (tank.getLifePoints()!=0)
+                survivors++;
+        }
+        return survivors==0;
     }
 
     private void executeNextTurn() {
@@ -39,6 +45,11 @@ public class RoundManager {
                             tank.getStateInfo()
                     );
             // TODO - execute tank action
+            for (TankAction action: actions.getActions()) {
+                action.acceptExecutor(executionManager);
+            }
         }
     }
+
+
 }
