@@ -1,10 +1,9 @@
 package edu.paszgr.control;
 
-import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.TankActionList;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
-import java.util.List;
+
 import java.util.stream.Collectors;
 
 public class RoundManager {
@@ -43,24 +42,24 @@ public class RoundManager {
 
     }
 
-    //todo split this method into "finishRound" and "initialize new round"
-
     private void executeNextTurn() {
-        List<Tank> tanks = board.getAllTanks();
-        //Tu leci ConcurrentModificationException
-        for (Tank tank : tanks) {
-            tank.getPlayer().createRoundStatistics(currentRound);
-            TankActionList actions = tank
-                    .getPlayer()
-                    .getPlayStrategy()
-                    .createTankActionList(
-                            tank.getStateInfo()
-                    );
-            for (TankAction action : actions.getActions()) {
-                executionManager.executeTankAction(action, tank, board);
-            }
-        }
+        board.getAllTanks().forEach(tank -> {
+
+            TankActionList actionList = tank.getPlayer().getPlayStrategy()
+                    .createTankActionList(tank.getStateInfo());
+            
+            actionList.getActions().forEach(tankAction -> 
+                executionManager.executeTankAction(tankAction, tank, board)
+            );
+
+        });
+
+        removeKilledTanks();
+        
     }
 
+    private void removeKilledTanks() {
+        board.getAllTanks().removeIf(tank -> !tank.isAlive());
+    }
 
 }
