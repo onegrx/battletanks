@@ -1,10 +1,8 @@
 package edu.paszgr.board;
 
 import edu.paszgr.control.Tank;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StateInfo {
     private final Tank tank;
@@ -16,14 +14,10 @@ public class StateInfo {
     }
 
     public List<Position> getEnemiesPositions() {
-        List<Position> positionsOfEnemies = new ArrayList<>();
-        for (Tank tankFromBoard: board.getAllTanks()) {
-            if(tankFromBoard!=tank){
-                positionsOfEnemies.add(tankFromBoard.getPosition());
-            }
-
-        }
-        return null;
+        return board.getAllTanks().stream()
+                .filter(tankFromBoard -> tankFromBoard != tank)
+                .map(Tank::getPosition)
+                .collect(Collectors.toList());
     }
 
     public Position getMyTankPosition() {
