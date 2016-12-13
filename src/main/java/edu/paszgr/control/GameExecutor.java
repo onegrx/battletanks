@@ -25,6 +25,8 @@ public class GameExecutor {
 
         for (int roundNumber = 1; roundNumber <= numberOfRounds; roundNumber++) {
 
+            board.setTanks(tanksManager.createTanks(this.players, board));
+
             for (Tank tank: board.getAllTanks()) {
                 tank.getPlayer().createRoundStatistics(roundNumber);
             }
