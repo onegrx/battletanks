@@ -9,13 +9,12 @@ import edu.paszgr.control.TanksManager;
 
 public class Main {
     public static void main(String[] args) {
-        // TODO
-        int numberOfRound = 2;
-        TanksManager tanksManager =new TanksManager();
+        int numberOfRound = 3;
+        TanksManager tanksManager = new TanksManager();
         PlayersManager playersManager = new PlayersManager();
         GameExecutor gameExecutor = new GameExecutor(tanksManager, playersManager);
 
-        BoardSize boardSize = new BoardSize(20,20);
+        BoardSize boardSize = new BoardSize(20, 20);
         ExecutionManager executionManager = new ExecutionManager();
         gameExecutor.executeGame(executionManager, boardSize, numberOfRound);
     }

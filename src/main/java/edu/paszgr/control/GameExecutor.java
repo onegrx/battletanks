@@ -8,10 +8,8 @@ import java.util.List;
 
 public class GameExecutor {
     private TanksManager tanksManager;
-    private RoundManager roundManager;
     private PlayersManager playersManager;
     private List<Player> players = null;
-    private int numberOfRounds = 0;
 
     public GameExecutor(TanksManager tanksManager, PlayersManager playersManager) {
         this.tanksManager = tanksManager;
@@ -19,15 +17,11 @@ public class GameExecutor {
     }
 
     public void executeGame(ExecutionManager executionManager, BoardSize boardSize, int numberOfRounds) {
-        System.out.println("Starting game.");
+        System.out.println("Starting game.\n");
         this.players = playersManager.createPlayers();
         Board board = new Board(boardSize);
-        this.numberOfRounds = numberOfRounds;
 
-        this.roundManager = new RoundManager(
-                board,
-                executionManager
-        );
+        RoundManager roundManager = new RoundManager(board, executionManager);
 
         for (int roundNumber = 1; roundNumber <= numberOfRounds; roundNumber ++) {
             board.setTanks(
@@ -40,28 +34,29 @@ public class GameExecutor {
             for (Tank tank: board.getAllTanks()) {
                 tank.getPlayer().createRoundStatistics(roundNumber);
             }
-            roundManager.executeNextRound();
+            roundManager.executeNextRound(roundNumber);
             this.presentRoundStatistics(roundNumber);
         }
         System.out.println("Game ended");
+
         this.presentSummedUpStatistics();
     }
 
     private void presentRoundStatistics(int roundNumber) {
-        System.out.println(" In round " + roundNumber + ":");
+        System.out.println("ROUND " + roundNumber + " STATISTICS: \n");
         for (Player player: players) {
             System.out.println("Player: " + player.getPlayerTankName());
-            System.out.println("Kiled: " + player.getRoundStatistics(roundNumber).getKills() + " enemies");
+            System.out.println("Killed: " + player.getRoundStatistics(roundNumber).getKills() + " enemies");
             System.out.println("Shot: " + player.getRoundStatistics(roundNumber).getShots() + " times");
             System.out.println("Moved: " + player.getRoundStatistics(roundNumber).getMoves() + " times");
-            System.out.println("End with: " + player.getRoundStatistics(roundNumber).getLifePointsLeft() + " points of life left");
-            System.out.println("*************************************");
+            System.out.println("HP left: " + player.getRoundStatistics(roundNumber).getLifePointsLeft());
+            System.out.println();
         }
 
     }
 
     private void presentSummedUpStatistics() {
-        System.out.println("In this game:");
+        System.out.println("\n\n ***** FINAL STATISTICS *****");
         for (Player player: players) {
             List<RoundStatistics> statistics = player.getStatistics();
             int allKills = 0;
@@ -74,10 +69,10 @@ public class GameExecutor {
 
             }
             System.out.println("Player: " + player.getPlayerTankName());
-            System.out.println("Kiled: " + allKills + " enemies");
+            System.out.println("Killed: " + allKills + " enemies");
             System.out.println("Shot: " + allShots + " times");
             System.out.println("Moved: " + allMoves + " times");
-            System.out.println("*************************************");
+            System.out.println();
         }
     }
 }
