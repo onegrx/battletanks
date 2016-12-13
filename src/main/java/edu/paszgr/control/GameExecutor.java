@@ -23,28 +23,22 @@ public class GameExecutor {
 
         RoundManager roundManager = new RoundManager(board, executionManager);
 
-        for (int roundNumber = 1; roundNumber <= numberOfRounds; roundNumber ++) {
-            board.setTanks(
-                    tanksManager.createTanks(
-                            this.players,
-                            board
-                    )
-            );
+        for (int roundNumber = 1; roundNumber <= numberOfRounds; roundNumber++) {
 
             for (Tank tank: board.getAllTanks()) {
                 tank.getPlayer().createRoundStatistics(roundNumber);
             }
+
             roundManager.executeNextRound(roundNumber);
             this.presentRoundStatistics(roundNumber);
         }
-        System.out.println("Game ended");
-
         this.presentSummedUpStatistics();
+        System.out.println("Game finished.");
     }
 
     private void presentRoundStatistics(int roundNumber) {
         System.out.println("ROUND " + roundNumber + " STATISTICS: \n");
-        for (Player player: players) {
+        for (Player player : players) {
             System.out.println("Player: " + player.getPlayerTankName());
             System.out.println("Killed: " + player.getRoundStatistics(roundNumber).getKills() + " enemies");
             System.out.println("Shot: " + player.getRoundStatistics(roundNumber).getShots() + " times");
@@ -56,18 +50,22 @@ public class GameExecutor {
     }
 
     private void presentSummedUpStatistics() {
-        System.out.println("\n\n ***** FINAL STATISTICS *****");
-        for (Player player: players) {
+
+        System.out.println("\n\n ***** FINAL STATISTICS *****\n");
+
+        for (Player player : players) {
             List<RoundStatistics> statistics = player.getStatistics();
+
             int allKills = 0;
             int allShots = 0;
             int allMoves = 0;
-            for (RoundStatistics roundStatistic: statistics) {
-                allKills+=roundStatistic.getKills();
-                allShots+=roundStatistic.getShots();
-                allMoves+=roundStatistic.getMoves();
 
+            for (RoundStatistics roundStatistic : statistics) {
+                allKills += roundStatistic.getKills();
+                allShots += roundStatistic.getShots();
+                allMoves += roundStatistic.getMoves();
             }
+
             System.out.println("Player: " + player.getPlayerTankName());
             System.out.println("Killed: " + allKills + " enemies");
             System.out.println("Shot: " + allShots + " times");
