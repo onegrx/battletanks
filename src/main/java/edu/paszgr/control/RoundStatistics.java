@@ -1,20 +1,23 @@
 package edu.paszgr.control;
 
 public class RoundStatistics {
-    private int kills = 0;
-    private int lifePointsLeft = 1;
+    private int lifePointsLeft = -1;
     private final int roundNumber;
-    private int shots;
-    private int moves;
+    private int kills = 0;
+    private int shots = 0;
+    private int moves = 0;
 
 
     public RoundStatistics(int roundNumber) {
         this.roundNumber = roundNumber;
     }
 
+    public int getKills() {
+        return kills;
+    }
 
-    public void addKill(int i) {
-        this.kills += i;
+    public void setKills(int kills) {
+        this.kills = kills;
     }
 
     /**
@@ -25,31 +28,26 @@ public class RoundStatistics {
     }
 
     public void setLifePointsLeft(int lifePointsLeft) {
-
         this.lifePointsLeft = lifePointsLeft;
     }
 
-    public int getKills() {
-        return kills;
+    public int getRoundNumber() {
+        return roundNumber;
     }
 
     public int getShots() {
         return shots;
     }
 
-    public void addShot() {
-        this.shots++;
+    public void setShots(int shots) {
+        this.shots = shots;
     }
 
     public int getMoves() {
         return moves;
     }
 
-    public void addMove() {
-        this.moves++;
-    }
-
-    public int getRoundNumber() {
-        return roundNumber;
+    public void setMoves(int moves) {
+        this.moves = moves;
     }
 }

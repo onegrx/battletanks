@@ -1,17 +1,36 @@
 package edu.paszgr.algo;
 
+import edu.paszgr.board.StateInfo;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class TankActionList {
-    private List<TankAction> actions = new LinkedList<>();
-    private int remainingActionPoints = 10;
+    private final StateInfo stateInfo;
+    private final ActionPointsCostCalculator actionPointsCalculator = new ActionPointsCostCalculator();
+    private List<TankAction> actions;
+    private int remainingActionPoints;
+    private int initialActionPoints;
+    private TankActionListStateInfo currentListStateInfo;
+
+    public TankActionList(StateInfo stateInfo, int initialActionPoints) {
+        this.stateInfo = stateInfo;
+        this.initialActionPoints = initialActionPoints;
+        renew();
+    }
 
     public void addAction(TankAction action) {
-        if (action.getActionPointsCost() <= remainingActionPoints){
+        TankActionListStateInfo newState = actionPointsCalculator.getPointsCost(
+                stateInfo,
+                action,
+                currentListStateInfo
+        );
+        int actionPointsCost = newState.getLastActionPointsCost();
+        if (actionPointsCost <= remainingActionPoints){
             actions.add(action);
-            remainingActionPoints -= action.getActionPointsCost();
+            remainingActionPoints -= actionPointsCost;
+            currentListStateInfo = newState;
         }
     }
 
@@ -22,5 +41,14 @@ public class TankActionList {
 
     public int getRemainingActionPoints() {
         return remainingActionPoints;
+    }
+
+    public void renew() {
+        actions = new LinkedList<>();
+        remainingActionPoints = initialActionPoints;
+        currentListStateInfo = new TankActionListStateInfo(
+                stateInfo.getMyTankPosition(),
+                0
+        );
     }
 }
