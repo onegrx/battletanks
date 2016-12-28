@@ -1,14 +1,14 @@
 package edu.paszgr.persistence.history;
 
 import edu.paszgr.persistence.GameState;
-import edu.paszgr.persistence.ListIterable;
+import edu.paszgr.persistence.GameStateIterable;
+import edu.paszgr.persistence.GameStateIterator;
 
 import java.util.HashMap;
-import java.util.ListIterator;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.NoSuchElementException;
 
-public class RoundHistory implements ListIterable<GameState> {
+public class RoundHistory implements GameStateIterable {
     private final Map<Integer, TurnHistory> turnsHistoryMap = new HashMap<>();
     private final int roundNumber;
 
@@ -30,16 +30,16 @@ public class RoundHistory implements ListIterable<GameState> {
     }
 
     @Override
-    public ListIterator<GameState> listIterator() {
-        return new RoundHistoryListIterator(this);
+    public GameStateIterator gameStateIterator() {
+        return new RoundHistoryGameStateIterator(this);
     }
 
 
     // TODO - implement iterator
-    private class RoundHistoryListIterator implements ListIterator<GameState> {
+    private class RoundHistoryGameStateIterator implements GameStateIterator {
         private final RoundHistory roundHistory;
 
-        private RoundHistoryListIterator(RoundHistory roundHistory) {
+        private RoundHistoryGameStateIterator(RoundHistory roundHistory) {
             this.roundHistory = roundHistory;
         }
 
@@ -49,7 +49,7 @@ public class RoundHistory implements ListIterable<GameState> {
         }
 
         @Override
-        public GameState next() {
+        public GameState next() throws NoSuchElementException {
             return null;
         }
 
@@ -59,37 +59,17 @@ public class RoundHistory implements ListIterable<GameState> {
         }
 
         @Override
-        public GameState previous() {
+        public GameState previous() throws NoSuchElementException {
             return null;
         }
 
         @Override
-        public int nextIndex() {
-            return 0;
+        public boolean isReachable(GameState state) {
+            return false;
         }
 
         @Override
-        public int previousIndex() {
-            return 0;
-        }
-
-        @Override
-        public void remove() {
-
-        }
-
-        @Override
-        public void forEachRemaining(Consumer<? super GameState> action) {
-
-        }
-
-        @Override
-        public void set(GameState state) {
-
-        }
-
-        @Override
-        public void add(GameState state) {
+        public void seekAfter(GameState state) throws NoSuchElementException {
 
         }
     }
