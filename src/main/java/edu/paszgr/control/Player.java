@@ -2,45 +2,27 @@ package edu.paszgr.control;
 
 import edu.paszgr.algo.PlayStrategy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-public class Player {
-    private final PlayStrategy playStrategy;
-
+public class Player implements Serializable {
+    private final transient PlayStrategy strategy;
+    private final transient StatisticsManager statistics = new StatisticsManager();
     private final String playerTankName;
 
-    private List<RoundStatistics> statistics = new ArrayList<>();
-    public Player(PlayStrategy playStrategy, String playerTankName) {
-        this.playStrategy = playStrategy;
+    public Player(PlayStrategy strategy, String playerTankName) {
+        this.strategy = strategy;
         this.playerTankName = playerTankName;
     }
 
-    public void createRoundStatistics(int roundNumber) {
-        this.statistics.add(
-                new RoundStatistics(roundNumber)
-        );
+    public PlayStrategy getStrategy() {
+        return strategy;
     }
 
-    public RoundStatistics getRoundStatistics(int roundNumber) {
-
-        return statistics.get(roundNumber - 1);
-    }
-
-    public RoundStatistics currentRound(){
-        //Tu leci ArrayIndexOutOfBoundsException
-        return statistics.get(statistics.size() - 1);
+    public StatisticsManager getStatistics() {
+        return statistics;
     }
 
     public String getPlayerTankName() {
         return playerTankName;
-    }
-
-    public PlayStrategy getPlayStrategy() {
-        return playStrategy;
-    }
-
-    public List<RoundStatistics> getStatistics() {
-        return statistics;
     }
 }

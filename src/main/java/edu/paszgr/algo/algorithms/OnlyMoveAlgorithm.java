@@ -21,12 +21,9 @@ public class OnlyMoveAlgorithm implements PlayStrategy {
         return "Only moving";
     }
 
-    @Override
-    public TankActionList createTankActionList(StateInfo info) {
-        TankActionList list = new TankActionList();
+    public void scheduleTankActionList(StateInfo info, TankActionList actionList) {
         Direction[] directions = Direction.values();
-        list.addAction(new Movement(directions[rnd.nextInt(4)]));
-        list.addAction(new WeaponFire(directions[rnd.nextInt(4)]));
-        return list;
+        actionList.addAction(new Movement(directions[rnd.nextInt(4)]));
+        actionList.addAction(new WeaponFire(directions[rnd.nextInt(4)]));
     }
 }

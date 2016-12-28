@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class TankActionListTest extends TestCase {
     @Test
     public void testAddAction() {
-        TankActionList actionList = new TankActionList();
+        TankActionList actionList = new TankActionList(stateInfo, stateInfo);
         int limit = actionList.getRemainingActionPoints();
 
         TankAction action = createTankAction(limit + 1);

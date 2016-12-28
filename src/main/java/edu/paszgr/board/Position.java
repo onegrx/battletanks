@@ -1,6 +1,10 @@
 package edu.paszgr.board;
 
-public class Position {
+import edu.paszgr.algo.Direction;
+
+import java.io.Serializable;
+
+public class Position implements Serializable {
     private final int x;
     private final int y;
 
@@ -25,13 +29,19 @@ public class Position {
         Position position = (Position) o;
 
         return x == position.x && y == position.y;
-
     }
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
+        int result = x * 65536;   // each coordinate on 2 bytes
+        result = result + y;
         return result;
+    }
+
+    public Position getNeighbor(Direction direction) {
+        return new Position(
+                x + direction.getxDirection(),
+                y + direction.getyDirection()
+        );
     }
 }

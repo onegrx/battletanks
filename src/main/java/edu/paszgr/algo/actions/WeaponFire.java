@@ -2,7 +2,7 @@ package edu.paszgr.algo.actions;
 
 import edu.paszgr.algo.Direction;
 import edu.paszgr.algo.TankAction;
-import edu.paszgr.board.TankActionExecutor;
+import edu.paszgr.algo.TankActionVisitor;
 
 public class WeaponFire implements TankAction {
     private final Direction direction;
@@ -12,17 +12,17 @@ public class WeaponFire implements TankAction {
         this.direction = direction;
     }
 
-    @Override
-    public void acceptExecutor(TankActionExecutor executor) {
-        executor.executeWeaponFire(this);
-    }
-
-    @Override
-    public int getActionPointsCost() {
-        return this.POINTS_COST;
-    }
-
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public void accept(TankActionVisitor visitor) {
+        visitor.visitWeaponFire(this);
+    }
+
+    @Override
+    public int getActionPointsBasicCost() {
+        return POINTS_COST;
     }
 }

@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
  */
 public class ExecutionManagerTest {
 
-    ExecutionManager executionManager = new ExecutionManager();
+    ExecutionManager executionManager = new ExecutionManager(logger);
     Board board = mock(Board.class);
     Player player = new Player(new OnlyMoveAlgorithm(), "Player");
 
@@ -24,7 +24,7 @@ public class ExecutionManagerTest {
         //given
         Movement movement = new Movement(Direction.UP);
         Position position = new Position(1, 1);
-        Tank tank = new Tank(player, board, 0, position);
+        Tank tank = new Tank(player, board, 0, position, color);
         player.createRoundStatistics(1);
 
         //when
@@ -42,7 +42,7 @@ public class ExecutionManagerTest {
         //given
         Movement movement = new Movement(Direction.LEFT);
         Position position = new Position(5, 3);
-        Tank tank = new Tank(player, board, 0, position);
+        Tank tank = new Tank(player, board, 0, position, color);
         player.createRoundStatistics(1);
 
 

@@ -26,13 +26,13 @@ public class TankTest {
 
     @Test
     public void getLifePointsTest() throws Exception {
-        Tank tank = new Tank(player, board, 1, position);
+        Tank tank = new Tank(player, board, 1, position, color);
         assertEquals(1, tank.getLifePoints());
     }
 
     @Test
     public void isAlive() throws Exception {
-        Tank tank = new Tank(player, board, 3, position);
+        Tank tank = new Tank(player, board, 3, position, color);
         assertEquals(true, tank.isAlive());
 
         when(player.currentRound()).thenReturn(roundStatistics);

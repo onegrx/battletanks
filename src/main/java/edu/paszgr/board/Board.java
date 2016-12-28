@@ -2,22 +2,39 @@ package edu.paszgr.board;
 
 import edu.paszgr.algo.Direction;
 import edu.paszgr.control.Tank;
+
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import static java.lang.Math.abs;
 
-public class Board {
-    private final BoardSize boardSize;
-    private List<Tank> tanks;
+public class Board implements Serializable {
+    private final transient FieldsManager fieldsManager = new FieldsManager();
+    private final BoardSize size;
+    private List<Tank> tanks = null;
+    private transient Field[][] fields;
 
     public Board(BoardSize boardSize) {
-        this.boardSize = boardSize;
+        this.size = boardSize;
+        this.fields = fieldsManager.createFields(boardSize);
     }
 
     public List<Tank> getTanksOnPosition(Position position) {
         return this.tanks.stream()
                 .filter(tank -> tank.getPosition() == position)
                 .collect(Collectors.toList());
+    }
+
+    public Position getPositionOfTank(Tank tank) {
+        return tank.getPosition();
+    }
+
+    public List<Tank> getAllTanks() {
+        return tanks;
+    }
+
+    public void setTanks(List<Tank> tanks) {
+        this.tanks = tanks;
     }
 
     /**
@@ -68,15 +85,12 @@ public class Board {
         }
     }
 
-    public List<Tank> getAllTanks() {
-        return tanks;
+    public BoardSize getSize() {
+        return size;
     }
 
-    public BoardSize getBoardSize() {
-        return boardSize;
-    }
-
-    public void setTanks(List<Tank> tanks) {
-        this.tanks = tanks;
+    public Field getField(Position position) {
+        // TODO
+        return null;
     }
 }

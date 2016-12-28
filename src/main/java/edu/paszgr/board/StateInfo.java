@@ -20,11 +20,27 @@ public class StateInfo {
                 .collect(Collectors.toList());
     }
 
+    public BoardSize getBoardSize() {
+        return this.board.getSize();
+    }
+
     public Position getMyTankPosition() {
         return this.tank.getPosition();
     }
 
-    public BoardSize getBoardSize() {
-        return this.board.getBoardSize();
+    public Field getField(Position position) {
+        return board.getField(position);
+    }
+
+    public boolean positionIsValid(Position position) {
+        int x = position.getX();
+        int y = position.getY();
+        int sizex = board.getSize().getXSize();
+        int sizey = board.getSize().getXSize();
+
+        if (x < 0 || x > sizex - 1 || y < 0 || y > sizey) {
+            return false;
+        }
+        return true;
     }
 }
