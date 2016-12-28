@@ -4,7 +4,6 @@ import edu.paszgr.board.Board;
 import edu.paszgr.board.Position;
 import edu.paszgr.board.StateInfo;
 
-import java.awt.*;
 import java.io.Serializable;
 
 public class Tank implements Serializable {
@@ -12,18 +11,16 @@ public class Tank implements Serializable {
     private int lifePoints = 1;
     private Position position = null;
     private final Player player;
-    private Color color;
 
     public Tank(Player player, Board board) {
         this.player = player;
         this.stateInfo = new StateInfo(this, board);
     }
 
-    public Tank(Player player, Board board, int lifePoints, Position position, Color color) {
+    public Tank(Player player, Board board, int lifePoints, Position position) {
         this(player, board);
         this.lifePoints = lifePoints;
         this.position = position;
-        this.color = color;
     }
 
     public StateInfo getStateInfo() {
@@ -48,14 +45,6 @@ public class Tank implements Serializable {
 
     public String getTankName() {
         return this.player.getPlayerTankName();
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public boolean isAlive() {
