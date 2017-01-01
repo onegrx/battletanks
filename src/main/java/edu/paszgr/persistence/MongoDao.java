@@ -56,7 +56,9 @@ public class MongoDao {
 
 
         Document tankDescriptorDoc = (Document) gs.get("currentTank");
-        BasicDBList list = (BasicDBList) gs.get("allTanks");
+        List<Document> allTanks = (List<Document>) gs.get("allTanks");
+        BasicDBList list = new BasicDBList();
+        list.addAll(allTanks);
 
         return new GameState(
                 gs.getInteger("roundNumber"),
@@ -79,8 +81,14 @@ public class MongoDao {
         return doc;
     }
 
-    private static List<Document> tankDescriptorsToDoc(List<TankDescriptor> tankDescriptors) {
-        return tankDescriptors.stream().map(MongoDao::tankDescriptorToDoc).collect(Collectors.toList());
+    private static BasicDBList tankDescriptorsToDoc(List<TankDescriptor> tankDescriptors) {
+        BasicDBList basicDbList = new BasicDBList();
+        for(TankDescriptor tankDescriptor: tankDescriptors) {
+            basicDbList.add(tankDescriptorToDoc(tankDescriptor));
+        }
+//        List<Document> list = tankDescriptors.stream().map(MongoDao::tankDescriptorToDoc).collect(Collectors.toList());
+//        basicDbList.addAll(list);
+        return basicDbList;
     }
 
     private static TankDescriptor docToTankDescriptor(Document doc) {
