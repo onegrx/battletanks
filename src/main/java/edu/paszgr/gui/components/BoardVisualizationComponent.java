@@ -18,11 +18,11 @@ public class BoardVisualizationComponent extends JPanel {
     }
 
     public void displayGameState(GameState state) {
-        BoardSize boardSize = state.getBoard().getSize();
-        if (boardSize.getXSize() != squareComponents.length
-                || boardSize.getYSize() != squareComponents[0].length) {
-            throw new IllegalArgumentException("Fields size and game state boardSize mismatch");
-        }
-        // TODO
+//        BoardSize boardSize = state.getBoard().getSize();
+//        if (boardSize.getXSize() != squareComponents.length
+//                || boardSize.getYSize() != squareComponents[0].length) {
+//            throw new IllegalArgumentException("Fields size and game state boardSize mismatch");
+//        }
+//        // TODO
     }
 }

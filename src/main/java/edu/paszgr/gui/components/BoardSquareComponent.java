@@ -1,16 +1,16 @@
 package edu.paszgr.gui.components;
 
 import edu.paszgr.board.Field;
-import edu.paszgr.control.Tank;
+import edu.paszgr.persistence.TankDescriptor;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BoardSquareComponent extends JComponent {
-    private Tank tank = null;
+    private TankDescriptor tank = null;
     private Field field = null;
 
-    public BoardSquareComponent(Field field, Tank tank) {
+    public BoardSquareComponent(Field field, TankDescriptor tank) {
         this.field = field;
         this.tank = tank;
     }
@@ -18,15 +18,14 @@ public class BoardSquareComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         paintSquareBorder(g, getSize());
-        if (field != null) {
-            paintField(g, getSize());
-        }
+        paintField(g, getSize());
         if (tank != null) {
             paintTank(g, getSize());
         }
     }
 
     private void paintSquareBorder(Graphics g, Dimension size) {
+        g.drawImage(null, 1, 2, null);
         // TODO
     }
 
@@ -39,13 +38,12 @@ public class BoardSquareComponent extends JComponent {
     }
 
 
-    public Tank getTank() {
+    public TankDescriptor getTank() {
         return tank;
     }
 
-    public void setTank(Tank tank) {
+    public void setTank(TankDescriptor tank) {
         this.tank = tank;
-        repaint();
     }
 
     public Field getField() {
@@ -54,6 +52,5 @@ public class BoardSquareComponent extends JComponent {
 
     public void setField(Field field) {
         this.field = field;
-        repaint();
     }
 }
