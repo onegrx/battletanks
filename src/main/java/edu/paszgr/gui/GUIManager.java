@@ -1,7 +1,7 @@
 package edu.paszgr.gui;
 
 import edu.paszgr.board.Field;
-import edu.paszgr.persistence.history.GameHistory;
+//import edu.paszgr.persistence.GameHistory;
 
 public class GUIManager {
     private GameJFrame view = null;
@@ -17,7 +17,7 @@ public class GUIManager {
         // TODO
     }
 
-    public void displayGameHistory(GameHistory gameHistory) {
-        // TODO
-    }
+//    public void displayGameHistory(GameHistory gameHistory) {
+//        // TODO
+//    }
 }

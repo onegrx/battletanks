@@ -8,7 +8,6 @@ import java.util.Random;
 public class FieldsManager {
 
     Random rand = new Random();
-    int randomNum = rand.nextInt();
 
     public Field[][] createFields(BoardSize boardSize) {
         Field[][] fields = new Field[boardSize.getXSize()][boardSize.getYSize()];

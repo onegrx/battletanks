@@ -38,7 +38,7 @@ public class StateInfo {
         int sizex = board.getSize().getXSize();
         int sizey = board.getSize().getXSize();
 
-        if (x < 0 || x > sizex - 1 || y < 0 || y > sizey) {
+        if (x < 0 || x > sizex - 1 || y < 0 || y > sizey -1) {
             return false;
         }
         return true;

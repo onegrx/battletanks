@@ -31,7 +31,7 @@ public class MongoDao {
         gameState.put("roundNumber", gs.getRoundNumber());
         gameState.put("turnNumber", gs.getTurnNumber());
         gameState.put("tankTurnNumber", gs.getTankTurnNumber());
-        gameState.put("currentTank", tankDescriptorToDoc(gs.getCurrentTant()));
+        gameState.put("currentTank", tankDescriptorToDoc(gs.getCurrentTank()));
         gameState.put("allTanks", tankDescriptorsToDoc(gs.getAllTanks()));
 
         collection.insertOne(gameState);

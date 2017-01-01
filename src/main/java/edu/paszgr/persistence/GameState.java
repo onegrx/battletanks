@@ -23,7 +23,7 @@ public class GameState implements Serializable {
         return tankTurnNumber;
     }
 
-    public TankDescriptor getCurrentTant() {
+    public TankDescriptor getCurrentTank() {
         return currentTank;
     }
 

@@ -79,12 +79,12 @@ public class RoundManager {
                 MongoDao.saveGamestate(gameState, "col");
                 // TODO - save state after each tank's actions - to this.gameStateFileName file
 
-                //TODO !!! extract to method at least
+                //TODO !!! extract to PERSITENCE MANAGER
 
                 //DEBUG BELOW
                 GameState gameState1 = MongoDao.readGameState(roundNumber, currentTurn, tankTurnNumber, "col");
-                System.out.println(gameState1.getCurrentTant().getPlayerTankName() + "HURA");
-                System.out.println(gameState1.getCurrentTant().getxPos() + "wow");
+                System.out.println(gameState1.getCurrentTank().getPlayerTankName() + "HURA");
+                System.out.println(gameState1.getCurrentTank().getxPos() + "wow");
             }
         }
         System.out.println();
