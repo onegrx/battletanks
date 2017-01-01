@@ -4,14 +4,7 @@ import com.mongodb.BasicDBList;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-
-import edu.paszgr.board.Position;
-import edu.paszgr.control.Player;
-import edu.paszgr.control.Tank;
 import org.bson.Document;
-
-import javax.print.Doc;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +16,8 @@ import static com.mongodb.client.model.Filters.eq;
  * Created by onegrx on 31.12.16.
  */
 public class MongoDao {
+
+    //TODO http://stackoverflow.com/questions/31058439/how-to-delete-all-documents-in-mongodb-collection-in-java
 
     private static final String DATABASE_NAME = "battletanks";
     private static final MongoClient mongoClient = new MongoClient("localhost", 27017);
@@ -43,7 +38,6 @@ public class MongoDao {
 
     }
 
-
     public static GameState readGameState(int roundNumber, int turnNumber, int tankTurnNumber, String collectionName) {
         MongoCollection<Document> collection = database.getCollection(collectionName);
         Document gs = collection.find(
@@ -54,11 +48,9 @@ public class MongoDao {
                 )
         ).first();
 
-
         Document tankDescriptorDoc = (Document) gs.get("currentTank");
-        List<Document> allTanks = (List<Document>) gs.get("allTanks");
         BasicDBList list = new BasicDBList();
-        list.addAll(allTanks);
+        list.addAll((List<Document>) gs.get("allTanks"));
 
         return new GameState(
                 gs.getInteger("roundNumber"),
@@ -69,7 +61,6 @@ public class MongoDao {
         );
 
     }
-
 
     private static Document tankDescriptorToDoc(TankDescriptor desc) {
         Document doc = new Document();
@@ -82,13 +73,7 @@ public class MongoDao {
     }
 
     private static BasicDBList tankDescriptorsToDoc(List<TankDescriptor> tankDescriptors) {
-        BasicDBList basicDbList = new BasicDBList();
-        for(TankDescriptor tankDescriptor: tankDescriptors) {
-            basicDbList.add(tankDescriptorToDoc(tankDescriptor));
-        }
-//        List<Document> list = tankDescriptors.stream().map(MongoDao::tankDescriptorToDoc).collect(Collectors.toList());
-//        basicDbList.addAll(list);
-        return basicDbList;
+        return tankDescriptors.stream().map(MongoDao::tankDescriptorToDoc).collect(Collectors.toCollection(BasicDBList::new));
     }
 
     private static TankDescriptor docToTankDescriptor(Document doc) {
