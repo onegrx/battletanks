@@ -90,7 +90,6 @@ public class Board implements Serializable {
     }
 
     public Field getField(Position position) {
-        // TODO
-        return null;
+        return fields[position.getX()][position.getY()];
     }
 }

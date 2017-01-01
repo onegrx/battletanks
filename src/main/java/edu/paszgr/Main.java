@@ -10,7 +10,7 @@ public class Main {
 
         GameExecutor gameExecutor = new GameExecutor("", "");
 
-        BoardSize boardSize = new BoardSize(20, 20);
+        BoardSize boardSize = new BoardSize(200, 200);
         ExecutionManager executionManager = new ExecutionManager();
         gameExecutor.executeGame(executionManager, boardSize, numberOfRound);
     }
