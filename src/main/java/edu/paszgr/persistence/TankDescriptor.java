@@ -31,5 +31,13 @@ public class TankDescriptor {
     public int getColor() {
         return color;
     }
+
+    public TankDescriptor(int lifePoints, int xPos, int yPos, String playerTankName, int color) {
+        this.lifePoints = lifePoints;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.playerTankName = playerTankName;
+        this.color = color;
+    }
 }
 

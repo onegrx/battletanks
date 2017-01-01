@@ -8,7 +8,7 @@ public class GameState implements Serializable {
     private int roundNumber;
     private int turnNumber;
     private int tankTurnNumber;
-    private TankDescriptor currentTant;
+    private TankDescriptor currentTank;
     private List<TankDescriptor> allTanks;
 
     public int getRoundNumber() {
@@ -24,10 +24,18 @@ public class GameState implements Serializable {
     }
 
     public TankDescriptor getCurrentTant() {
-        return currentTant;
+        return currentTank;
     }
 
     public List<TankDescriptor> getAllTanks() {
         return allTanks;
+    }
+
+    public GameState(int roundNumber, int turnNumber, int tankTurnNumber, TankDescriptor currentTank, List<TankDescriptor> allTanks) {
+        this.roundNumber = roundNumber;
+        this.turnNumber = turnNumber;
+        this.tankTurnNumber = tankTurnNumber;
+        this.currentTank = currentTank;
+        this.allTanks = allTanks;
     }
 }
