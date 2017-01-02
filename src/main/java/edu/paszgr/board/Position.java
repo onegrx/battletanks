@@ -24,16 +24,16 @@ public class Position implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
 
         Position position = (Position) o;
-
         return x == position.x && y == position.y;
     }
 
     @Override
     public int hashCode() {
-        int result = x * 65536;   // each coordinate on 2 bytes
+        int result = x << 17;   // each coordinate on 17 bits
         result = result + y;
         return result;
     }
@@ -43,5 +43,10 @@ public class Position implements Serializable {
                 x + direction.getxDirection(),
                 y + direction.getyDirection()
         );
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + "," + y + ")";
     }
 }

@@ -35,7 +35,12 @@ public class ExecutionManager implements TankActionVisitor {
         RoundStatistics statistics = currentTank.getPlayer().getStatistics().getStatisticsForRound(roundNumber);
         statistics.setMoves(statistics.getMoves() + 1);
 
-        Position newPosition = getNewPosition(movement.getDirection(), oldPosition, 1);
+        Position newPosition = oldPosition.getNeighbor(movement.getDirection());
+
+        if (!board.positionIsValid(newPosition)) {
+            newPosition = oldPosition;
+        }
+
         currentTank.setPosition(newPosition);
 
         logger.log("Tank " + currentTank.getTankName() + " has already moved to ("
@@ -57,15 +62,5 @@ public class ExecutionManager implements TankActionVisitor {
 
         statistics.setKills(statistics.getKills() + onTargetLine.size());
         statistics.setShots(statistics.getShots() + 1);
-    }
-
-    private Position getNewPosition(Direction direction, Position oldPosition, int steps) {
-        switch (direction) {
-            case DOWN: return new Position(oldPosition.getX(), oldPosition.getY() - steps);
-            case UP: return new Position(oldPosition.getX(), oldPosition.getY() + steps);
-            case LEFT: return new Position(oldPosition.getX() - steps, oldPosition.getY());
-            case RIGHT: return new Position(oldPosition.getX() + steps, oldPosition.getY());
-            default: return oldPosition;
-        }
     }
 }

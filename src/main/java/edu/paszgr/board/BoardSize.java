@@ -18,4 +18,9 @@ public class BoardSize implements Serializable {
     public int getYSize() {
         return ySize;
     }
+
+    @Override
+    public String toString() {
+        return "BoardSize(" + xSize + "," + ySize + ")";
+    }
 }

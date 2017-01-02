@@ -25,16 +25,14 @@ public class GameJFrameController {
         updateGameStates();
         initializeListeners();
         view.getRoundNumberChoiceComponent().setDomain(1, PersistanceManager.getRoundsNumber());
+        setBoardFields(PersistanceManager.getFields());
         displayGameState();
     }
 
     public void setBoardFields(Field[][] fields) {
-        SwingUtilities.invokeLater(() -> {
-            view.getBoardVisualizationComponent().setFields(fields);
-            view.getBoardVisualizationComponent().repaint();
-        });
+        view.getBoardVisualizationComponent().setFields(fields);
+        view.pack();
     }
-
 
     private void initializeListeners() {
         view.getPreviousStateButton().addActionListener(
@@ -66,13 +64,17 @@ public class GameJFrameController {
                                     return;
                                 }
 
+                                if (newItem == currentRoundNumber) {
+                                    return;
+                                }
+
                                 roundNumberChosen(newItem);
                             }
                         }
                 )
         );
 
-        view.getTankTurnNumberChoiceComponent().addActionListener(
+        view.getTurnNumberChoiceComponent().addActionListener(
                 evt -> SwingUtilities.invokeLater(
                         () -> {
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
@@ -80,6 +82,10 @@ public class GameJFrameController {
                                 int newItem = (int) choiceComponent.getSelectedItem();
 
                                 if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
+                                    return;
+                                }
+
+                                if (newItem == currentTurnNumber) {
                                     return;
                                 }
 
@@ -100,13 +106,16 @@ public class GameJFrameController {
                                     return;
                                 }
 
+                                if (newItem == currentTankTurnNumber) {
+                                    return;
+                                }
+
                                 tankTurnNumberChosen(newItem);
                             }
                         }
                 )
         );
     }
-
 
     private void roundNumberChosen(int roundNumber) {
         currentRoundNumber = roundNumber;

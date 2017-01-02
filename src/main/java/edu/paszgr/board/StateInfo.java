@@ -33,14 +33,6 @@ public class StateInfo {
     }
 
     public boolean positionIsValid(Position position) {
-        int x = position.getX();
-        int y = position.getY();
-        int sizex = board.getSize().getXSize();
-        int sizey = board.getSize().getXSize();
-
-        if (x < 0 || x > sizex - 1 || y < 0 || y > sizey -1) {
-            return false;
-        }
-        return true;
+        return board.positionIsValid(position);
     }
 }

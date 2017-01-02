@@ -56,6 +56,13 @@ public class BoardSquareComponent extends JComponent {
     private void paintTank(Graphics g, int width, int height) {
         Image tankImage = ImagesManager.getTankImage(new Color(tank.getColor()));
         g.drawImage(tankImage, 0, 0, null);
+        g.setColor(Color.black);
+        g.drawString("(" + tank.getxPos() + "," + tank.getyPos() + ")", 0, GUIConstants.STRING_HEIGHT);
+        g.drawString(
+                String.valueOf(tank.getLifePoints()),
+                GUIConstants.BOARD_SQUARE_BORDER_INSETS.left + 1,
+                GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.height - GUIConstants.BOARD_SQUARE_BORDER_INSETS.bottom - 1
+        );
     }
 
 

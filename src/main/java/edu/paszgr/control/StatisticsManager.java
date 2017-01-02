@@ -6,7 +6,13 @@ public class StatisticsManager {
     private Map<Integer, RoundStatistics> roundStatisticsMap = new LinkedHashMap<>();
 
     public RoundStatistics getStatisticsForRound(int roundNumber) {
-        return roundStatisticsMap.get(roundNumber);
+        RoundStatistics result =  roundStatisticsMap.get(roundNumber);
+
+        if (result == null) {
+            result = new RoundStatistics(roundNumber);
+        }
+
+        return result;
     }
 
     public void setStatisticsForRound(RoundStatistics statistics, int roundNumber) {

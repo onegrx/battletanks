@@ -10,7 +10,9 @@ public class GUIConstants {
 
     public static final Rectangle TANK_VISUALIZATION_PREFERRED_SIZE = new Rectangle(250, 100);
 
-    public static final Rectangle BOARD_PREFERRED_SIZE = new Rectangle(600, 600);
+    public static final Rectangle BOARD_PREFERRED_SIZE = new Rectangle(150, 150);
+
+    public static final int STRING_HEIGHT = 11;
 
     public static final String RESOURCE_TANK_DEFAULT =
             "gui" + File.separator + "tanks" + File.separator + "tank_transparent.png";
@@ -22,7 +24,7 @@ public class GUIConstants {
     public static final String RESOURCE_FIELD_SAND =
             "gui" + File.separator + "fields" + File.separator + "field_sand.png";
     public static final String RESOURCE_FIELD_NEUTRAL =
-            "gui" + File.separator + "fields" + File.separator + "field_neutral";
+            "gui" + File.separator + "fields" + File.separator + "field_neutral.png";
 
     public static final Color RESOURCE_TANK_DEFAULT_TEMP_COLOR = new Color(0, 0, 0, 255);
 }

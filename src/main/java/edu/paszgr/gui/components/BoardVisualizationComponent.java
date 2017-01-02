@@ -30,6 +30,12 @@ public class BoardVisualizationComponent extends JScrollPane {
 
         content.removeAll();
         content.setLayout(new GridLayout(ySize, xSize, 0, 0));
+        setPreferredSize(
+                new Dimension(
+                        xSize * GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.width + getVerticalScrollBar().getMaximumSize().width,
+                        ySize * GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.height + getHorizontalScrollBar().getMaximumSize().height
+                )
+        );
 
         squareComponents = new BoardSquareComponent[xSize][ySize];
         for (int y=0; y<ySize; y++) {
