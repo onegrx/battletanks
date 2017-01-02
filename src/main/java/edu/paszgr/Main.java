@@ -1,15 +1,17 @@
 package edu.paszgr;
 
+import edu.paszgr.board.BoardSize;
+import edu.paszgr.board.ExecutionManager;
+import edu.paszgr.control.GameExecutor;
+
 public class Main {
     public static void main(String[] args) {
-        // TODO - rewrite
-//        int numberOfRound = 3;
-//        TanksManager tanksManager = new TanksManager();
-//        PlayersManager playersManager = new PlayersManager();
-//        GameExecutor gameExecutor = new GameExecutor(tanksManager, playersManager, infoLogger, fieldsFileName, gameStateFileName);
-//
-//        BoardSize boardSize = new BoardSize(20, 20);
-//        ExecutionManager executionManager = new ExecutionManager(logger);
-//        gameExecutor.executeGame(executionManager, boardSize, numberOfRound);
+        int numberOfRound = 3;
+
+        GameExecutor gameExecutor = new GameExecutor("", "");
+
+        BoardSize boardSize = new BoardSize(20, 20);
+        ExecutionManager executionManager = new ExecutionManager();
+        gameExecutor.executeGame(executionManager, boardSize, numberOfRound);
     }
 }

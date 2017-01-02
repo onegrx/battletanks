@@ -27,6 +27,8 @@ public class ActionPointsCostCalculator implements TankActionVisitor {
                     currentActionListState.getCurrentPosition(),
                     movement.getActionPointsBasicCost()
             );
+
+            return;
         }
 
         Field targetField = stateInfo.getField(targetPosition);

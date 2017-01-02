@@ -26,6 +26,12 @@
             <version>1.10.19</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.4.0</version>
+        </dependency>
     </dependencies>
 
 
