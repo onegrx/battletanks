@@ -5,7 +5,6 @@ import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
 import edu.paszgr.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,15 +14,17 @@ public class RoundManager {
     private int currentTurn = 1;
     private static final int TURN_MAX = 10;
     private final String gameStateFileName;
+    private GameInfoLogger logger;
 
-    public RoundManager(Board board, ExecutionManager executionManager, String gameStateFileName) {
+    public RoundManager(Board board, ExecutionManager executionManager, String gameStateFileName, GameInfoLogger logger) {
         this.board = board;
         this.executionManager = executionManager;
         this.gameStateFileName = gameStateFileName;
+        this.logger = logger;
     }
 
     public void executeNextRound(int roundNumber) {
-        System.out.println("\n *** ROUND " + roundNumber + " ***\n");
+        logger.log("\n *** ROUND " + roundNumber + " ***\n");
         while (!this.roundEndReached()) {
             this.executeNextTurn(roundNumber);
         }
@@ -48,7 +49,7 @@ public class RoundManager {
     private void executeNextTurn(int roundNumber) {
         List<Tank> tanks = board.getAllTanks();
         // tankTurnNumber is needed for the persistence of GameState
-        for (int tankTurnNumber = 0; tankTurnNumber<tanks.size(); tankTurnNumber++) {
+        for (int tankTurnNumber = 0; tankTurnNumber < tanks.size(); tankTurnNumber++) {
             Tank tank = tanks.get(tankTurnNumber);
             if (tank.isAlive()) {
 
@@ -63,9 +64,10 @@ public class RoundManager {
 
                 PersistanceManager.saveGameState(board, tank, roundNumber, currentTurn, tankTurnNumber);
 
+
             }
         }
-        System.out.println();
+        logger.log("");
     }
 
     private void removeKilledTanks() {
