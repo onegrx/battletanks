@@ -38,7 +38,6 @@ public class GameJFrameController {
         view.getPreviousStateButton().addActionListener(
                 e -> SwingUtilities.invokeLater(
                         () -> {
-                            System.out.println("Listener " + System.currentTimeMillis());
                             gameStatePrevious();
                             displayGameState();
                         }
@@ -48,7 +47,6 @@ public class GameJFrameController {
         view.getNextStateButton().addActionListener(
                 e -> SwingUtilities.invokeLater(
                         () -> {
-                            System.out.println("Listener " + System.currentTimeMillis());
                             gameStateNext();
                             displayGameState();
                         }
@@ -58,7 +56,6 @@ public class GameJFrameController {
         view.getRoundNumberChoiceComponent().addActionListener(
                 evt -> SwingUtilities.invokeLater(
                         () -> {
-                            System.out.println("round " + System.currentTimeMillis());
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
                                 NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
                                 int newItem = (int) choiceComponent.getSelectedItem();
@@ -80,7 +77,6 @@ public class GameJFrameController {
         view.getTurnNumberChoiceComponent().addActionListener(
                 evt -> SwingUtilities.invokeLater(
                         () -> {
-                            System.out.println("turn " + System.currentTimeMillis());
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
                                 NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
                                 int newItem = (int) choiceComponent.getSelectedItem();
@@ -102,7 +98,6 @@ public class GameJFrameController {
         view.getTankTurnNumberChoiceComponent().addActionListener(
                 evt -> SwingUtilities.invokeLater(
                         () -> {
-                            System.out.println("tankturn " + System.currentTimeMillis());
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
                                 NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
                                 int newItem = (int) choiceComponent.getSelectedItem();

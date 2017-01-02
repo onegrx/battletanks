@@ -12,7 +12,7 @@ public class GUIConstants {
 
     public static final Rectangle BOARD_PREFERRED_SIZE = new Rectangle(150, 150);
 
-    public static final int STRING_HEIGHT = 15;
+    public static final int STRING_HEIGHT = 11;
 
     public static final String RESOURCE_TANK_DEFAULT =
             "gui" + File.separator + "tanks" + File.separator + "tank_transparent.png";
