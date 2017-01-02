@@ -1,5 +1,6 @@
 package edu.paszgr.persistence;
 
+import edu.paszgr.GameConstants;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.Field;
 import edu.paszgr.control.Tank;
@@ -94,14 +95,14 @@ public class PersistanceManager {
 
 
     public static int getRoundsNumber() {
-        return -1;
+        return GameConstants.ROUNDS_NUMBER;
     }
 
     public static int getTurnsNumber(int roundNumber) {
-        return -1;
+        return MongoDao.getTurnsNumber(roundNumber);
     }
 
     public static int getTankTurnsNumber(int roundNumber, int turnNumber) {
-        return -1;
+        return MongoDao.getTankTurnsNumber(roundNumber, turnNumber);
     }
 }

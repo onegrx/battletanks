@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class RoundManager {
     private final Board board;
     private ExecutionManager executionManager;
-    private int currentTurn = 1;
+    private int currentTurn = 0;
     private static final int TURN_MAX = 10;
     private GameInfoLogger logger;
 
@@ -36,7 +36,7 @@ public class RoundManager {
         //TODO: survivors == 0 allows the only remaining tank to move and fire, even though it is alone
         //TODO: consider changing to 1
         if (survivors == 0 || currentTurn > TURN_MAX) {
-            currentTurn = 1;
+            currentTurn = 0;
             return true;
         } else {
             currentTurn++;
