@@ -17,15 +17,17 @@ public class RoundManager {
     private int currentTurn = 1;
     private static final int TURN_MAX = 10;
     private final String gameStateFileName;
+    private GameInfoLogger logger;
 
-    public RoundManager(Board board, ExecutionManager executionManager, String gameStateFileName) {
+    public RoundManager(Board board, ExecutionManager executionManager, String gameStateFileName, GameInfoLogger logger) {
         this.board = board;
         this.executionManager = executionManager;
         this.gameStateFileName = gameStateFileName;
+        this.logger = logger;
     }
 
     public void executeNextRound(int roundNumber) {
-        System.out.println("\n *** ROUND " + roundNumber + " ***\n");
+        logger.log("\n *** ROUND " + roundNumber + " ***\n");
         while (!this.roundEndReached()) {
             this.executeNextTurn(roundNumber);
         }
@@ -75,19 +77,19 @@ public class RoundManager {
                     ));
                 });
 
-                GameState gameState = new GameState(roundNumber, currentTurn, tankTurnNumber, tankDescriptor, allTanks);
-                MongoDao.saveGamestate(gameState, "col");
+            //    GameState gameState = new GameState(roundNumber, currentTurn, tankTurnNumber, tankDescriptor, allTanks);
+             //   MongoDao.saveGamestate(gameState, "col");
                 // TODO - save state after each tank's actions - to this.gameStateFileName file
 
                 //TODO !!! extract to PERSITENCE MANAGER
 
                 //DEBUG BELOW
-                GameState gameState1 = MongoDao.readGameState(roundNumber, currentTurn, tankTurnNumber, "col");
-                System.out.println(gameState1.getCurrentTank().getPlayerTankName() + "HURA");
-                System.out.println(gameState1.getCurrentTank().getxPos() + "wow");
+              //  GameState gameState1 = MongoDao.readGameState(roundNumber, currentTurn, tankTurnNumber, "col");
+             //   System.out.println(gameState1.getCurrentTank().getPlayerTankName() + "HURA");
+             //   System.out.println(gameState1.getCurrentTank().getxPos() + "wow");
             }
         }
-        System.out.println();
+        logger.log("");
     }
 
     private void removeKilledTanks() {

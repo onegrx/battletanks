@@ -1,13 +1,43 @@
 package edu.paszgr.control;
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 public class GameInfoLogger {
-    private static String outputFilePath = null;
 
-    public static void log(String info) {
-        // TODO
+
+    Logger logger = Logger.getLogger("GameInfoLogger");
+    FileHandler fh;
+
+    public GameInfoLogger(String filePath) {
+        try {
+
+            // This block configure the logger with handler and formatter
+            fh = new FileHandler(filePath);
+            logger.addHandler(fh);
+            logger.setLevel(Level.FINEST);
+            MyFormatter formatter = new MyFormatter();
+            fh.setFormatter(formatter);
+
+            // the following statement is used to log any messages
+            logger.finest("Start Logging");
+
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void setOutputFile(String filePath) {
-        outputFilePath = filePath;
+
+    public void log(String info) {
+        logger.finest(info);
     }
+
+
+
 }
+
