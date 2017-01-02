@@ -7,32 +7,26 @@ public class NumberRangeChoiceComponent extends JComboBox<Integer> {
     private int max;
 
     public NumberRangeChoiceComponent() {
-        super(new Integer[0]);
+        super();
         setEditable(true);
         this.min = 1;
         this.max = 1;
     }
 
     public NumberRangeChoiceComponent(int min, int max) {
-        validateInterval(min, max);
-        this.min = min;
-        this.max = max;
-        for (int v = min; v <= max; v++) {
-            addItem(new Integer(v));
-        }
-        setEditable(true);
+        this();
+        setDomain(min, max);
     }
 
     public void setDomain(int min, int max) {
-        // TODO
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public int getMax() {
-        return max;
+        validateInterval(min, max);
+        this.min = min;
+        this.max = max;
+        removeAllItems();
+        Integer[] items = getIntervalArray(min, max);
+        for (Integer item : items) {
+            addItem(item);
+        }
     }
 
     private void validateInterval(int min, int max) throws IllegalArgumentException {
@@ -42,7 +36,18 @@ public class NumberRangeChoiceComponent extends JComboBox<Integer> {
     }
 
     private Integer[] getIntervalArray(int min, int max) {
-        // TODO
-        return null;
+        Integer[] items = new Integer[max - min + 1];
+        for (int value = min; value <= max; value++) {
+            items[value] = value;
+        }
+        return items;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public int getMax() {
+        return max;
     }
 }
