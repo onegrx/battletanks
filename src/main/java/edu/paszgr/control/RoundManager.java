@@ -3,10 +3,7 @@ package edu.paszgr.control;
 import edu.paszgr.algo.TankActionList;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
-import edu.paszgr.persistence.GameState;
-import edu.paszgr.persistence.IdGenerator;
-import edu.paszgr.persistence.MongoDao;
-import edu.paszgr.persistence.TankDescriptor;
+import edu.paszgr.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,28 +61,8 @@ public class RoundManager {
 
                 removeKilledTanks();
 
-                TankDescriptor tankDescriptor = new TankDescriptor(
-                    tank.getLifePoints(), tank.getPosition().getX(), tank.getPosition().getY(), tank.getTankName(), tank.getPlayer().getColor().getRGB()
-                );
+                PersistanceManager.saveGameState(board, tank, roundNumber, currentTurn, tankTurnNumber);
 
-                List<TankDescriptor> allTanks = new ArrayList<>();
-
-                board.getAllTanks().forEach(boardTank -> {
-                    allTanks.add(new TankDescriptor(
-                            boardTank.getLifePoints(), boardTank.getPosition().getX(), boardTank.getPosition().getY(), boardTank.getTankName(), boardTank.getPlayer().getColor().getRGB()
-                    ));
-                });
-
-                GameState gameState = new GameState(IdGenerator.next(), roundNumber, currentTurn, tankTurnNumber, tankDescriptor, allTanks);
-                MongoDao.saveGamestate(gameState, "gamestates");
-                // TODO - save state after each tank's actions - to this.gameStateFileName file
-
-                //TODO !!! extract to PERSITENCE MANAGER
-
-                //DEBUG BELOW
-                GameState gameState1 = MongoDao.readGameState(roundNumber, currentTurn, tankTurnNumber, "gamestates");
-                System.out.println(gameState1.getCurrentTank().getPlayerTankName() + "HURA");
-                System.out.println(gameState1.getCurrentTank().getxPos() + "wow");
             }
         }
         System.out.println();

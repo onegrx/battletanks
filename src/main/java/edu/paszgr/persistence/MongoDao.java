@@ -18,8 +18,6 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public class MongoDao {
 
-    //TODO http://stackoverflow.com/questions/31058439/how-to-delete-all-documents-in-mongodb-collection-in-java
-
     private static final String DATABASE_NAME = "battletanks";
     private static final MongoClient mongoClient = new MongoClient("localhost", 27017);
     private static final MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
@@ -61,10 +59,12 @@ public class MongoDao {
                 eq("id", id)
         ).first();
 
-
         return documentToGamestate(gs);
 
+    }
 
+    public static void dropCollection() {
+        database.getCollection(PersistanceManager.COLLECTION_NAME).drop();
     }
 
     private static GameState documentToGamestate(Document gs) {
