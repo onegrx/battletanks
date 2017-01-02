@@ -6,5 +6,6 @@
 
 /target
 
-PersistenceManagerMock.java
 Test.java
+
+log.txt
