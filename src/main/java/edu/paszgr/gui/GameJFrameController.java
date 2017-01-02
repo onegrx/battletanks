@@ -25,21 +25,20 @@ public class GameJFrameController {
         updateGameStates();
         initializeListeners();
         view.getRoundNumberChoiceComponent().setDomain(1, PersistanceManager.getRoundsNumber());
+        setBoardFields(PersistanceManager.getFields());
         displayGameState();
     }
 
     public void setBoardFields(Field[][] fields) {
-        SwingUtilities.invokeLater(() -> {
-            view.getBoardVisualizationComponent().setFields(fields);
-            view.getBoardVisualizationComponent().repaint();
-        });
+        view.getBoardVisualizationComponent().setFields(fields);
+        view.pack();
     }
-
 
     private void initializeListeners() {
         view.getPreviousStateButton().addActionListener(
                 e -> SwingUtilities.invokeLater(
                         () -> {
+                            System.out.println("Listener " + System.currentTimeMillis());
                             gameStatePrevious();
                             displayGameState();
                         }
@@ -49,6 +48,7 @@ public class GameJFrameController {
         view.getNextStateButton().addActionListener(
                 e -> SwingUtilities.invokeLater(
                         () -> {
+                            System.out.println("Listener " + System.currentTimeMillis());
                             gameStateNext();
                             displayGameState();
                         }
@@ -58,11 +58,16 @@ public class GameJFrameController {
         view.getRoundNumberChoiceComponent().addActionListener(
                 evt -> SwingUtilities.invokeLater(
                         () -> {
+                            System.out.println("round " + System.currentTimeMillis());
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
                                 NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
                                 int newItem = (int) choiceComponent.getSelectedItem();
 
                                 if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
+                                    return;
+                                }
+
+                                if (newItem == currentRoundNumber) {
                                     return;
                                 }
 
@@ -72,14 +77,19 @@ public class GameJFrameController {
                 )
         );
 
-        view.getTankTurnNumberChoiceComponent().addActionListener(
+        view.getTurnNumberChoiceComponent().addActionListener(
                 evt -> SwingUtilities.invokeLater(
                         () -> {
+                            System.out.println("turn " + System.currentTimeMillis());
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
                                 NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
                                 int newItem = (int) choiceComponent.getSelectedItem();
 
                                 if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
+                                    return;
+                                }
+
+                                if (newItem == currentTurnNumber) {
                                     return;
                                 }
 
@@ -92,11 +102,16 @@ public class GameJFrameController {
         view.getTankTurnNumberChoiceComponent().addActionListener(
                 evt -> SwingUtilities.invokeLater(
                         () -> {
+                            System.out.println("tankturn " + System.currentTimeMillis());
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
                                 NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
                                 int newItem = (int) choiceComponent.getSelectedItem();
 
                                 if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
+                                    return;
+                                }
+
+                                if (newItem == currentTankTurnNumber) {
                                     return;
                                 }
 
@@ -106,7 +121,6 @@ public class GameJFrameController {
                 )
         );
     }
-
 
     private void roundNumberChosen(int roundNumber) {
         currentRoundNumber = roundNumber;

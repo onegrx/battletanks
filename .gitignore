@@ -5,3 +5,6 @@
 *.iml
 
 /target
+
+PersistenceManagerMock.java
+Test.java

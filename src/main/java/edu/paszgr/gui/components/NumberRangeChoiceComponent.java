@@ -36,7 +36,7 @@ public class NumberRangeChoiceComponent extends JComboBox<Integer> {
     }
 
     private Integer[] getIntervalArray(int min, int max) {
-        Integer[] items = new Integer[max - min + 1];
+        Integer[] items = new Integer[max - min + 2];
         for (int value = min; value <= max; value++) {
             items[value] = value;
         }

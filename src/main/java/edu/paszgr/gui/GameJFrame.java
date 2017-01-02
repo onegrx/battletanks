@@ -61,6 +61,7 @@ public class GameJFrame extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        setEnabled(true);
     }
 
     private void addComponentGridBag(JComponent component, int gridx, int gridy, int gridwidth, int gridheight) {
