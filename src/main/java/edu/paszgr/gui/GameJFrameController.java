@@ -1,19 +1,15 @@
 package edu.paszgr.gui;
 
 import edu.paszgr.board.Field;
+import edu.paszgr.gui.components.NumberRangeChoiceComponent;
 import edu.paszgr.persistence.GameState;
 import edu.paszgr.persistence.PersistanceManager;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class GameJFrameController {
     private final GameJFrame view;
-
-    private final PersistanceManager persistanceManager = new PersistanceManager();
-    private Field[][] fields = null;
 
     private int currentRoundNumber = 1;
     private int currentTurnNumber = 1;
@@ -28,15 +24,14 @@ public class GameJFrameController {
         this.view = view;
         updateGameStates();
         initializeListeners();
+        view.getRoundNumberChoiceComponent().setDomain(1, PersistanceManager.getRoundsNumber());
+        displayGameState();
     }
 
     public void setBoardFields(Field[][] fields) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                view.getBoardVisualizationComponent().setFields(fields);
-                view.getBoardVisualizationComponent().repaint();
-            }
+        SwingUtilities.invokeLater(() -> {
+            view.getBoardVisualizationComponent().setFields(fields);
+            view.getBoardVisualizationComponent().repaint();
         });
     }
 
@@ -60,50 +55,137 @@ public class GameJFrameController {
                 )
         );
 
+        view.getRoundNumberChoiceComponent().addActionListener(
+                evt -> SwingUtilities.invokeLater(
+                        () -> {
+                            if ("comboBoxChanged".equals(evt.getActionCommand())) {
+                                NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
+                                int newItem = (int) choiceComponent.getSelectedItem();
+
+                                if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
+                                    return;
+                                }
+
+                                roundNumberChosen(newItem);
+                            }
+                        }
+                )
+        );
+
+        view.getTankTurnNumberChoiceComponent().addActionListener(
+                evt -> SwingUtilities.invokeLater(
+                        () -> {
+                            if ("comboBoxChanged".equals(evt.getActionCommand())) {
+                                NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
+                                int newItem = (int) choiceComponent.getSelectedItem();
+
+                                if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
+                                    return;
+                                }
+
+                                turnNumberChosen(newItem);
+                            }
+                        }
+                )
+        );
+
+        view.getTankTurnNumberChoiceComponent().addActionListener(
+                evt -> SwingUtilities.invokeLater(
+                        () -> {
+                            if ("comboBoxChanged".equals(evt.getActionCommand())) {
+                                NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
+                                int newItem = (int) choiceComponent.getSelectedItem();
+
+                                if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
+                                    return;
+                                }
+
+                                tankTurnNumberChosen(newItem);
+                            }
+                        }
+                )
+        );
     }
 
 
     private void roundNumberChosen(int roundNumber) {
-
+        currentRoundNumber = roundNumber;
+        currentTurnNumber = 1;
+        currentTankTurnNumber = 1;
+        updateGameStates();
+        displayGameState();
     }
 
     private void turnNumberChosen(int turnNumber) {
-
+        currentTurnNumber = turnNumber;
+        currentTankTurnNumber = 1;
+        updateGameStates();
+        displayGameState();
     }
 
-    private void tankTurnNumberChosen(int currentTankTurnNumber) {
-
+    private void tankTurnNumberChosen(int tankTurnNumber) {
+        currentTankTurnNumber = tankTurnNumber;
+        updateGameStates();
+        displayGameState();
     }
 
-    private void displayGameState() {
+    private synchronized void displayGameState() {
         updateButtons();
         updateBoardVisualization();
         updateGameStateChoice();
         updateTankSummary();
         updateLabels();
+        view.repaint();
     }
 
     private void updateLabels() {
-        // TODO
+        view.getCurrentRoundNumberLabel().setText(String.valueOf(currentRoundNumber));
+        view.getCurrentTurnNumberLabel().setText(String.valueOf(currentTurnNumber));
+        view.getCurrentTankTurnNumberLabel().setText(String.valueOf(currentTankTurnNumber));
     }
 
     private void updateTankSummary() {
-        // TODO
+        view.getCurrentTankSummaryComponent().setTank(
+                currentGameState.getCurrentTank()
+        );
     }
 
     private void updateGameStateChoice() {
-        // TODO
+        NumberRangeChoiceComponent roundChoice = view.getRoundNumberChoiceComponent();
+        NumberRangeChoiceComponent turnChoice = view.getTurnNumberChoiceComponent();
+        NumberRangeChoiceComponent tankTurnChoice = view.getTankTurnNumberChoiceComponent();
+
+        turnChoice.setDomain(1, PersistanceManager.getTurnsNumber(currentRoundNumber));
+        tankTurnChoice.setDomain(1, PersistanceManager.getTankTurnsNumber(currentTurnNumber));
+
+        roundChoice.setSelectedIndex(currentRoundNumber);
+        turnChoice.setSelectedItem(currentTurnNumber);
+        tankTurnChoice.setSelectedItem(currentTankTurnNumber);
     }
 
     private void updateBoardVisualization() {
-        // TODO
+        view.getBoardVisualizationComponent().displayGameState(
+                currentGameState
+        );
     }
 
     private void updateButtons() {
-        // TODO
+        JButton prevButton = view.getPreviousStateButton();
+        JButton nextButton = view.getNextStateButton();
+
+        if (nextGameState == null) {
+            nextButton.setEnabled(false);
+        } else {
+            nextButton.setEnabled(true);
+        }
+        if (previousGameState == null) {
+            prevButton.setEnabled(false);
+        } else {
+            prevButton.setEnabled(true);
+        }
     }
 
-    private void gameStateNext() {
+    private synchronized void gameStateNext() {
         previousGameState = currentGameState;
 
         if (nextGameState != null) {
@@ -118,7 +200,7 @@ public class GameJFrameController {
         nextGameState = getNextGameState();
     }
 
-    private void gameStatePrevious() {
+    private synchronized void gameStatePrevious() {
         nextGameState = currentGameState;
 
         if (previousGameState != null) {
@@ -133,7 +215,7 @@ public class GameJFrameController {
         previousGameState = getPreviousGameState();
     }
 
-    private void updateGameStates() {
+    private synchronized void updateGameStates() {
         previousGameState = getPreviousGameState();
         currentGameState = getCurrentGameState();
         nextGameState = getNextGameState();
