@@ -35,6 +35,11 @@ public class GameExecutor {
             }
 
             roundManager.executeNextRound(roundNumber);
+
+            for (Tank tank : board.getAllTanks()) {
+                tank.getPlayer().getStatistics().getStatisticsForRound(roundNumber).setLifePointsLeft(tank.getLifePoints());
+            }
+
             this.presentRoundStatistics(roundNumber);
         }
         this.presentSummedUpStatistics();
