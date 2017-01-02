@@ -1,21 +1,23 @@
 package edu.paszgr.gui.components;
 
 import edu.paszgr.board.Field;
+import edu.paszgr.gui.GUIConstants;
 import edu.paszgr.persistence.GameState;
 import edu.paszgr.persistence.TankDescriptor;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class BoardVisualizationComponent extends JPanel {
+public class BoardVisualizationComponent extends JScrollPane {
+    private final JPanel content = new JPanel();
     private BoardSquareComponent[][] squareComponents = null;
-    private final JScrollPane scrollPane = new JScrollPane();
 
     public BoardVisualizationComponent() {
-        setLayout(new BorderLayout(0, 0));
-        add(scrollPane, BorderLayout.CENTER);
+        super();
         JLabel label = new JLabel("Empty Board");
-        scrollPane.add(label);
+        content.add(label);
+        setViewportView(content);
+        setPreferredSize(GUIConstants.BOARD_PREFERRED_SIZE.getSize());
     }
 
     public void setFields(Field[][] fields) {
@@ -26,15 +28,15 @@ public class BoardVisualizationComponent extends JPanel {
         int xSize = fields.length;
         int ySize = fields[0].length;
 
-        scrollPane.removeAll();
-        scrollPane.setLayout(new GridLayout(ySize, xSize, 0, 0));
+        content.removeAll();
+        content.setLayout(new GridLayout(ySize, xSize, 0, 0));
 
         squareComponents = new BoardSquareComponent[xSize][ySize];
         for (int y=0; y<ySize; y++) {
             for (int x=0; x<xSize; x++) {
                 BoardSquareComponent squareComponent = new BoardSquareComponent(fields[x][y], null);
                 squareComponents[x][y] = squareComponent;
-                scrollPane.add(squareComponent);
+                content.add(squareComponent);
             }
         }
     }

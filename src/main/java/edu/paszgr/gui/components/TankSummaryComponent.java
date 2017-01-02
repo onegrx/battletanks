@@ -10,6 +10,10 @@ import java.awt.*;
 public class TankSummaryComponent extends JComponent {
     private TankDescriptor tank = null;
 
+    public TankSummaryComponent() {
+        setPreferredSize(GUIConstants.TANK_VISUALIZATION_PREFERRED_SIZE.getSize());
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         if (tank != null) {
@@ -37,7 +41,7 @@ public class TankSummaryComponent extends JComponent {
 
     private void paintTankNotSet(Graphics g, Dimension size) {
         g.setColor(Color.BLACK);
-        g.drawString("No tank to describe", 0, 0);
+        g.drawString("No current tank to describe", 0, 10);
     }
 
     public TankDescriptor getTank() {

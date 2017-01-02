@@ -10,11 +10,10 @@ public class GUIManager {
     public void createAndShowGUI() {
         this.view = new GameJFrame();
         this.controller = new GameJFrameController(view);
-        // TODO
     }
 
     public void setBoardFields(Field[][] fields) {
-        // TODO
+        controller.setBoardFields(fields);
     }
 
     public void displayGameHistory(GameHistory gameHistory) {

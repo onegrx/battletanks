@@ -10,6 +10,7 @@ public class GUIConstants {
 
     public static final Rectangle TANK_VISUALIZATION_PREFERRED_SIZE = new Rectangle(250, 100);
 
+    public static final Rectangle BOARD_PREFERRED_SIZE = new Rectangle(600, 600);
 
     public static final String RESOURCE_TANK_DEFAULT =
             "gui" + File.separator + "tanks" + File.separator + "tank_transparent.png";
