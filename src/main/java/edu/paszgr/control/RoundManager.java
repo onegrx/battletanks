@@ -13,13 +13,11 @@ public class RoundManager {
     private ExecutionManager executionManager;
     private int currentTurn = 1;
     private static final int TURN_MAX = 10;
-    private final String gameStateFileName;
     private GameInfoLogger logger;
 
-    public RoundManager(Board board, ExecutionManager executionManager, String gameStateFileName, GameInfoLogger logger) {
+    public RoundManager(Board board, ExecutionManager executionManager, GameInfoLogger logger) {
         this.board = board;
         this.executionManager = executionManager;
-        this.gameStateFileName = gameStateFileName;
         this.logger = logger;
     }
 

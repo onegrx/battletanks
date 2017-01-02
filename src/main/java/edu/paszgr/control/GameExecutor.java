@@ -10,14 +10,11 @@ public class GameExecutor {
     private final TanksManager tanksManager = new TanksManager();
     private final PlayersManager playersManager = new PlayersManager();
     private List<Player> players = null;
-    private final String fieldsFileName;
-    private final String gameStateFileName;
-    private  GameInfoLogger logger;
 
-    public GameExecutor(String fieldsFileName, String gameStateFileName, GameInfoLogger logger) {
-        this.fieldsFileName = fieldsFileName;
-        this.gameStateFileName = gameStateFileName;
-        this.logger=logger;
+    private GameInfoLogger logger;
+
+    public GameExecutor(GameInfoLogger logger) {
+        this.logger = logger;
     }
 
     public void executeGame(ExecutionManager executionManager, BoardSize boardSize, int numberOfRounds) {
@@ -27,13 +24,13 @@ public class GameExecutor {
 
         // TODO - save board fields
 
-        RoundManager roundManager = new RoundManager(board, executionManager, gameStateFileName,  logger);
+        RoundManager roundManager = new RoundManager(board, executionManager, logger);
 
         for (int roundNumber = 1; roundNumber <= numberOfRounds; roundNumber++) {
 
             board.setTanks(tanksManager.createTanks(this.players, board));
 
-            for (Tank tank: board.getAllTanks()) {
+            for (Tank tank : board.getAllTanks()) {
                 tank.getPlayer().getStatistics().setStatisticsForRound(new RoundStatistics(roundNumber), roundNumber);
             }
 

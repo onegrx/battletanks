@@ -7,12 +7,16 @@ import edu.paszgr.persistence.MongoDao;
 import edu.paszgr.control.GameInfoLogger;
 
 public class Main {
+
+    private static final String LOG_FILE = "log.txt";
+
     public static void main(String[] args) {
+
         int numberOfRound = 3;
-        GameInfoLogger gameInfoLogger = new GameInfoLogger("log.txt");
 
         MongoDao.dropCollection();
-        GameExecutor gameExecutor = new GameExecutor("", "", gameInfoLogger);
+        GameInfoLogger gameInfoLogger = new GameInfoLogger(LOG_FILE);
+        GameExecutor gameExecutor = new GameExecutor(gameInfoLogger);
 
 
         BoardSize boardSize = new BoardSize(20, 20);
