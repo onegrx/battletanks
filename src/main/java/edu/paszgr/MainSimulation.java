@@ -6,7 +6,7 @@ import edu.paszgr.control.GameExecutor;
 import edu.paszgr.persistence.MongoDao;
 import edu.paszgr.control.GameInfoLogger;
 
-public class Main {
+public class MainSimulation {
     public static void main(String[] args) {
         int numberOfRound = 3;
         GameInfoLogger gameInfoLogger = new GameInfoLogger("log.txt");

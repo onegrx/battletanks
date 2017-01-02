@@ -50,7 +50,7 @@ public class PersistanceManager {
         return getGameStateById(id - 1);
     }
 
-    public void saveFieldsToFile(Field[][] fields, String fileName) {
+    public static void saveFieldsToFile(Field[][] fields, String fileName) {
         try {
             FileOutputStream fos = new FileOutputStream(fileName);
             ObjectOutputStream outputStream = new ObjectOutputStream(fos);
@@ -101,7 +101,7 @@ public class PersistanceManager {
         return -1;
     }
 
-    public static int getTankTurnsNumber(int turnNumber) {
+    public static int getTankTurnsNumber(int roundNumber, int turnNumber) {
         return -1;
     }
 }

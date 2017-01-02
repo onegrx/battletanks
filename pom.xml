@@ -55,7 +55,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>edu.paszgr.Main</mainClass>
+                            <mainClass>edu.paszgr.MainSimulation</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

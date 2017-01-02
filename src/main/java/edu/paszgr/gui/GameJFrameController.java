@@ -156,7 +156,7 @@ public class GameJFrameController {
         NumberRangeChoiceComponent tankTurnChoice = view.getTankTurnNumberChoiceComponent();
 
         turnChoice.setDomain(1, PersistanceManager.getTurnsNumber(currentRoundNumber));
-        tankTurnChoice.setDomain(1, PersistanceManager.getTankTurnsNumber(currentTurnNumber));
+        tankTurnChoice.setDomain(1, PersistanceManager.getTankTurnsNumber(currentRoundNumber, currentTurnNumber));
 
         roundChoice.setSelectedIndex(currentRoundNumber);
         turnChoice.setSelectedItem(currentTurnNumber);
