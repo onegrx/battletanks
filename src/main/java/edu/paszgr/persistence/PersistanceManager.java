@@ -44,7 +44,7 @@ public class PersistanceManager {
         return fields;
     }
 
-    public void saveFieldsToFile(Field[][] fields, String fileName) {
+    public static void saveFieldsToFile(Field[][] fields, String fileName) {
         try {
             FileOutputStream fos = new FileOutputStream(fileName);
             ObjectOutputStream outputStream = new ObjectOutputStream(fos);
@@ -54,6 +54,15 @@ public class PersistanceManager {
         }
     }
 
+    public static int getRoundsNumber() {
+        return -1;
+    }
 
+    public static int getTurnsNumber(int roundNumber) {
+        return -1;
+    }
 
+    public static int getTankTurnsNumber(int turnNumber) {
+        return -1;
+    }
 }
