@@ -85,6 +85,15 @@ public class Board implements Serializable {
         }
     }
 
+    public boolean positionIsValid(Position position) {
+        if (position == null) {
+            return false;
+        }
+        int x = position.getX();
+        int y = position.getY();
+        return x >= 0 && x < size.getXSize() && y >= 0 && y < size.getYSize();
+    }
+
     public BoardSize getSize() {
         return size;
     }

@@ -2,21 +2,19 @@ package edu.paszgr.control;
 
 import edu.paszgr.board.Board;
 import edu.paszgr.board.Position;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by onegrx on 13.12.16.
  */
 
 @RunWith(MockitoJUnitRunner.class)
-public class TankTest {
+public class TestTank {
 
     @Mock private Player player;
     @Mock private Board board;
@@ -25,26 +23,21 @@ public class TankTest {
 
 
     @Test
-    public void getLifePointsTest() throws Exception {
-        Tank tank = new Tank(player, board, 1, position, color);
+    public void testGetLifePoints() throws Exception {
+        Tank tank = new Tank(player, board, 1, position);
         assertEquals(1, tank.getLifePoints());
     }
 
     @Test
-    public void isAlive() throws Exception {
-        Tank tank = new Tank(player, board, 3, position, color);
+    public void testIsAlive() throws Exception {
+        Tank tank = new Tank(player, board, 3, position);
         assertEquals(true, tank.isAlive());
 
-        when(player.currentRound()).thenReturn(roundStatistics);
-
-        tank.decreaseLifePoints(1);
-        verify(roundStatistics).setLifePointsLeft(2);
+        tank.setLifePoints(tank.getLifePoints() - 1);
         assertEquals(true, tank.isAlive());
-        tank.decreaseLifePoints(2);
-        verify(roundStatistics).setLifePointsLeft(0);
+        tank.setLifePoints(tank.getLifePoints() - 2);
         assertEquals(false, tank.isAlive());
-        tank.decreaseLifePoints(10);
+        tank.setLifePoints(tank.getLifePoints() - 10);
         assertEquals(false, tank.isAlive());
     }
-
 }
