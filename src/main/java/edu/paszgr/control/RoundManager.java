@@ -4,6 +4,7 @@ import edu.paszgr.algo.TankActionList;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
 import edu.paszgr.persistence.GameState;
+import edu.paszgr.persistence.IdGenerator;
 import edu.paszgr.persistence.MongoDao;
 import edu.paszgr.persistence.TankDescriptor;
 
@@ -75,14 +76,14 @@ public class RoundManager {
                     ));
                 });
 
-                GameState gameState = new GameState(roundNumber, currentTurn, tankTurnNumber, tankDescriptor, allTanks);
-                MongoDao.saveGamestate(gameState, "col");
+                GameState gameState = new GameState(IdGenerator.next(), roundNumber, currentTurn, tankTurnNumber, tankDescriptor, allTanks);
+                MongoDao.saveGamestate(gameState, "gamestates");
                 // TODO - save state after each tank's actions - to this.gameStateFileName file
 
                 //TODO !!! extract to PERSITENCE MANAGER
 
                 //DEBUG BELOW
-                GameState gameState1 = MongoDao.readGameState(roundNumber, currentTurn, tankTurnNumber, "col");
+                GameState gameState1 = MongoDao.readGameState(roundNumber, currentTurn, tankTurnNumber, "gamestates");
                 System.out.println(gameState1.getCurrentTank().getPlayerTankName() + "HURA");
                 System.out.println(gameState1.getCurrentTank().getxPos() + "wow");
             }

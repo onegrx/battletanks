@@ -5,6 +5,7 @@ import java.util.List;
 
 public class GameState implements Serializable {
 
+    private int id;
     private int roundNumber;
     private int turnNumber;
     private int tankTurnNumber;
@@ -31,7 +32,12 @@ public class GameState implements Serializable {
         return allTanks;
     }
 
-    public GameState(int roundNumber, int turnNumber, int tankTurnNumber, TankDescriptor currentTank, List<TankDescriptor> allTanks) {
+    public int getId() {
+        return id;
+    }
+
+    public GameState(int id, int roundNumber, int turnNumber, int tankTurnNumber, TankDescriptor currentTank, List<TankDescriptor> allTanks) {
+        this.id = id;
         this.roundNumber = roundNumber;
         this.turnNumber = turnNumber;
         this.tankTurnNumber = tankTurnNumber;

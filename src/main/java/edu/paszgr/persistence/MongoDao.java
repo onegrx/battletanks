@@ -5,6 +5,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class MongoDao {
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         Document gameState = new Document();
+        gameState.put("id", IdGenerator.next());
         gameState.put("roundNumber", gs.getRoundNumber());
         gameState.put("turnNumber", gs.getTurnNumber());
         gameState.put("tankTurnNumber", gs.getTankTurnNumber());
@@ -48,18 +50,39 @@ public class MongoDao {
                 )
         ).first();
 
+        return documentToGamestate(gs);
+
+
+    }
+
+    public static GameState readGameStateById(int id, String collectionName) {
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+        Document gs = collection.find(
+                eq("id", id)
+        ).first();
+
+
+        return documentToGamestate(gs);
+
+
+    }
+
+    private static GameState documentToGamestate(Document gs) {
+        if (gs == null) {
+            return null;
+        }
         Document tankDescriptorDoc = (Document) gs.get("currentTank");
         BasicDBList list = new BasicDBList();
         list.addAll((List<Document>) gs.get("allTanks"));
 
         return new GameState(
+                gs.getInteger("id"),
                 gs.getInteger("roundNumber"),
                 gs.getInteger("turnNumber"),
                 gs.getInteger("tankTurnNumber"),
                 docToTankDescriptor(tankDescriptorDoc),
                 docListToTankDescriptors(list)
         );
-
     }
 
     private static Document tankDescriptorToDoc(TankDescriptor desc) {
@@ -85,5 +108,6 @@ public class MongoDao {
     private static List<TankDescriptor> docListToTankDescriptors(BasicDBList list) {
         return list.stream().map(tankDescDoc -> docToTankDescriptor((Document) tankDescDoc)).collect(Collectors.toList());
     }
+
 }
 
