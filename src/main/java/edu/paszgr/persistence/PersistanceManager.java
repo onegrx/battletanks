@@ -11,12 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class PersistanceManager {
-
     public static final String COLLECTION_NAME = "gamestates";
-    public static final String FIELDS_FILE_NAME = "fields.ser";
 
     public static Field[][] getFields() {
-        return readFieldsFromFile(FIELDS_FILE_NAME);
+        return readFieldsFromFile(GameConstants.FIELDS_FILE_NAME);
     }
 
     public static GameState getGameState(int roundNumber, int turnNumber, int tankTurnNumber) {

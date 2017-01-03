@@ -53,8 +53,11 @@ public class ExecutionManager implements TankActionVisitor {
         List<Tank> onTargetLine = board.getTanksOnTargetLine(position, weaponFire.getDirection());
 
         logger.log("Tank " + currentTank.getTankName() + " has already fired.");
-        onTargetLine.forEach(tank ->
-                logger.log("Tank " + tank.getTankName() + " fragged"));
+
+        onTargetLine.forEach(tank -> {
+            logger.log("Tank " + tank.getTankName() + " fragged");
+            tank.getPlayer().getStatistics().getStatisticsForRound(roundNumber).setLifePointsLeft(0);
+        });
 
         onTargetLine.forEach(tank -> tank.setLifePoints(tank.getLifePoints() - 1));
 
