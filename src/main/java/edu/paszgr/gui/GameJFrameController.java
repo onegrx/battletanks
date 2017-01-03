@@ -100,7 +100,13 @@ public class GameJFrameController {
                         () -> {
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
                                 NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
-                                int newItem = (int) choiceComponent.getSelectedItem();
+                                Object selectedItem = choiceComponent.getSelectedItem();
+
+                                if (selectedItem == null) {
+                                    return;
+                                }
+
+                                int newItem = (int) selectedItem;
 
                                 if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
                                     return;

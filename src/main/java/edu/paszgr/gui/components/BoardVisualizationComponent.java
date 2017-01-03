@@ -53,6 +53,7 @@ public class BoardVisualizationComponent extends JScrollPane {
             throw new IllegalStateException("Attempt to display game state without prior setting fields");
         }
         try {
+            resetSquareComponents();
             for (TankDescriptor tank : state.getAllTanks()) {
                 int x = tank.getxPos();
                 int y = tank.getyPos();
@@ -63,6 +64,17 @@ public class BoardVisualizationComponent extends JScrollPane {
             }
         } catch (IndexOutOfBoundsException e) {
             throw new RuntimeException("Tank position exceeds board bounds", e);
+        }
+    }
+
+    private void resetSquareComponents() {
+        if (squareComponents == null) {
+            return;
+        }
+        for (int i = 0; i < squareComponents.length; i++) {
+            for (int j = 0; j < squareComponents[0].length; j++) {
+                squareComponents[i][j].setTank(null);
+            }
         }
     }
 }
