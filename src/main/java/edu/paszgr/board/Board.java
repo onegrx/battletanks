@@ -101,4 +101,8 @@ public class Board implements Serializable {
     public Field getField(Position position) {
         return fields[position.getX()][position.getY()];
     }
+
+    public Field[][] getFields() {
+        return fields;
+    }
 }

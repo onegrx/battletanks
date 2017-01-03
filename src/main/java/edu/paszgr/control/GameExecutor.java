@@ -1,8 +1,10 @@
 package edu.paszgr.control;
 
+import edu.paszgr.GameConstants;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.BoardSize;
 import edu.paszgr.board.ExecutionManager;
+import edu.paszgr.persistence.PersistanceManager;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class GameExecutor {
         this.players = playersManager.createPlayers();
         Board board = new Board(boardSize);
 
-        // TODO - save board fields
+        PersistanceManager.saveFieldsToFile(board.getFields(), GameConstants.FIELDS_FILE_NAME);
 
         RoundManager roundManager = new RoundManager(board, executionManager, logger);
 
