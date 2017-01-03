@@ -96,4 +96,41 @@ public class TestExecutionManager {
         //then
         assertEquals(0, tank2.getLifePoints());
     }
+
+    @Test
+    public void testWeaponFireMiss() throws Exception {
+        //given
+        Direction direction = Direction.RIGHT;
+
+        Position position1 = new Position(1, 1);
+        Position position2 = position1.getNeighbor(direction);
+
+        Player player1 = Mockito.mock(Player.class);
+        StatisticsManager manager1 = Mockito.mock(StatisticsManager.class);
+        when(manager1.getStatisticsForRound(1)).thenReturn(new RoundStatistics(1));
+        when(player1.getStatistics()).thenReturn(manager1);
+
+        Player player2 = Mockito.mock(Player.class);
+        StatisticsManager manager2 = Mockito.mock(StatisticsManager.class);
+        when(manager2.getStatisticsForRound(1)).thenReturn(new RoundStatistics(1));
+        when(player2.getStatistics()).thenReturn(manager2);
+
+        Board board = Mockito.mock(Board.class);
+
+        Tank tank1 = new Tank(player1, board, 1, position1);
+        Tank tank2 = new Tank(player2, board, 1, position2);
+
+        when(board.getTanksOnTargetLine(position1, direction)).thenReturn(new LinkedList<Tank>() {{
+        }});
+
+        TankAction weaponFire = new WeaponFire(direction);
+
+        // then
+        assertEquals(1, tank2.getLifePoints());
+
+        //when
+        executionManager.executeTankAction(weaponFire, tank1, board, 1);
+        //then
+        assertEquals(1, tank2.getLifePoints());
+    }
 }
