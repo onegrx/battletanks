@@ -1,22 +1,18 @@
 package edu.paszgr.control;
 
-import edu.paszgr.GameConstants;
 import edu.paszgr.algo.TankActionList;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
 import edu.paszgr.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class RoundManager {
     private final Board board;
     private ExecutionManager executionManager;
-    private int currentTurn = GameConstants.STARTING_TURN_NUMBER;
-    private static final int TURN_MAX = GameConstants.TURNS_NUMBER_LIMIT;
-
+    private int currentTurn = 0;
+    private static final int TURN_MAX = 10;
     private GameInfoLogger logger;
 
     public RoundManager(Board board, ExecutionManager executionManager, GameInfoLogger logger) {
@@ -26,11 +22,9 @@ public class RoundManager {
     }
 
     public void executeNextRound(int roundNumber) {
-        currentTurn = GameConstants.STARTING_TURN_NUMBER;
         logger.log("\n *** ROUND " + roundNumber + " ***\n");
         while (!this.roundEndReached()) {
             this.executeNextTurn(roundNumber);
-            currentTurn++;
         }
     }
 
@@ -41,19 +35,20 @@ public class RoundManager {
                 .size();
         //TODO: survivors == 0 allows the only remaining tank to move and fire, even though it is alone
         //TODO: consider changing to 1
-        if (survivors < 2 || currentTurn > TURN_MAX) {
+        if (survivors == 0 || currentTurn > TURN_MAX) {
+            currentTurn = 0;
             return true;
         } else {
+            currentTurn++;
             return false;
         }
     }
 
     private void executeNextTurn(int roundNumber) {
         List<Tank> tanks = board.getAllTanks();
-        List<Tank> stillAliveTanks = new ArrayList<>(tanks.size());
-        stillAliveTanks.addAll(tanks);
-        int tankTurnNumber = GameConstants.STARTING_TANK_TURN_NUMBER;
-        for (Tank tank : tanks) {
+        // tankTurnNumber is needed for the persistence of GameState
+        for (int tankTurnNumber = 0; tankTurnNumber < tanks.size(); tankTurnNumber++) {
+            Tank tank = tanks.get(tankTurnNumber);
             if (tank.isAlive()) {
 
                 TankActionList actionList = new TankActionList(tank.getStateInfo(), 10);
@@ -63,18 +58,17 @@ public class RoundManager {
                         executionManager.executeTankAction(tankAction, tank, board, roundNumber)
                 );
 
-                removeKilledTanks(stillAliveTanks);
+                removeKilledTanks();
 
                 PersistanceManager.saveGameState(board, tank, roundNumber, currentTurn, tankTurnNumber);
 
+
             }
-            tankTurnNumber++;
         }
-        board.setTanks(stillAliveTanks);
         logger.log("");
     }
 
-    private void removeKilledTanks(List<Tank> stillAliveTanks) {
-        stillAliveTanks.removeIf(tank -> !tank.isAlive());
+    private void removeKilledTanks() {
+        board.getAllTanks().removeIf(tank -> !tank.isAlive());
     }
 }
