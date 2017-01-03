@@ -75,8 +75,12 @@ public class GameJFrameController {
                                     }
                                 }
 
-                                int newItem = (int) selectedItem;
-
+                                int newItem;
+                                try {
+                                    newItem = (int) selectedItem;
+                                } catch (NullPointerException e) {  // Selected empty value
+                                    return;
+                                }
 
                                 if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
                                     return;
