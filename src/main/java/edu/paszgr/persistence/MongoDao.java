@@ -1,11 +1,16 @@
 package edu.paszgr.persistence;
 
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 import com.mongodb.BasicDBList;
 import com.mongodb.MongoClient;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +32,7 @@ public class MongoDao {
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         Document gameState = new Document();
-        gameState.put("id", IdGenerator.next());
+        gameState.put("id", gs.getId());
         gameState.put("roundNumber", gs.getRoundNumber());
         gameState.put("turnNumber", gs.getTurnNumber());
         gameState.put("tankTurnNumber", gs.getTankTurnNumber());
@@ -65,6 +70,31 @@ public class MongoDao {
 
     public static void dropCollection() {
         database.getCollection(PersistanceManager.COLLECTION_NAME).drop();
+    }
+
+    public static int getTankTurnsNumber(int roundNumber, int turnNumber) {
+        MongoCollection<Document> collection = database.getCollection(PersistanceManager.COLLECTION_NAME);
+        Bson filter = and(
+                eq("roundNumber", roundNumber),
+                eq("turnNumber", turnNumber));
+        return (int) collection.count(filter);
+    }
+
+    public static int getTurnsNumber(int roundNumber) {
+        MongoCollection<Document> collection = database.getCollection(PersistanceManager.COLLECTION_NAME);
+
+        Document match = new Document(
+                "$match", new Document("roundNumber", roundNumber)
+        );
+
+        Document group = new Document(
+                "$group", new Document("turnNumber", null)
+        );
+
+        List<Document> pipeline = Lists.newArrayList(match, group);
+
+        AggregateIterable<Document> aggregate = collection.aggregate(pipeline);
+        return Iterators.size(aggregate.iterator());
     }
 
     private static GameState documentToGamestate(Document gs) {

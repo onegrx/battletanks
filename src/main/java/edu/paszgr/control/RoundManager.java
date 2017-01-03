@@ -16,6 +16,7 @@ public class RoundManager {
     private ExecutionManager executionManager;
     private int currentTurn = GameConstants.STARTING_TURN_NUMBER;
     private static final int TURN_MAX = GameConstants.TURNS_NUMBER_LIMIT;
+
     private GameInfoLogger logger;
 
     public RoundManager(Board board, ExecutionManager executionManager, GameInfoLogger logger) {
@@ -76,32 +77,4 @@ public class RoundManager {
     private void removeKilledTanks(List<Tank> stillAliveTanks) {
         stillAliveTanks.removeIf(tank -> !tank.isAlive());
     }
-
-//    private void executeNextTurn(int roundNumber) {
-//        List<Tank> tanks = board.getAllTanks();
-//        List<Tank> stillAliveTanks = new ArrayList<>(tanks.size());
-//        tanks.addAll(tanks);
-//        int tankTurnNumber = GameConstants.STARTING_TANK_TURN_NUMBER;
-//        for (Tank tank : stillAliveTanks) {
-//            if (tank.isAlive()) {
-//
-//                TankActionList actionList = new TankActionList(tank.getStateInfo(), 10);
-//                tank.getPlayer().getStrategy().scheduleTankActionList(tank.getStateInfo(), actionList);
-//
-//                actionList.getActions().forEach(tankAction ->
-//                        executionManager.executeTankAction(tankAction, tank, board, roundNumber)
-//                );
-//
-//                removeKilledTanks();
-//
-//                PersistanceManager.saveGameState(board, tank, roundNumber, currentTurn, tankTurnNumber);
-//            }
-//            tankTurnNumber++;
-//        }
-//        logger.log("");
-//    }
-//
-//    private void removeKilledTanks() {
-//        board.getAllTanks().removeIf(tank -> !tank.isAlive());
-//    }
 }

@@ -11,8 +11,6 @@ public class MainSimulation {
 
     public static void main(String[] args) {
 
-        int numberOfRound = 3;
-
         MongoDao.dropCollection();
         GameInfoLogger gameInfoLogger = new GameInfoLogger(LOG_FILE);
         GameExecutor gameExecutor = new GameExecutor(gameInfoLogger);
@@ -20,7 +18,7 @@ public class MainSimulation {
 
         BoardSize boardSize = new BoardSize(20, 20);
         ExecutionManager executionManager = new ExecutionManager(gameInfoLogger);
-        gameExecutor.executeGame(executionManager, boardSize, numberOfRound);
+        gameExecutor.executeGame(executionManager, boardSize, GameConstants.ROUNDS_NUMBER);
 
     }
 }
