@@ -25,4 +25,10 @@ public enum Direction {
     public int getyDirection() {
         return yDirection;
     }
+
+    @Override
+    public String toString() {
+        return "xDirection=" + xDirection +
+                ", yDirection=" + yDirection;
+    }
 }

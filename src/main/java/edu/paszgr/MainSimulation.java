@@ -15,8 +15,7 @@ public class MainSimulation {
         GameInfoLogger gameInfoLogger = new GameInfoLogger(LOG_FILE);
         GameExecutor gameExecutor = new GameExecutor(gameInfoLogger);
 
-
-        BoardSize boardSize = new BoardSize(5, 5);
+        BoardSize boardSize = GameConstants.BOARD_SIZE_DEFAULT;
         ExecutionManager executionManager = new ExecutionManager(gameInfoLogger);
         gameExecutor.executeGame(executionManager, boardSize, GameConstants.ROUNDS_NUMBER);
 

@@ -4,9 +4,8 @@ import edu.paszgr.algo.Direction;
 import edu.paszgr.control.Tank;
 
 import java.io.Serializable;
-import java.util.*;
-import java.util.stream.Collectors;
-import static java.lang.Math.abs;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Board implements Serializable {
     private final transient FieldsManager fieldsManager = new FieldsManager();
@@ -20,9 +19,13 @@ public class Board implements Serializable {
     }
 
     public List<Tank> getTanksOnPosition(Position position) {
-        return this.tanks.stream()
-                .filter(tank -> tank.getPosition() == position)
-                .collect(Collectors.toList());
+        List<Tank> tanksOnPos = new LinkedList<>();
+        this.tanks.forEach(tank -> {
+          if (tank.getPosition().equals(position)) {
+              tanksOnPos.add(tank);
+          }
+        });
+        return tanksOnPos;
     }
 
     public Position getPositionOfTank(Tank tank) {
@@ -43,46 +46,16 @@ public class Board implements Serializable {
      *          and along the direction until the end of board
      * */
     public List<Tank> getTanksOnTargetLine(Position p, Direction direction) {
-        switch (direction) {
-            case UP:
-                return tanks.stream()
-                        .filter(t -> t.getPosition().getX() > p.getX() && t.getPosition().getY() == p.getY())
-                        .collect(Collectors.toList());
-            case DOWN:
-                return tanks.stream()
-                        .filter(t -> t.getPosition().getX() < p.getX() && t.getPosition().getY() == p.getY())
-                        .collect(Collectors.toList());
-            case LEFT:
-                return tanks.stream()
-                        .filter(t -> t.getPosition().getY() < p.getY() && t.getPosition().getX() == p.getX())
-                        .collect(Collectors.toList());
-            case RIGHT:
-                return tanks.stream()
-                        .filter(t -> t.getPosition().getY() > p.getY() && t.getPosition().getX() == p.getX())
-                        .collect(Collectors.toList());
-            case UP_LEFT:
-                return tanks.stream()
-                        .filter(t -> t.getPosition().getX() > p.getX() && t.getPosition().getY() < p.getY())
-                        .filter(t -> abs(t.getPosition().getX() - p.getX()) == abs(t.getPosition().getY() - p.getY()))
-                        .collect(Collectors.toList());
-            case UP_RIGHT:
-                return tanks.stream()
-                        .filter(t -> t.getPosition().getX() > p.getX() && t.getPosition().getY() > p.getY())
-                        .filter(t -> abs(t.getPosition().getX() - p.getX()) == abs(t.getPosition().getY() - p.getY()))
-                        .collect(Collectors.toList());
-            case DOWN_LEFT:
-                return tanks.stream()
-                        .filter(t -> t.getPosition().getX() < p.getX() && t.getPosition().getY() < p.getY())
-                        .filter(t -> abs(t.getPosition().getX() - p.getX()) == abs(t.getPosition().getY() - p.getY()))
-                        .collect(Collectors.toList());
-            case DOWN_RIGHT:
-                return tanks.stream()
-                        .filter(t -> t.getPosition().getX() < p.getX() && t.getPosition().getY() > p.getY())
-                        .filter(t -> abs(t.getPosition().getX() - p.getX()) == abs(t.getPosition().getY() - p.getY()))
-                        .collect(Collectors.toList());
-            default:
-                return Collections.emptyList();
+        Position next = p.getNeighbor(direction);
+
+        List<Tank> tanks = new LinkedList<>();
+
+        while (positionIsValid(next)) {
+            getTanksOnPosition(next).forEach(tanks::add);
+            next = next.getNeighbor(direction);
         }
+
+        return tanks;
     }
 
     public boolean positionIsValid(Position position) {
