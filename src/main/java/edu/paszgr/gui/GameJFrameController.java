@@ -58,7 +58,25 @@ public class GameJFrameController {
                         () -> {
                             if ("comboBoxChanged".equals(evt.getActionCommand())) {
                                 NumberRangeChoiceComponent choiceComponent = (NumberRangeChoiceComponent) evt.getSource();
-                                int newItem = (int) choiceComponent.getSelectedItem();
+                                if (choiceComponent == null) {
+                                    return;
+                                }
+
+                                Object selectedItem = choiceComponent.getSelectedItem();
+                                if (selectedItem == null) {
+                                    return;
+                                }
+
+                                if (selectedItem instanceof String) {
+                                    try {
+                                        selectedItem = Integer.parseInt((String) selectedItem);
+                                    } catch (NumberFormatException e) { // invalid input
+                                        return;
+                                    }
+                                }
+
+                                int newItem = (int) selectedItem;
+
 
                                 if (newItem < choiceComponent.getMin() || newItem > choiceComponent.getMax()) {
                                     return;
