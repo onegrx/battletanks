@@ -6,6 +6,7 @@ import com.mongodb.BasicDBList;
 import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -74,10 +75,24 @@ public class MongoDao {
 
     public static int getTankTurnsNumber(int roundNumber, int turnNumber) {
         MongoCollection<Document> collection = database.getCollection(PersistanceManager.COLLECTION_NAME);
-        Bson filter = and(
-                eq("roundNumber", roundNumber),
-                eq("turnNumber", turnNumber));
-        return (int) collection.count(filter);
+
+        Document matchDoc = new Document();
+        matchDoc.put("roundNumber", roundNumber);
+        matchDoc.put("turnNumber", turnNumber);
+
+        Document match = new Document(
+                "$match", matchDoc
+        );
+
+        Document group = new Document(
+                "$group", new Document("_id", "$tankTurnNumber")
+        );
+
+        List<Document> pipeline = Lists.newArrayList(match, group);
+
+        AggregateIterable<Document> aggregate = collection.aggregate(pipeline);
+        return Iterators.size(aggregate.iterator());
+
     }
 
     public static int getTurnsNumber(int roundNumber) {
@@ -88,7 +103,7 @@ public class MongoDao {
         );
 
         Document group = new Document(
-                "$group", new Document("turnNumber", null)
+                "$group", new Document("_id", "$turnNumber")
         );
 
         List<Document> pipeline = Lists.newArrayList(match, group);
