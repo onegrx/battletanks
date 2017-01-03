@@ -44,6 +44,11 @@
 
 
     <build>
+        <resources>
+            <resource>
+                <directory>gui</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

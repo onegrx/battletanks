@@ -27,6 +27,7 @@ public class BoardVisualizationComponent extends JScrollPane {
 
         int xSize = fields.length;
         int ySize = fields[0].length;
+        System.out.println("FIELDS: " + xSize + " " + ySize);
 
         content.removeAll();
         content.setLayout(new GridLayout(ySize, xSize, 0, 0));
