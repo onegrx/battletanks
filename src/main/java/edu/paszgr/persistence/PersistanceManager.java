@@ -39,13 +39,20 @@ public class PersistanceManager {
     }
 
     public static GameState getNextGameState(int roundNumber, int turnNumber, int tankTurnNumber) {
-        int id = getGameState(roundNumber, turnNumber, tankTurnNumber).getId();
+        GameState gameState = getGameState(roundNumber, turnNumber, tankTurnNumber);
+        if (gameState == null) {
+            return null;
+        }
+        int id = gameState.getId();
         return getGameStateById(id + 1);
     }
 
-
     public static GameState getPrevGameState(int roundNumber, int turnNumber, int tankTurnNumber) {
-        int id = getGameState(roundNumber, turnNumber, tankTurnNumber).getId();
+        GameState gameState = getGameState(roundNumber, turnNumber, tankTurnNumber);
+        if (gameState == null) {
+            return null;
+        }
+        int id = gameState.getId();
         return getGameStateById(id - 1);
     }
 

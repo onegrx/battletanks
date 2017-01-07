@@ -6,12 +6,9 @@ import com.mongodb.BasicDBList;
 import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,8 +52,6 @@ public class MongoDao {
         ).first();
 
         return documentToGamestate(gs);
-
-
     }
 
     public static GameState readGameStateById(int id, String collectionName) {
