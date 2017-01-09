@@ -1,6 +1,5 @@
 package edu.paszgr.board;
 
-import edu.paszgr.algo.Direction;
 import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.TankActionVisitor;
 import edu.paszgr.algo.actions.Movement;

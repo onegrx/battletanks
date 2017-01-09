@@ -4,10 +4,8 @@ import edu.paszgr.board.Board;
 import edu.paszgr.board.Position;
 import edu.paszgr.board.StateInfo;
 
-import java.io.Serializable;
-
-public class Tank implements Serializable {
-    private final transient StateInfo stateInfo;
+public class Tank {
+    private final StateInfo stateInfo;
     private int lifePoints = 1;
     private Position position = null;
     private final Player player;

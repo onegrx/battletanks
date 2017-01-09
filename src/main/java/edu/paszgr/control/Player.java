@@ -3,11 +3,10 @@ package edu.paszgr.control;
 import edu.paszgr.algo.PlayStrategy;
 
 import java.awt.*;
-import java.io.Serializable;
 
-public class Player implements Serializable {
-    private final transient PlayStrategy strategy;
-    private final transient StatisticsManager statistics = new StatisticsManager();
+public class Player {
+    private final PlayStrategy strategy;
+    private final StatisticsManager statistics = new StatisticsManager();
     private final String playerTankName;
     private Color color;
 

@@ -4,10 +4,9 @@ import edu.paszgr.GameConstants;
 import edu.paszgr.algo.TankActionList;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
-import edu.paszgr.persistence.*;
+import edu.paszgr.persistence.PersistanceManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

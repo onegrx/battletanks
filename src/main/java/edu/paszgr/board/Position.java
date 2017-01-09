@@ -4,7 +4,7 @@ import edu.paszgr.algo.Direction;
 
 import java.io.Serializable;
 
-public class Position implements Serializable {
+public class Position {
     private final int x;
     private final int y;
 
