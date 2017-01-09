@@ -52,8 +52,6 @@ public class MongoDao {
         ).first();
 
         return documentToGamestate(gs);
-
-
     }
 
     public static GameState readGameStateById(int id, String collectionName) {
