@@ -2,6 +2,7 @@ package edu.paszgr.algo;
 
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
+import edu.paszgr.algo.actions.weapons.LaserWeaponFire;
 import edu.paszgr.board.Position;
 import edu.paszgr.board.StateInfo;
 import junit.framework.TestCase;
@@ -20,7 +21,7 @@ public class TestTankActionList extends TestCase {
         StateInfo stateInfo = Mockito.mock(StateInfo.class);
         when(stateInfo.getMyTankPosition()).thenReturn(new Position(1, 1));
         int initialActionPoints = 10;
-        TankAction action = new WeaponFire(Direction.DOWN);
+        TankAction action = new LaserWeaponFire(Direction.DOWN);
 
         TankActionList tankActionList = new TankActionList(stateInfo, initialActionPoints);
 

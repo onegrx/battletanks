@@ -54,13 +54,19 @@ public class RoundManager {
         int tankTurnNumber = GameConstants.STARTING_TANK_TURN_NUMBER;
         for (Tank tank : tanks) {
             if (tank.isAlive()) {
+                int accumulatedActionPoints = tank.getAccumulatedActionPoints();
+                int actionPointsForThisTurn = accumulatedActionPoints + GameConstants.ACTION_POINTS_PER_TURN;
 
-                TankActionList actionList = new TankActionList(tank.getStateInfo(), 10);
+                TankActionList actionList = new TankActionList(tank.getStateInfo(), actionPointsForThisTurn);
+
+
                 tank.getPlayer().getStrategy().scheduleTankActionList(tank.getStateInfo(), actionList);
 
                 actionList.getActions().forEach(tankAction ->
                         executionManager.executeTankAction(tankAction, tank, board, roundNumber)
                 );
+
+                tank.setAccumulatedActionPoints(actionList.getRemainingActionPoints());
 
                 removeKilledTanks(stillAliveTanks);
 
