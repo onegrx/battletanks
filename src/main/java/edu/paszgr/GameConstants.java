@@ -14,4 +14,5 @@ public class GameConstants {
     public static final BoardSize BOARD_SIZE_DEFAULT = new BoardSize(8, 8);
 
     public static final int ACTION_POINTS_PER_TURN = 10;
+    public static final int INITIAL_TANK_LIFE_POINTS = 100;
 }

@@ -20,9 +20,9 @@ public class BoardSquareComponent extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        paintField(g, getWidth(), getHeight());
+        paintField(g);
         if (tank != null) {
-            paintTank(g, getWidth(), getHeight());
+            paintTank(g);
         }
         paintSquareBorder(g, getWidth(), getHeight());
     }
@@ -48,12 +48,12 @@ public class BoardSquareComponent extends JComponent {
         }
     }
 
-    private void paintField(Graphics g, int width, int height) {
+    private void paintField(Graphics g) {
         Image fieldImage = ImagesManager.getFieldImage(field.getClass());
         g.drawImage(fieldImage, 0, 0, null);
     }
 
-    private void paintTank(Graphics g, int width, int height) {
+    private void paintTank(Graphics g) {
         Image tankImage = ImagesManager.getTankImage(new Color(tank.getColor()));
         g.drawImage(tankImage, 0, 0, null);
         g.setColor(Color.black);

@@ -1,11 +1,16 @@
 package edu.paszgr.gui;
 
+import edu.paszgr.algo.Direction;
+import edu.paszgr.algo.actions.WeaponFire;
 import edu.paszgr.board.Field;
 import edu.paszgr.board.fields.NeutralField;
 import edu.paszgr.board.fields.SandField;
+import edu.paszgr.persistence.TankDescriptor;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -15,10 +20,13 @@ import java.util.Map;
 
 public class ImagesManager {
     private static final Map<Class<? extends Field>, Image> fieldImagesMap = new HashMap<>();
+    private static final Map<Class<? extends WeaponFire>, Image> weaponFireImagesMap = new HashMap<>();
 
     private static BufferedImage tankDefault = null;
     private static BufferedImage fieldDefault = null;
     private static BufferedImage fieldNull = null;
+
+    private static BufferedImage weaponFireDefault = null;
 
     static {
         try {
@@ -44,22 +52,18 @@ public class ImagesManager {
         boolean isAlphaPremultiplied = colorModel.isAlphaPremultiplied();
         WritableRaster raster = tankDefault.copyData(null);
 
-        BufferedImage result = new BufferedImage(colorModel, raster, isAlphaPremultiplied, null);
+        BufferedImage image = new BufferedImage(colorModel, raster, isAlphaPremultiplied, null);
 
-        int width = result.getWidth();
-        int height = result.getHeight();
-        int minX = result.getMinX();
-        int minY = result.getMinY();
-        int tankColorRGB = tankColor.getRGB();
-        for (int x = minX; x < minX + width; x++) {
-            for (int y = minY; y < minY + height; y++) {
-                if (result.getRGB(x, y) == GUIConstants.RESOURCE_TANK_DEFAULT_TEMP_COLOR.getRGB()) {
-                    result.setRGB(x, y, tankColorRGB);
-                }
-            }
-        }
+        replaceColor(image, GUIConstants.RESOURCE_TANK_DEFAULT_TEMP_COLOR, tankColor);
 
-        return result;
+        return image;
+    }
+
+    public static Image getWeaponFireImage(
+            Class<? extends WeaponFire> weaponFireClass,
+            Direction direction,
+            TankDescriptor sourceTank) {
+return null;
     }
 
     private static void init() throws IOException {
@@ -82,5 +86,52 @@ public class ImagesManager {
         return ImageIO.read(
                 ImagesManager.class.getClassLoader().getResourceAsStream(path)
         );
+    }
+
+    private static BufferedImage rotateImage(BufferedImage bufferedImage, Direction direction) {
+        AffineTransform tx = new AffineTransform();
+        double degrees = getDirectionDegrees(direction);
+        tx.rotate(Math.toRadians(degrees), bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
+
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+        return op.filter(bufferedImage, null);
+    }
+
+    private static double getDirectionDegrees(Direction direction) {
+        switch (direction) {
+            case UP:
+                return 90;
+            case DOWN:
+                return 270;
+            case DOWN_LEFT:
+                return 225;
+            case DOWN_RIGHT:
+                return 315;
+            case LEFT:
+                return 180;
+            case RIGHT:
+                return 0;
+            case UP_LEFT:
+                return 135;
+            case UP_RIGHT:
+                return 45;
+        }
+        return 0;
+    }
+
+    private static void replaceColor(BufferedImage image, Color replacedColor, Color newColor) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int minX = image.getMinX();
+        int minY = image.getMinY();
+        int replacedRGB = newColor.getRGB();
+        int newRGB = newColor.getRGB();
+        for (int x = minX; x < minX + width; x++) {
+            for (int y = minY; y < minY + height; y++) {
+                if (image.getRGB(x, y) == replacedRGB) {
+                    image.setRGB(x, y, newRGB);
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package edu.paszgr.control;
 
+import edu.paszgr.GameConstants;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.Position;
 
@@ -20,7 +21,7 @@ public class TanksManager {
         return new Tank(
                 player,
                 board,
-                1,
+                GameConstants.INITIAL_TANK_LIFE_POINTS,
                 new Position(
                         random.nextInt(board.getSize().getXSize()),
                         random.nextInt(board.getSize().getYSize())
