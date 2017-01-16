@@ -5,6 +5,7 @@ import edu.paszgr.algo.PlayStrategy;
 import edu.paszgr.algo.TankActionList;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
+import edu.paszgr.algo.actions.weapons.LaserWeaponFire;
 import edu.paszgr.board.StateInfo;
 
 import java.util.Random;
@@ -24,6 +25,6 @@ public class OnlyMoveAlgorithm implements PlayStrategy {
     public void scheduleTankActionList(StateInfo info, TankActionList actionList) {
         Direction[] directions = Direction.values();
         actionList.addAction(new Movement(directions[rnd.nextInt(4)]));
-        actionList.addAction(new WeaponFire(directions[rnd.nextInt(4)]));
+        actionList.addAction(new LaserWeaponFire(directions[rnd.nextInt(4)]));
     }
 }

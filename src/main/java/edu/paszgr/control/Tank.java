@@ -3,14 +3,18 @@ package edu.paszgr.control;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.Position;
 import edu.paszgr.board.StateInfo;
+import edu.paszgr.board.TankDispatchedEntity;
 
-import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Tank implements Serializable {
-    private final transient StateInfo stateInfo;
+public class Tank {
+    private final StateInfo stateInfo;
     private int lifePoints = 1;
     private Position position = null;
     private final Player player;
+    private List<TankDispatchedEntity> entities = new LinkedList<>();
+    private int accumulatedActionPoints = 0;
 
     public Tank(Player player, Board board) {
         this.player = player;
@@ -53,5 +57,17 @@ public class Tank implements Serializable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public int getAccumulatedActionPoints() {
+        return accumulatedActionPoints;
+    }
+
+    public void setAccumulatedActionPoints(int accumulatedActionPoints) {
+        this.accumulatedActionPoints = accumulatedActionPoints;
+    }
+
+    public List<TankDispatchedEntity> getEntities() {
+        return entities;
     }
 }

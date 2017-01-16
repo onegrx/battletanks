@@ -1,8 +1,6 @@
 package edu.paszgr.board;
 
-import java.io.Serializable;
-
-public class BoardSize implements Serializable {
+public class BoardSize {
     private final int xSize;
     private final int ySize;
 

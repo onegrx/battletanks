@@ -5,6 +5,7 @@ import edu.paszgr.algo.PlayStrategy;
 import edu.paszgr.algo.TankActionList;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
+import edu.paszgr.algo.actions.weapons.LaserWeaponFire;
 import edu.paszgr.board.Position;
 import edu.paszgr.board.StateInfo;
 
@@ -22,15 +23,15 @@ public class SmartAlgorithm implements PlayStrategy {
         for (Position enemy : stateInfo.getEnemiesPositions()) {
             if (enemy.getX() == myPosition.getX()) {
                 if (enemy.getY() > myPosition.getY()) {
-                    actionList.addAction(new WeaponFire(Direction.DOWN));
+                    actionList.addAction(new LaserWeaponFire(Direction.DOWN));
                 } else {
-                    actionList.addAction(new WeaponFire(Direction.UP));
+                    actionList.addAction(new LaserWeaponFire(Direction.UP));
                 }
             } else if (enemy.getY() == myPosition.getY()) {
                 if (enemy.getX() > myPosition.getX()) {
-                    actionList.addAction(new WeaponFire(Direction.RIGHT));
+                    actionList.addAction(new LaserWeaponFire(Direction.RIGHT));
                 } else {
-                    actionList.addAction(new WeaponFire(Direction.RIGHT));
+                    actionList.addAction(new LaserWeaponFire(Direction.RIGHT));
                 }
             }
         }

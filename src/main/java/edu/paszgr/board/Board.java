@@ -3,11 +3,10 @@ package edu.paszgr.board;
 import edu.paszgr.algo.Direction;
 import edu.paszgr.control.Tank;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Board implements Serializable {
+public class Board {
     private final transient FieldsManager fieldsManager = new FieldsManager();
     private final BoardSize size;
     private List<Tank> tanks = null;

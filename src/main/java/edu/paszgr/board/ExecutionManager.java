@@ -1,25 +1,32 @@
 package edu.paszgr.board;
 
-import edu.paszgr.algo.Direction;
 import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.TankActionVisitor;
+import edu.paszgr.algo.WeaponFireVisitor;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
+import edu.paszgr.algo.actions.weapons.LaserWeaponFire;
+import edu.paszgr.algo.actions.weapons.MineWeaponFire;
+import edu.paszgr.algo.actions.weapons.MissileWeaponFire;
+import edu.paszgr.algo.actions.weapons.TankPiercingWeaponFire;
 import edu.paszgr.control.GameInfoLogger;
 import edu.paszgr.control.RoundStatistics;
 import edu.paszgr.control.Tank;
 
 import java.util.List;
 
-public class ExecutionManager implements TankActionVisitor {
+public class ExecutionManager implements TankActionVisitor, WeaponFireVisitor {
     private Tank currentTank = null;
     private Board board = null;
     private int roundNumber = -1;
     private GameInfoLogger logger;
+    private TankDispatchedEntity entity = null;
 
     public ExecutionManager(GameInfoLogger logger) {
         this.logger = logger;
     }
+
+
 
     public void executeTankAction(TankAction action, Tank tank, Board board, int roundNumber) {
         this.board = board;
@@ -65,5 +72,31 @@ public class ExecutionManager implements TankActionVisitor {
 
         statistics.setKills(statistics.getKills() + onTargetLine.size());
         statistics.setShots(statistics.getShots() + 1);
+    }
+
+    public void handleTankDispatchedEntity(TankDispatchedEntity entity, int roundNumber) {
+        this.roundNumber = roundNumber;
+        this.entity = entity;
+        entity.getSourceAction().acceptWeaponFireVisitor(this);
+    }
+
+    @Override
+    public void visitLaserWeaponFire(LaserWeaponFire laserWeaponFire) {
+        // TODO
+    }
+
+    @Override
+    public void visitMissileWeaponFire(MissileWeaponFire missileWeaponFire) {
+        // TODO
+    }
+
+    @Override
+    public void visitTankPiercingWeaponFire(TankPiercingWeaponFire tankPiercingWeaponFire) {
+        // TODO
+    }
+
+    @Override
+    public void visitMineWeaponFire(MineWeaponFire mineWeaponFire) {
+        // TODO
     }
 }
