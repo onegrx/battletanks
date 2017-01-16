@@ -13,8 +13,6 @@ import edu.paszgr.control.GameInfoLogger;
 import edu.paszgr.control.RoundStatistics;
 import edu.paszgr.control.Tank;
 
-import java.util.List;
-
 public class ExecutionManager implements TankActionVisitor, WeaponFireVisitor {
     private Tank currentTank = null;
     private Board board = null;
@@ -56,22 +54,25 @@ public class ExecutionManager implements TankActionVisitor, WeaponFireVisitor {
 
     @Override
     public void visitWeaponFire(WeaponFire weaponFire) {
-        Position position = currentTank.getPosition();
-        List<Tank> onTargetLine = board.getTanksOnTargetLine(position, weaponFire.getDirection());
-
-        logger.log("Tank " + currentTank.getTankName() + " has already fired in direction: " + weaponFire.getDirection().toString());
-
-        onTargetLine.forEach(tank -> {
-            logger.log("Tank " + tank.getTankName() + " fragged");
-            tank.getPlayer().getStatistics().getStatisticsForRound(roundNumber).setLifePointsLeft(0);
-        });
-
-        onTargetLine.forEach(tank -> tank.setLifePoints(tank.getLifePoints() - 1));
-
-        RoundStatistics statistics = currentTank.getPlayer().getStatistics().getStatisticsForRound(roundNumber);
-
-        statistics.setKills(statistics.getKills() + onTargetLine.size());
-        statistics.setShots(statistics.getShots() + 1);
+        TankDispatchedEntity entity = new TankDispatchedEntity(weaponFire, currentTank, currentTank.getPosition());
+        currentTank.getEntities().add(entity);
+        handleTankDispatchedEntity(entity, roundNumber);
+//        Position position = currentTank.getPosition();
+//        List<Tank> onTargetLine = board.getTanksOnTargetLine(position, weaponFire.getDirection());
+//
+//        logger.log("Tank " + currentTank.getTankName() + " has already fired in direction: " + weaponFire.getDirection().toString());
+//
+//        onTargetLine.forEach(tank -> {
+//            logger.log("Tank " + tank.getTankName() + " fragged");
+//            tank.getPlayer().getStatistics().getStatisticsForRound(roundNumber).setLifePointsLeft(0);
+//        });
+//
+//        onTargetLine.forEach(tank -> tank.setLifePoints(tank.getLifePoints() - 1));
+//
+//        RoundStatistics statistics = currentTank.getPlayer().getStatistics().getStatisticsForRound(roundNumber);
+//
+//        statistics.setKills(statistics.getKills() + onTargetLine.size());
+//        statistics.setShots(statistics.getShots() + 1);
     }
 
     public void handleTankDispatchedEntity(TankDispatchedEntity entity, int roundNumber) {
@@ -82,6 +83,8 @@ public class ExecutionManager implements TankActionVisitor, WeaponFireVisitor {
 
     @Override
     public void visitLaserWeaponFire(LaserWeaponFire laserWeaponFire) {
+        TankDispatchedEntity entity = this.entity;
+        Tank sourceTank = entity.getSourceTank();
         // TODO
     }
 
