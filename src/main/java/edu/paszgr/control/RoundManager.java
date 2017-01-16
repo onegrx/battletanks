@@ -55,7 +55,8 @@ public class RoundManager {
         int tankTurnNumber = GameConstants.STARTING_TANK_TURN_NUMBER;
         for (Tank tank : tanks) {
             if (tank.isAlive()) {
-                for (TankDispatchedEntity entity: tank.getEntities()){
+                List<TankDispatchedEntity> entities = new  ArrayList(tank.getEntities());
+                for (TankDispatchedEntity entity: entities){
                     executionManager.handleTankDispatchedEntity(entity, roundNumber);
                 }
                 int accumulatedActionPoints = tank.getAccumulatedActionPoints();
