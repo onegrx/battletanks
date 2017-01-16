@@ -139,10 +139,11 @@ public class MongoDao {
         return tankDescriptors.stream().map(MongoDao::tankDescriptorToDoc).collect(Collectors.toCollection(BasicDBList::new));
     }
 
+    // TODO - retrieve TankDispatchedEntities
     private static TankDescriptor docToTankDescriptor(Document doc) {
         return new TankDescriptor(
-                doc.getInteger("lifePoints"), doc.getInteger("xPos"), doc.getInteger("yPos"), doc.getString("playerTankName"), doc.getInteger("color")
-        );
+                doc.getInteger("lifePoints"), doc.getInteger("xPos"), doc.getInteger("yPos"), doc.getString("playerTankName"), doc.getInteger("color"),
+                null);
     }
 
     private static List<TankDescriptor> docListToTankDescriptors(BasicDBList list) {

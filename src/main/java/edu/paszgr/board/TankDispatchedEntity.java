@@ -8,7 +8,7 @@ public class TankDispatchedEntity {
     private final Tank sourceTank;
     Position position = null;
 
-    public TankDispatchedEntity(Position position, WeaponFire sourceAction, Tank sourceTank) {
+    public TankDispatchedEntity(WeaponFire sourceAction, Tank sourceTank, Position position) {
         this.position = position;
         this.sourceAction = sourceAction;
         this.sourceTank = sourceTank;
