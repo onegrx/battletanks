@@ -7,6 +7,7 @@ import edu.paszgr.persistence.TankDescriptor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class BoardSquareComponent extends JComponent {
     private TankDescriptor tank = null;
@@ -15,11 +16,12 @@ public class BoardSquareComponent extends JComponent {
     public BoardSquareComponent(Field field, TankDescriptor tank) {
         this.field = field;
         this.tank = tank;
-        setPreferredSize(GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.getSize());
+        setSize(GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.getSize());
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+        setSize(GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.getSize());
         paintField(g);
         if (tank != null) {
             paintTank(g);
@@ -49,12 +51,15 @@ public class BoardSquareComponent extends JComponent {
     }
 
     private void paintField(Graphics g) {
-        Image fieldImage = ImagesManager.getFieldImage(field.getClass());
-        g.drawImage(fieldImage, 0, 0, null);
+        BufferedImage fieldImage = ImagesManager.getFieldImage(field.getClass());
+        g.drawImage(ImagesManager.resizeImage(fieldImage, new Rectangle(getSize().width, getSize().height)), 0, 0, null);
     }
 
     private void paintTank(Graphics g) {
-        Image tankImage = ImagesManager.getTankImage(new Color(tank.getColor()));
+        BufferedImage tankImage = ImagesManager.resizeImage(
+                ImagesManager.getTankImage(new Color(tank.getColor())),
+                new Rectangle(getSize().width, getSize().height)
+        );
         g.drawImage(tankImage, 0, 0, null);
         g.setColor(Color.black);
         g.drawString("(" + tank.getxPos() + "," + tank.getyPos() + ")", 0, GUIConstants.STRING_HEIGHT);

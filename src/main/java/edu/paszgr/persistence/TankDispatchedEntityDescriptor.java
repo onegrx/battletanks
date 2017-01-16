@@ -14,6 +14,7 @@ public class TankDispatchedEntityDescriptor {
      * */
     private String weaponFireClassName;
     private Direction direction = null;
+    private int rgb;
 
     public TankDispatchedEntityDescriptor(int xPos, int yPos, String weaponFireClassName, TankDescriptor sourceTank) {
         this.xPos = xPos;
@@ -42,5 +43,13 @@ public class TankDispatchedEntityDescriptor {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public int getRgb() {
+        return rgb;
+    }
+
+    public void setRgb(int rgb) {
+        this.rgb = rgb;
     }
 }

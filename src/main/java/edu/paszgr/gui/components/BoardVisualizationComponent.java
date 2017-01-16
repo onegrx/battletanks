@@ -17,7 +17,6 @@ public class BoardVisualizationComponent extends JScrollPane {
         JLabel label = new JLabel("Empty Board");
         content.add(label);
         setViewportView(content);
-//        setPreferredSize(GUIConstants.BOARD_MAX_SIZE.getSize());
     }
 
     public void setFields(Field[][] fields) {
@@ -45,6 +44,22 @@ public class BoardVisualizationComponent extends JScrollPane {
                 squareComponents[x][y] = squareComponent;
                 content.add(squareComponent);
             }
+        }
+
+        int squaresWidth = xSize * GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.width;
+        int squaresHeight = ySize * GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.height;
+        boolean setWidth = getSize().width > squaresWidth;
+        boolean setHeight = getSize().height > squaresHeight;
+        if (setWidth || setHeight) {
+            int width = getSize().width;
+            int height = getSize().height;
+            if (setHeight) {
+                height = squaresHeight;
+            }
+            if (setWidth) {
+                width = squaresWidth;
+            }
+            setPreferredSize(new Dimension(width, height));
         }
     }
 
