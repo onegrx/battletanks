@@ -1,7 +1,6 @@
 package edu.paszgr.persistence;
 
 import edu.paszgr.algo.Direction;
-import edu.paszgr.algo.actions.WeaponFire;
 
 /**
  * Created by Piotr on 2017-01-16.
@@ -13,22 +12,19 @@ public class TankDispatchedEntityDescriptor {
      *  When saving, use weaponFire.class.getName()
      *  When retrieving, use Class.forName(savedName)
      * */
-    private Class<? extends WeaponFire> weaponFireClass;
+    private String weaponFireClassName;
     private Direction direction = null;
-    private TankDescriptor sourceTank;
 
-    public TankDispatchedEntityDescriptor(int xPos, int yPos, Class<? extends WeaponFire> weaponFireClass, TankDescriptor sourceTank) {
+    public TankDispatchedEntityDescriptor(int xPos, int yPos, String weaponFireClassName, TankDescriptor sourceTank) {
         this.xPos = xPos;
         this.yPos = yPos;
-        this.weaponFireClass = weaponFireClass;
-        this.sourceTank = sourceTank;
+        this.weaponFireClassName = weaponFireClassName;
     }
 
-    public TankDispatchedEntityDescriptor(int xPos, int yPos, Class<? extends WeaponFire> weaponFireClass, TankDescriptor sourceTank, Direction direction) {
+    public TankDispatchedEntityDescriptor(int xPos, int yPos, String weaponFireClassName, TankDescriptor sourceTank, Direction direction) {
         this.xPos = xPos;
         this.yPos = yPos;
-        this.weaponFireClass = weaponFireClass;
-        this.sourceTank = sourceTank;
+        this.weaponFireClassName = weaponFireClassName;
         this.direction = direction;
     }
 
@@ -40,12 +36,8 @@ public class TankDispatchedEntityDescriptor {
         return yPos;
     }
 
-    public Class<? extends WeaponFire> getWeaponFireClass() {
-        return weaponFireClass;
-    }
-
-    public TankDescriptor getSourceTank() {
-        return sourceTank;
+    public String getWeaponFireClassName() {
+        return weaponFireClassName;
     }
 
     public Direction getDirection() {
