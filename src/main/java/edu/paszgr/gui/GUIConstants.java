@@ -3,13 +3,15 @@ package edu.paszgr.gui;
 import java.awt.*;
 
 public class GUIConstants {
-    public static final Rectangle BOARD_SQUARE_PREFERRED_SIZE = new Rectangle(50, 50);
+    public static final Rectangle GUI_SIZE = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+    public static final Rectangle BOARD_SQUARE_PREFERRED_SIZE = new Rectangle(270, 270);
+//    public static final Rectangle BOARD_SQUARE_
     public static final Insets BOARD_SQUARE_BORDER_INSETS = new Insets(2, 2, 2, 2);
     public static final Color BOARD_SQUARE_BORDER_COLOR = new Color(0, 0, 0);
 
-    public static final Rectangle TANK_VISUALIZATION_PREFERRED_SIZE = new Rectangle(250, 100);
+    public static final Rectangle TANK_VISUALIZATION_PREFERRED_SIZE = new Rectangle(200, 50);
 
-    public static final Rectangle BOARD_MAX_SIZE = new Rectangle(600, 600);
+    public static final Rectangle BOARD_MAX_SIZE = GUI_SIZE;
 
     public static final int STRING_HEIGHT = 11;
 

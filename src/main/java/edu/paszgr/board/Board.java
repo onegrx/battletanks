@@ -77,4 +77,17 @@ public class Board {
     public Field[][] getFields() {
         return fields;
     }
+
+    // TODO
+    public List<TankDispatchedEntity> getEnemiesWeaponFiresOnPosition(Position position, Tank subjectTank) {
+        return null;
+    }
+
+    // TODO
+    public Tank getTankOnShootPath(Position initialPosition, Direction direction, int speed) {
+        if (speed < 0) {
+
+        }
+        return null;
+    }
 }
