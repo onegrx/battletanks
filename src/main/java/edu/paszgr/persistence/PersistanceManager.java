@@ -74,7 +74,7 @@ public class PersistanceManager {
                         tankDispatchedEntity.getPosition().getX(),
                         tankDispatchedEntity.getPosition().getY(),
                         tankDispatchedEntity.getSourceAction().getDirection(),
-                        tankDispatchedEntity.getSourceAction().getClass().getName()
+                        tankDispatchedEntity.getSourceAction().getClass().getSimpleName()
                 ))
                 .collect(Collectors.toList());
     }
