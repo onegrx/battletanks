@@ -80,12 +80,43 @@ public class Board {
 
     // TODO
     public List<TankDispatchedEntity> getEnemiesWeaponFiresOnPosition(Position position, Tank subjectTank) {
+
+        for (Tank tank: tanks) {
+
+        }
         return null;
     }
 
-    // TODO
-    public Tank getTankOnShootPath(Position initialPosition, Direction direction, int speed) {
-        if (speed < 0) {
+    // chyba działa
+    public Tank moveTankDispatchedEntity(TankDispatchedEntity entity) {
+        int speed = entity.getSourceAction().getSpeed();
+        Direction direction = entity.getSourceAction().getDirection();
+
+
+        if(speed < 0){
+            List<Tank> tanks = this.getTanksOnTargetLine(entity.getPosition(), direction);
+            if(tanks.size()!=0){
+                return tanks.get(0);
+            }
+           return null;
+        }
+
+        while(speed != 0)
+        {
+            speed--;
+            Position newPosition = new Position(entity.getPosition().getX() + direction.getxDirection(),entity.getPosition().getY() + direction.getyDirection());
+            if(positionIsValid(newPosition)) {
+                entity.setPosition(newPosition);
+            }
+            else {
+                entity.getSourceTank().getEntities().remove(entity);
+                return null;
+            }
+            List<Tank> tanks = getTanksOnPosition(entity.getPosition());
+            if(tanks.size()!=0){
+                return tanks.get(0);
+            }
+            return null;
 
         }
         return null;
