@@ -3,6 +3,7 @@ package edu.paszgr.board;
 import edu.paszgr.algo.Direction;
 import edu.paszgr.control.Tank;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -80,11 +81,18 @@ public class Board {
 
     // TODO
     public List<TankDispatchedEntity> getEnemiesWeaponFiresOnPosition(Position position, Tank subjectTank) {
-
+        List<TankDispatchedEntity> entities = new LinkedList<>();
         for (Tank tank: tanks) {
+            if(tank != subjectTank){
+                for (TankDispatchedEntity entity: tank.getEntities()){
+                    if (entity.getPosition().equals(position)) {
+                        entities.add(entity);
+                    }
+                }
+            }
 
         }
-        return null;
+        return entities;
     }
 
     // chyba działa
@@ -116,7 +124,7 @@ public class Board {
             if(tanks.size()!=0){
                 return tanks.get(0);
             }
-            return null;
+
 
         }
         return null;

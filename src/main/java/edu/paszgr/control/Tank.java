@@ -44,7 +44,12 @@ public class Tank {
     }
 
     public void setLifePoints(int lifePoints) {
-        this.lifePoints = lifePoints;
+        if(lifePoints<0) {
+            this.lifePoints = 0;
+        }
+        else {
+            this.lifePoints = lifePoints;
+        }
     }
 
     public String getTankName() {
