@@ -31,4 +31,13 @@ public enum Direction {
         return "xDirection=" + xDirection +
                 ", yDirection=" + yDirection;
     }
+
+    public static Direction get(int x, int y) {
+        for(Direction d : Direction.values()) {
+            if(d.getxDirection() == x && d.getyDirection() == y) {
+                return d;
+            }
+        }
+        return null;
+    }
 }

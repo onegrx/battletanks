@@ -3,12 +3,14 @@ package edu.paszgr.persistence;
 import edu.paszgr.GameConstants;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.Field;
+import edu.paszgr.board.TankDispatchedEntity;
 import edu.paszgr.control.Tank;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PersistanceManager {
     public static final String COLLECTION_NAME = "gamestates";
@@ -66,17 +68,27 @@ public class PersistanceManager {
         }
     }
 
-    // TODO - save TankDispatchedEntities
+    private static List<TankDispatchedEntityDescriptor> extractDispatched(Tank tank) {
+        return tank.getEntities().stream()
+                .map(tankDispatchedEntity -> new TankDispatchedEntityDescriptor(
+                        tankDispatchedEntity.getPosition().getX(),
+                        tankDispatchedEntity.getPosition().getY(),
+                        tankDispatchedEntity.getSourceAction().getDirection(),
+                        tankDispatchedEntity.getSourceAction().getClass().getName()
+                ))
+                .collect(Collectors.toList());
+    }
+
     public static void saveGameState(Board board, Tank tank, int roundNumber, int turnNumber, int tankTurnNumber) {
+
         TankDescriptor tankDescriptor = new TankDescriptor(
-                tank.getLifePoints(), tank.getPosition().getX(), tank.getPosition().getY(), tank.getTankName(), tank.getPlayer().getColor().getRGB(),
-                null);
+                tank.getLifePoints(), tank.getPosition().getX(), tank.getPosition().getY(),
+                tank.getTankName(), tank.getPlayer().getColor().getRGB(), extractDispatched(tank));
 
         List<TankDescriptor> allTanks = new ArrayList<>();
-
         board.getAllTanks().forEach(boardTank -> allTanks.add(new TankDescriptor(
-                boardTank.getLifePoints(), boardTank.getPosition().getX(), boardTank.getPosition().getY(), boardTank.getTankName(), boardTank.getPlayer().getColor().getRGB(),
-                null)));
+                boardTank.getLifePoints(), boardTank.getPosition().getX(), boardTank.getPosition().getY(),
+                boardTank.getTankName(), boardTank.getPlayer().getColor().getRGB(), extractDispatched(boardTank))));
 
         GameState gameState = new GameState(IdGenerator.next(), roundNumber, turnNumber, tankTurnNumber, tankDescriptor, allTanks);
         MongoDao.saveGamestate(gameState, COLLECTION_NAME);

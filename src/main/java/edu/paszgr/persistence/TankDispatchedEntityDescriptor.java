@@ -8,24 +8,19 @@ import edu.paszgr.algo.Direction;
 public class TankDispatchedEntityDescriptor {
     private int xPos;
     private int yPos;
+    private Direction direction;
+
     /**
      *  When saving, use weaponFire.class.getName()
      *  When retrieving, use Class.forName(savedName)
      * */
     private String weaponFireClassName;
-    private Direction direction = null;
 
-    public TankDispatchedEntityDescriptor(int xPos, int yPos, String weaponFireClassName, TankDescriptor sourceTank) {
+    public TankDispatchedEntityDescriptor(int xPos, int yPos, Direction direction, String weaponFireClassName) {
         this.xPos = xPos;
         this.yPos = yPos;
-        this.weaponFireClassName = weaponFireClassName;
-    }
-
-    public TankDispatchedEntityDescriptor(int xPos, int yPos, String weaponFireClassName, TankDescriptor sourceTank, Direction direction) {
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.weaponFireClassName = weaponFireClassName;
         this.direction = direction;
+        this.weaponFireClassName = weaponFireClassName;
     }
 
     public int getxPos() {
