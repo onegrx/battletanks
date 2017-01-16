@@ -66,17 +66,17 @@ public class PersistanceManager {
         }
     }
 
+    // TODO - save TankDispatchedEntities
     public static void saveGameState(Board board, Tank tank, int roundNumber, int turnNumber, int tankTurnNumber) {
-
         TankDescriptor tankDescriptor = new TankDescriptor(
-                tank.getLifePoints(), tank.getPosition().getX(), tank.getPosition().getY(), tank.getTankName(), tank.getPlayer().getColor().getRGB()
-        );
+                tank.getLifePoints(), tank.getPosition().getX(), tank.getPosition().getY(), tank.getTankName(), tank.getPlayer().getColor().getRGB(),
+                null);
 
         List<TankDescriptor> allTanks = new ArrayList<>();
 
         board.getAllTanks().forEach(boardTank -> allTanks.add(new TankDescriptor(
-                boardTank.getLifePoints(), boardTank.getPosition().getX(), boardTank.getPosition().getY(), boardTank.getTankName(), boardTank.getPlayer().getColor().getRGB()
-        )));
+                boardTank.getLifePoints(), boardTank.getPosition().getX(), boardTank.getPosition().getY(), boardTank.getTankName(), boardTank.getPlayer().getColor().getRGB(),
+                null)));
 
         GameState gameState = new GameState(IdGenerator.next(), roundNumber, turnNumber, tankTurnNumber, tankDescriptor, allTanks);
         MongoDao.saveGamestate(gameState, COLLECTION_NAME);
