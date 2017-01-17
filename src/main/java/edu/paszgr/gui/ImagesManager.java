@@ -72,7 +72,6 @@ public class ImagesManager {
 
             result = copyImage(result);
             replaceColor(result, GUIConstants.RESOURCE_WEAPON_DEFAULT_TEMP_COLOR, new Color(rgb));
-            System.out.println(rgb);
             return result;
     }
 

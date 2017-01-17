@@ -42,7 +42,9 @@ public class BoardSquareComponent extends JComponent {
 
     private void paintWeaponFireEntities(Graphics g) {
         g.setColor(Color.black);
-        g.drawString("fires: " + entities.size(), 0, 0);
+        g.drawString("fires: " + entities.size(),
+                GUIConstants.BOARD_SQUARE_BORDER_INSETS.left + 2,
+                GUIConstants.STRING_HEIGHT + GUIConstants.BOARD_SQUARE_BORDER_INSETS.top + 2);
         TankDispatchedEntityDescriptor entity = entities.get(0);
         BufferedImage image = ImagesManager.getWeaponFireImage(
                 entity.getWeaponFireClassName(),

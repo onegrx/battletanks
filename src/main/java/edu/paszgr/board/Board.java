@@ -100,13 +100,14 @@ public class Board {
 
 
         if (speed < 0) {
+            entity.getSourceTank().getEntities().remove(entity);
             List<Tank> tanks = this.getTanksOnTargetLine(entity.getPosition(), direction);
             return tanks.stream().findFirst().orElse(null);
         }
 
         while (speed != 0) {
             speed--;
-            Position newPosition = new Position(entity.getPosition().getX() + direction.getxDirection(), entity.getPosition().getY() + direction.getyDirection());
+            Position newPosition = entity.getPosition().getNeighbor(direction);
 
             if (positionIsValid(newPosition)) {
                 entity.setPosition(newPosition);
@@ -117,6 +118,7 @@ public class Board {
 
             List<Tank> tanks = getTanksOnPosition(entity.getPosition());
             if (tanks.size() != 0) {
+                entity.getSourceTank().getEntities().remove(entity);
                 return tanks.get(0);
             }
         }

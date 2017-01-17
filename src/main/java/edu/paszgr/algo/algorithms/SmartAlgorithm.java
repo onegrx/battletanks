@@ -6,6 +6,8 @@ import edu.paszgr.algo.TankActionList;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
 import edu.paszgr.algo.actions.weapons.LaserWeaponFire;
+import edu.paszgr.algo.actions.weapons.MineWeaponFire;
+import edu.paszgr.algo.actions.weapons.MissileWeaponFire;
 import edu.paszgr.algo.actions.weapons.TankPiercingWeaponFire;
 import edu.paszgr.board.Position;
 import edu.paszgr.board.StateInfo;
@@ -20,20 +22,20 @@ public class SmartAlgorithm implements PlayStrategy {
 
     @Override
     public void scheduleTankActionList(StateInfo stateInfo, TankActionList actionList) {
-        actionList.addAction(new TankPiercingWeaponFire(Direction.DOWN));
+        actionList.addAction(new MineWeaponFire(Direction.LEFT));
         Position myPosition = stateInfo.getMyTankPosition();
         for (Position enemy : stateInfo.getEnemiesPositions()) {
             if (enemy.getX() == myPosition.getX()) {
                 if (enemy.getY() > myPosition.getY()) {
                     actionList.addAction(new TankPiercingWeaponFire(Direction.DOWN));
                 } else {
-                    actionList.addAction(new TankPiercingWeaponFire(Direction.UP));
+                    actionList.addAction(new LaserWeaponFire(Direction.UP));
                 }
             } else if (enemy.getY() == myPosition.getY()) {
                 if (enemy.getX() > myPosition.getX()) {
-                    actionList.addAction(new TankPiercingWeaponFire(Direction.RIGHT));
+                    actionList.addAction(new MissileWeaponFire(Direction.RIGHT));
                 } else {
-                    actionList.addAction(new TankPiercingWeaponFire(Direction.RIGHT));
+                    actionList.addAction(new MineWeaponFire(Direction.LEFT));
                 }
             }
         }

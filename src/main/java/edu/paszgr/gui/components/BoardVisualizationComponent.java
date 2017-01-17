@@ -30,7 +30,6 @@ public class BoardVisualizationComponent extends JScrollPane {
 
         int xSize = fields.length;
         int ySize = fields[0].length;
-        System.out.println("FIELDS: " + xSize + " " + ySize);
 
         content.removeAll();
         content.setLayout(new GridLayout(ySize, xSize, 0, 0));
@@ -72,9 +71,6 @@ public class BoardVisualizationComponent extends JScrollPane {
         try {
             resetSquareComponents();
             for (TankDescriptor tank : state.getAllTanks()) {
-                if (tank.getEntities().size() > 0) {
-                    System.out.println(tank.getEntities().size());
-                }
                 for (TankDispatchedEntityDescriptor entity : tank.getEntities()) {
                     entity.setRgb(tank.getColor());
                     int x = entity.getxPos();
@@ -101,6 +97,7 @@ public class BoardVisualizationComponent extends JScrollPane {
             for (int j = 0; j < squareComponents[0].length; j++) {
                 squareComponents[i][j].setTank(null);
                 squareComponents[i][j].setEntities(new LinkedList<>());
+                repaint();
             }
         }
     }

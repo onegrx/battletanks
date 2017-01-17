@@ -16,7 +16,7 @@ public class TankPiercingWeaponFire extends WeaponFire {
 
     @Override
     public int getLifePointsDamage() {
-        return 10;
+        return 20;
     }
 
     @Override

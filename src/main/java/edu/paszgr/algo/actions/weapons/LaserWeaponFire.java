@@ -16,7 +16,7 @@ public class LaserWeaponFire extends WeaponFire {
 
     @Override
     public int getLifePointsDamage() {
-        return 1;
+        return 2;
     }
 
     @Override

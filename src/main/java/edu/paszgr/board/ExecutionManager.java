@@ -116,7 +116,7 @@ public class ExecutionManager implements TankActionVisitor, WeaponFireVisitor {
         Tank hitTank = board.moveTankDispatchedEntity(entity);
         if(hitTank!=null){
             sourceTank.getEntities().remove(entity);
-            logger.log("Tank " + hitTank.getTankName() + " fragged");
+            logger.log("Tank " + hitTank.getTankName() + " hit by " + sourceTank.getTankName());
             hitTank.setLifePoints(hitTank.getLifePoints() - entity.getSourceAction().getLifePointsDamage());
             hitTank.getPlayer().getStatistics().getStatisticsForRound(roundNumber).setLifePointsLeft(hitTank.getLifePoints());
             if(hitTank.getLifePoints() == 0) {

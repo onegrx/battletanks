@@ -46,7 +46,6 @@ public class TankDescriptor {
         this.playerTankName = playerTankName;
         this.color = color;
         this.entities = entities;
-        this.entities = new LinkedList<>();
     }
 }
 

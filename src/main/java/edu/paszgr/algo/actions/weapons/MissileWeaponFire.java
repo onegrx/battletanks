@@ -11,12 +11,12 @@ public class MissileWeaponFire extends WeaponFire {
 
     @Override
     public int getSpeed() {
-        return 3;
+        return 2;
     }
 
     @Override
     public int getLifePointsDamage() {
-        return 4;
+        return 10;
     }
 
     @Override

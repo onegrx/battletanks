@@ -16,7 +16,7 @@ public class MineWeaponFire extends WeaponFire {
 
     @Override
     public int getLifePointsDamage() {
-        return 5;
+        return 15;
     }
 
     @Override
