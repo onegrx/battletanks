@@ -27,5 +27,6 @@ public class GUIConstants {
     public static final String RESOURCE_WEAPON_MISSILE = "gui/weapons/missile.png";
     public static final String RESOURCE_WEAPON_PIERCING = "gui/weapons/piercing.png";
 
-    public static final Color RESOURCE_IMAGE_DEFAULT_TEMP_COLOR = new Color(0, 0, 0, 255);
+    public static final Color RESOURCE_TANK_DEFAULT_TEMP_COLOR = new Color(0, 0, 0, 255);
+    public static final Color RESOURCE_WEAPON_DEFAULT_TEMP_COLOR = new Color(0, 0, 0, 255);
 }

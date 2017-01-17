@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class ImagesManager {
     private static final Map<Class<? extends Field>, BufferedImage> fieldImagesMap = new HashMap<>();
-    private static final Map<String, Map<Direction, BufferedImage>> weaponFireImagesMap = new HashMap<>();
+    private static final Map<String, Map<String, BufferedImage>> weaponFireImagesMap = new HashMap<>();
 
     private static BufferedImage tankDefault = null;
     private static BufferedImage fieldDefault = null;
@@ -51,27 +51,28 @@ public class ImagesManager {
 
     public static BufferedImage getTankImage(Color tankColor) {
         BufferedImage image = copyImage(tankDefault);
-        replaceColor(image, GUIConstants.RESOURCE_IMAGE_DEFAULT_TEMP_COLOR, tankColor);
+        replaceColor(image, GUIConstants.RESOURCE_TANK_DEFAULT_TEMP_COLOR, tankColor);
         return image;
     }
 
     public static BufferedImage getWeaponFireImage(
             String weaponFireClassName,
             Direction direction,
-            Color color) {
+            int rgb) {
 
-            Map<Direction, BufferedImage> weaponMap = weaponFireImagesMap.get(weaponFireClassName);
+            Map<String, BufferedImage> weaponMap = weaponFireImagesMap.get(weaponFireClassName);
             if (weaponMap == null) {
                 return weaponFireDefault;
             }
 
-            BufferedImage result = weaponMap.get(direction);
+            BufferedImage result = weaponMap.get(direction.toString());
             if (result == null) {
                 return weaponFireDefault;
             }
 
             result = copyImage(result);
-            replaceColor(result, GUIConstants.RESOURCE_IMAGE_DEFAULT_TEMP_COLOR, color);
+            replaceColor(result, GUIConstants.RESOURCE_WEAPON_DEFAULT_TEMP_COLOR, new Color(rgb));
+            System.out.println(rgb);
             return result;
     }
 
@@ -112,10 +113,10 @@ public class ImagesManager {
         weaponFireImagesMap.put(LaserWeaponFire.class.getSimpleName(), getImagesDirectedMap(laserImage));
     }
 
-    private static Map<Direction, BufferedImage> getImagesDirectedMap(BufferedImage image) {
-        Map<Direction, BufferedImage> map = new HashMap<>();
+    private static Map<String, BufferedImage> getImagesDirectedMap(BufferedImage image) {
+        Map<String, BufferedImage> map = new HashMap<>();
         for (Direction direction : directions()) {
-            map.put(direction, rotateImage(image, direction));
+            map.put(direction.toString(), rotateImage(image, direction));
         }
         return map;
     }
@@ -141,21 +142,21 @@ public class ImagesManager {
     private static double getDirectionDegrees(Direction direction) {
         switch (direction) {
             case UP:
-                return 90;
-            case DOWN:
                 return 270;
+            case DOWN:
+                return 90;
             case DOWN_LEFT:
-                return 225;
+                return 135;
             case DOWN_RIGHT:
-                return 315;
+                return 45;
             case LEFT:
                 return 180;
             case RIGHT:
                 return 0;
             case UP_LEFT:
-                return 135;
+                return 225;
             case UP_RIGHT:
-                return 45;
+                return 315;
         }
         return 0;
     }
@@ -166,7 +167,7 @@ public class ImagesManager {
         int minX = image.getMinX();
         int minY = image.getMinY();
         int replacedRGB = replacedColor.getRGB();
-        int newRGB = newColor.getRGB();
+        int newRGB = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue(), 255).getRGB();
         for (int x = minX; x < minX + width; x++) {
             for (int y = minY; y < minY + height; y++) {
                 if (image.getRGB(x, y) == replacedRGB) {

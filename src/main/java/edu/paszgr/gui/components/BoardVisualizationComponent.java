@@ -4,9 +4,11 @@ import edu.paszgr.board.Field;
 import edu.paszgr.gui.GUIConstants;
 import edu.paszgr.persistence.GameState;
 import edu.paszgr.persistence.TankDescriptor;
+import edu.paszgr.persistence.TankDispatchedEntityDescriptor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 public class BoardVisualizationComponent extends JScrollPane {
     private final JPanel content = new JPanel();
@@ -70,6 +72,12 @@ public class BoardVisualizationComponent extends JScrollPane {
         try {
             resetSquareComponents();
             for (TankDescriptor tank : state.getAllTanks()) {
+                for (TankDispatchedEntityDescriptor entity : tank.getEntities()) {
+                    entity.setRgb(tank.getColor());
+                    int x = entity.getxPos();
+                    int y = entity.getyPos();
+                    squareComponents[x][y].getEntities().add(entity);
+                }
                 int x = tank.getxPos();
                 int y = tank.getyPos();
 
@@ -89,6 +97,7 @@ public class BoardVisualizationComponent extends JScrollPane {
         for (int i = 0; i < squareComponents.length; i++) {
             for (int j = 0; j < squareComponents[0].length; j++) {
                 squareComponents[i][j].setTank(null);
+                squareComponents[i][j].setEntities(new LinkedList<>());
             }
         }
     }

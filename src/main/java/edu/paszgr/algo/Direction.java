@@ -1,5 +1,7 @@
 package edu.paszgr.algo;
 
+import java.util.Objects;
+
 public enum Direction {
     LEFT(-1,0),
     RIGHT(1,0),
