@@ -4,9 +4,11 @@ import edu.paszgr.GameConstants;
 import edu.paszgr.algo.TankActionList;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.ExecutionManager;
+import edu.paszgr.board.TankDispatchedEntity;
 import edu.paszgr.persistence.PersistanceManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +56,12 @@ public class RoundManager {
         int tankTurnNumber = GameConstants.STARTING_TANK_TURN_NUMBER;
         for (Tank tank : tanks) {
             if (tank.isAlive()) {
+                List<TankDispatchedEntity> entities = new ArrayList<>(tank.getEntities());
+                Collections.copy(entities, tank.getEntities());
+//                entities.addAll(tank.getEntities());
+                for (TankDispatchedEntity entity: entities){
+                    executionManager.handleTankDispatchedEntity(entity, roundNumber);
+                }
                 int accumulatedActionPoints = tank.getAccumulatedActionPoints();
                 int actionPointsForThisTurn = accumulatedActionPoints + GameConstants.ACTION_POINTS_PER_TURN;
 
