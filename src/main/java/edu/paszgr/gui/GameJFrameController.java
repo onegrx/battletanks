@@ -163,7 +163,6 @@ public class GameJFrameController {
         updateGameStateChoice();
         updateTankSummary();
         updateLabels();
-        view.repaint();
         updating = false;
     }
 

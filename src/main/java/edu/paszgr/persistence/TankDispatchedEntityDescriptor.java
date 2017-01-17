@@ -15,6 +15,8 @@ public class TankDispatchedEntityDescriptor {
      *  When retrieving, use Class.forName(savedName)
      * */
     private String weaponFireClassName;
+    private int rgb;
+
 
     public TankDispatchedEntityDescriptor(int xPos, int yPos, Direction direction, String weaponFireClassName) {
         this.xPos = xPos;
@@ -37,5 +39,13 @@ public class TankDispatchedEntityDescriptor {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public int getRgb() {
+        return rgb;
+    }
+
+    public void setRgb(int rgb) {
+        this.rgb = rgb;
     }
 }

@@ -60,9 +60,9 @@ public class GameJFrame extends JFrame {
         setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
         setResizable(false);
         boardVisualizationComponent.setPreferredSize(new Dimension(
-                GUIConstants.GUI_SIZE.width - 100,
+                GUIConstants.GUI_SIZE.width - 30,
                 GUIConstants.GUI_SIZE.height
-                        - 300
+                        - 250
         ));
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

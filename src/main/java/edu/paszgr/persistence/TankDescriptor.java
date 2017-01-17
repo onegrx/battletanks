@@ -1,5 +1,6 @@
 package edu.paszgr.persistence;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class TankDescriptor {
     private int yPos;
     private String playerTankName;
     private int color;
-    private List<TankDispatchedEntityDescriptor> entities;
+    private List<TankDispatchedEntityDescriptor> entities = new LinkedList<>();
 
     public int getLifePoints() {
         return lifePoints;
@@ -45,6 +46,7 @@ public class TankDescriptor {
         this.playerTankName = playerTankName;
         this.color = color;
         this.entities = entities;
+        this.entities = new LinkedList<>();
     }
 }
 
