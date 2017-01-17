@@ -58,7 +58,7 @@ public class ExecutionManager implements TankActionVisitor, WeaponFireVisitor {
         }
         currentTank.setLifePoints(currentTank.getLifePoints()- damage);
         currentTank.getPlayer().getStatistics().getStatisticsForRound(roundNumber).setLifePointsLeft(currentTank.getLifePoints());
-        if(currentTank.getLifePoints() == 0) {
+        if(currentTank.getLifePoints() == 0 && !entities.isEmpty()) {
             RoundStatistics statistics2 = entities.get(0).getSourceTank().getPlayer().getStatistics().getStatisticsForRound(roundNumber);
             statistics2.setKills(statistics.getKills() + 1);
             logger.log("Tank " + currentTank.getTankName() + " fragged");
