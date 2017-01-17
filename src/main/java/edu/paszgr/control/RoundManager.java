@@ -60,7 +60,7 @@ public class RoundManager {
                 Collections.copy(entities, tank.getEntities());
 //                entities.addAll(tank.getEntities());
                 for (TankDispatchedEntity entity: entities){
-                    executionManager.handleTankDispatchedEntity(entity, roundNumber);
+                    executionManager.handleTankDispatchedEntity(entity, roundNumber, board);
                 }
                 int accumulatedActionPoints = tank.getAccumulatedActionPoints();
                 int actionPointsForThisTurn = accumulatedActionPoints + GameConstants.ACTION_POINTS_PER_TURN;

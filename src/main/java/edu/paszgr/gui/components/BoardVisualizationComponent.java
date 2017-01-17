@@ -72,6 +72,9 @@ public class BoardVisualizationComponent extends JScrollPane {
         try {
             resetSquareComponents();
             for (TankDescriptor tank : state.getAllTanks()) {
+                if (tank.getEntities().size() > 0) {
+                    System.out.println(tank.getEntities().size());
+                }
                 for (TankDispatchedEntityDescriptor entity : tank.getEntities()) {
                     entity.setRgb(tank.getColor());
                     int x = entity.getxPos();

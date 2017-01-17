@@ -31,13 +31,14 @@ public class TanksManager {
                 )
         );
 
-        tank.getEntities().add(
-                new TankDispatchedEntity(
-                        new LaserWeaponFire(Direction.DOWN),
-                        tank,
-                        new Position(1, 1)
-                )
-        );
+        while (board.getTanksOnPosition(tank.getPosition()).size() > 1) {
+            tank.setPosition(
+                    new Position(
+                            random.nextInt(board.getSize().getXSize()),
+                            random.nextInt(board.getSize().getYSize())
+                    )
+            );
+        }
 
         return tank;
     }

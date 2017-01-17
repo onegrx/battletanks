@@ -43,6 +43,9 @@ public class ExecutionManager implements TankActionVisitor, WeaponFireVisitor {
         statistics.setMoves(statistics.getMoves() + 1);
 
         Position newPosition = oldPosition.getNeighbor(movement.getDirection());
+        if (board.getTanksOnPosition(newPosition).size() > 0) {
+            return;
+        }
 
         if (!board.positionIsValid(newPosition)) {
             newPosition = oldPosition;
@@ -74,15 +77,16 @@ public class ExecutionManager implements TankActionVisitor, WeaponFireVisitor {
     public void visitWeaponFire(WeaponFire weaponFire) {
         TankDispatchedEntity entity = new TankDispatchedEntity(weaponFire, currentTank, currentTank.getPosition());
         currentTank.getEntities().add(entity);
-        handleTankDispatchedEntity(entity, roundNumber);
+        handleTankDispatchedEntity(entity, roundNumber, board);
         logger.log("Tank " + currentTank.getTankName() + " has already fired in direction: " + weaponFire.getDirection().toString());
         RoundStatistics statistics = currentTank.getPlayer().getStatistics().getStatisticsForRound(roundNumber);
         statistics.setShots(statistics.getShots() + 1);
     }
 
-    public void handleTankDispatchedEntity(TankDispatchedEntity entity, int roundNumber) {
+    public void handleTankDispatchedEntity(TankDispatchedEntity entity, int roundNumber, Board board) {
         this.roundNumber = roundNumber;
         this.entity = entity;
+        this.board = board;
         entity.getSourceAction().acceptWeaponFireVisitor(this);
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 public class Board {
     private final transient FieldsManager fieldsManager = new FieldsManager();
     private final BoardSize size;
-    private List<Tank> tanks = null;
+    private List<Tank> tanks = new LinkedList<>();
     private transient Field[][] fields;
 
     public Board(BoardSize boardSize) {
