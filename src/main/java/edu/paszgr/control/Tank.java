@@ -3,12 +3,18 @@ package edu.paszgr.control;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.Position;
 import edu.paszgr.board.StateInfo;
+import edu.paszgr.board.TankDispatchedEntity;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class Tank {
     private final StateInfo stateInfo;
     private int lifePoints = 1;
     private Position position = null;
     private final Player player;
+    private List<TankDispatchedEntity> entities = new LinkedList<>();
+    private int accumulatedActionPoints = 0;
 
     public Tank(Player player, Board board) {
         this.player = player;
@@ -38,7 +44,12 @@ public class Tank {
     }
 
     public void setLifePoints(int lifePoints) {
-        this.lifePoints = lifePoints;
+        if(lifePoints<0) {
+            this.lifePoints = 0;
+        }
+        else {
+            this.lifePoints = lifePoints;
+        }
     }
 
     public String getTankName() {
@@ -51,5 +62,17 @@ public class Tank {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public int getAccumulatedActionPoints() {
+        return accumulatedActionPoints;
+    }
+
+    public void setAccumulatedActionPoints(int accumulatedActionPoints) {
+        this.accumulatedActionPoints = accumulatedActionPoints;
+    }
+
+    public List<TankDispatchedEntity> getEntities() {
+        return entities;
     }
 }

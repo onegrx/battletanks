@@ -28,6 +28,7 @@ public class TankSummaryComponent extends JComponent {
         g.drawString("Last tank:", 0 , GUIConstants.STRING_HEIGHT);
         g.drawString("Life points: " + tank.getLifePoints(), 0, GUIConstants.STRING_HEIGHT*2);
         g.drawString("Position: (" + tank.getxPos() + ", " + tank.getyPos() + ")", 0, GUIConstants.STRING_HEIGHT*3);
+        g.drawString(tank.getPlayerTankName(), 0, GUIConstants.STRING_HEIGHT*4);
 
         Image tankImage = ImagesManager.getTankImage(new Color(tank.getColor()));
         g.drawImage(
@@ -37,13 +38,11 @@ public class TankSummaryComponent extends JComponent {
                 0,
                 null
         );
-
-        g.drawString(tank.getPlayerTankName(), 0, GUIConstants.TANK_VISUALIZATION_PREFERRED_SIZE.height - GUIConstants.STRING_HEIGHT);
     }
 
     private void paintTankNotSet(Graphics g) {
         g.setColor(Color.BLACK);
-        g.drawString("No current tank to describe", 0, 10);
+        g.drawString("No current tank to show", 0, 10);
     }
 
     public TankDescriptor getTank() {

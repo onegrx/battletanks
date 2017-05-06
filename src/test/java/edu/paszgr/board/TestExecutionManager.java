@@ -4,6 +4,7 @@ import edu.paszgr.algo.Direction;
 import edu.paszgr.algo.TankAction;
 import edu.paszgr.algo.actions.Movement;
 import edu.paszgr.algo.actions.WeaponFire;
+import edu.paszgr.algo.actions.weapons.LaserWeaponFire;
 import edu.paszgr.algo.algorithms.OnlyMoveAlgorithm;
 import edu.paszgr.control.*;
 import org.testng.annotations.Test;
@@ -86,7 +87,7 @@ public class TestExecutionManager {
             add(tank2);
         }});
 
-        TankAction weaponFire = new WeaponFire(direction);
+        TankAction weaponFire = new LaserWeaponFire(direction);
 
         // then
         assertEquals(1, tank2.getLifePoints());
@@ -123,7 +124,7 @@ public class TestExecutionManager {
         when(board.getTanksOnTargetLine(position1, direction)).thenReturn(new LinkedList<Tank>() {{
         }});
 
-        TankAction weaponFire = new WeaponFire(direction);
+        TankAction weaponFire = new LaserWeaponFire(direction);
 
         // then
         assertEquals(1, tank2.getLifePoints());

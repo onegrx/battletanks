@@ -1,30 +1,58 @@
 package edu.paszgr.gui.components;
 
+import edu.paszgr.algo.Direction;
+import edu.paszgr.algo.actions.weapons.MissileWeaponFire;
+import edu.paszgr.algo.actions.weapons.TankPiercingWeaponFire;
 import edu.paszgr.board.Field;
 import edu.paszgr.gui.GUIConstants;
 import edu.paszgr.gui.ImagesManager;
 import edu.paszgr.persistence.TankDescriptor;
+import edu.paszgr.persistence.TankDispatchedEntityDescriptor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
 
 public class BoardSquareComponent extends JComponent {
     private TankDescriptor tank = null;
+    private List<TankDispatchedEntityDescriptor> entities = new LinkedList<>();
     private Field field = null;
 
     public BoardSquareComponent(Field field, TankDescriptor tank) {
         this.field = field;
         this.tank = tank;
-        setPreferredSize(GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.getSize());
+        setSize(GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.getSize());
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        paintField(g, getWidth(), getHeight());
+        setSize(GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.getSize());
+        paintField(g);
         if (tank != null) {
-            paintTank(g, getWidth(), getHeight());
+            paintTank(g);
+        }
+
+        if (entities.size() > 0) {
+            paintWeaponFireEntities(g);
         }
         paintSquareBorder(g, getWidth(), getHeight());
+    }
+
+    private void paintWeaponFireEntities(Graphics g) {
+        g.setColor(Color.black);
+        g.drawString("fires: " + entities.size(),
+                GUIConstants.BOARD_SQUARE_BORDER_INSETS.left + 2,
+                GUIConstants.STRING_HEIGHT + GUIConstants.BOARD_SQUARE_BORDER_INSETS.top + 2);
+        TankDispatchedEntityDescriptor entity = entities.get(0);
+        BufferedImage image = ImagesManager.getWeaponFireImage(
+                entity.getWeaponFireClassName(),
+                entity.getDirection(),
+                entity.getRgb()
+        );
+        image = ImagesManager.resizeImage(image, new Rectangle(getSize().width, getSize().height));
+        g.drawImage(image, 0, 0, null);
     }
 
     private void paintSquareBorder(Graphics g, int width, int height) {
@@ -48,23 +76,28 @@ public class BoardSquareComponent extends JComponent {
         }
     }
 
-    private void paintField(Graphics g, int width, int height) {
-        Image fieldImage = ImagesManager.getFieldImage(field.getClass());
-        g.drawImage(fieldImage, 0, 0, null);
+    private void paintField(Graphics g) {
+        BufferedImage fieldImage = ImagesManager.getFieldImage(field.getClass());
+        g.drawImage(ImagesManager.resizeImage(fieldImage, new Rectangle(getSize().width, getSize().height)), 0, 0, null);
     }
 
-    private void paintTank(Graphics g, int width, int height) {
-        Image tankImage = ImagesManager.getTankImage(new Color(tank.getColor()));
+    private void paintTank(Graphics g) {
+        BufferedImage tankImage = ImagesManager.resizeImage(
+                ImagesManager.getTankImage(new Color(tank.getColor())),
+                new Rectangle(getSize().width, getSize().height)
+        );
         g.drawImage(tankImage, 0, 0, null);
         g.setColor(Color.black);
-        g.drawString("(" + tank.getxPos() + "," + tank.getyPos() + ")", 0, GUIConstants.STRING_HEIGHT);
         g.drawString(
-                String.valueOf(tank.getLifePoints()),
+                "(" + tank.getxPos() + "," + tank.getyPos() + ")",
                 GUIConstants.BOARD_SQUARE_BORDER_INSETS.left + 1,
-                GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.height - GUIConstants.BOARD_SQUARE_BORDER_INSETS.bottom - 1
+                getSize().height - GUIConstants.BOARD_SQUARE_BORDER_INSETS.bottom - 1);
+        g.drawString(
+                "HP: " + String.valueOf(tank.getLifePoints()),
+                getSize().width - 50,
+                GUIConstants.STRING_HEIGHT + GUIConstants.BOARD_SQUARE_BORDER_INSETS.top + 1
         );
     }
-
 
     public TankDescriptor getTank() {
         return tank;
@@ -80,5 +113,13 @@ public class BoardSquareComponent extends JComponent {
 
     public void setField(Field field) {
         this.field = field;
+    }
+
+    public List<TankDispatchedEntityDescriptor> getEntities() {
+        return entities;
+    }
+
+    public void setEntities(List<TankDispatchedEntityDescriptor> entities) {
+        this.entities = entities;
     }
 }

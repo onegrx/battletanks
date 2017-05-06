@@ -1,5 +1,7 @@
 package edu.paszgr.algo;
 
+import java.util.Objects;
+
 public enum Direction {
     LEFT(-1,0),
     RIGHT(1,0),
@@ -30,5 +32,14 @@ public enum Direction {
     public String toString() {
         return "xDirection=" + xDirection +
                 ", yDirection=" + yDirection;
+    }
+
+    public static Direction get(int x, int y) {
+        for(Direction d : Direction.values()) {
+            if(d.getxDirection() == x && d.getyDirection() == y) {
+                return d;
+            }
+        }
+        return null;
     }
 }

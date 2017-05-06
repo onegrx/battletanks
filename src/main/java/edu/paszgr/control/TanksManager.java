@@ -1,7 +1,11 @@
 package edu.paszgr.control;
 
+import edu.paszgr.GameConstants;
+import edu.paszgr.algo.Direction;
+import edu.paszgr.algo.actions.weapons.LaserWeaponFire;
 import edu.paszgr.board.Board;
 import edu.paszgr.board.Position;
+import edu.paszgr.board.TankDispatchedEntity;
 
 import java.util.List;
 import java.util.Random;
@@ -17,14 +21,25 @@ public class TanksManager {
     }
 
     private Tank createTank(Player player, Board board) {
-        return new Tank(
+        Tank tank = new Tank(
                 player,
                 board,
-                1,
+                GameConstants.INITIAL_TANK_LIFE_POINTS,
                 new Position(
                         random.nextInt(board.getSize().getXSize()),
                         random.nextInt(board.getSize().getYSize())
                 )
         );
+
+        while (board.getTanksOnPosition(tank.getPosition()).size() > 1) {
+            tank.setPosition(
+                    new Position(
+                            random.nextInt(board.getSize().getXSize()),
+                            random.nextInt(board.getSize().getYSize())
+                    )
+            );
+        }
+
+        return tank;
     }
 }

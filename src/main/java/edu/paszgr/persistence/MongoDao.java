@@ -7,6 +7,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import edu.paszgr.algo.Direction;
+import edu.paszgr.board.TankDispatchedEntity;
 import org.bson.Document;
 
 import java.util.List;
@@ -107,6 +109,8 @@ public class MongoDao {
         return Iterators.size(aggregate.iterator());
     }
 
+
+
     private static GameState documentToGamestate(Document gs) {
         if (gs == null) {
             return null;
@@ -125,6 +129,20 @@ public class MongoDao {
         );
     }
 
+    private static Document dispatchedDescriptorToDoc(TankDispatchedEntityDescriptor desc) {
+        Document doc = new Document();
+        doc.put("xPos", desc.getxPos());
+        doc.put("yPos", desc.getyPos());
+        doc.put("xDirection", desc.getDirection().getxDirection());
+        doc.put("yDirection", desc.getDirection().getyDirection());
+        doc.put("weapon", desc.getWeaponFireClassName());
+        return doc;
+    }
+
+    private static BasicDBList dispatchedDescriptorsToDoc(List<TankDispatchedEntityDescriptor> dispatchedDescriptors) {
+        return dispatchedDescriptors.stream().map(MongoDao::dispatchedDescriptorToDoc).collect(Collectors.toCollection(BasicDBList::new));
+    }
+
     private static Document tankDescriptorToDoc(TankDescriptor desc) {
         Document doc = new Document();
         doc.put("lifePoints", desc.getLifePoints());
@@ -132,6 +150,7 @@ public class MongoDao {
         doc.put("yPos", desc.getyPos());
         doc.put("playerTankName", desc.getPlayerTankName());
         doc.put("color", desc.getColor());
+        doc.put("dispatched", dispatchedDescriptorsToDoc(desc.getEntities()));
         return doc;
     }
 
@@ -140,13 +159,36 @@ public class MongoDao {
     }
 
     private static TankDescriptor docToTankDescriptor(Document doc) {
+
+        BasicDBList dispatched = new BasicDBList();
+        dispatched.addAll((List<Document>) doc.get("dispatched"));
+
         return new TankDescriptor(
-                doc.getInteger("lifePoints"), doc.getInteger("xPos"), doc.getInteger("yPos"), doc.getString("playerTankName"), doc.getInteger("color")
+                doc.getInteger("lifePoints"),
+                doc.getInteger("xPos"), doc.getInteger("yPos"),
+                doc.getString("playerTankName"),
+                doc.getInteger("color"),
+                docListToTankDispatchedDescriptors(dispatched));
+    }
+
+    private static TankDispatchedEntityDescriptor docToDispatchedDescriptor(Document doc) {
+        return new TankDispatchedEntityDescriptor(
+                doc.getInteger("xPos"),
+                doc.getInteger("yPos"),
+                Direction.get(
+                        doc.getInteger("xDirection"),
+                        doc.getInteger("yDirection")
+                ),
+                doc.getString("weapon")
         );
     }
 
     private static List<TankDescriptor> docListToTankDescriptors(BasicDBList list) {
         return list.stream().map(tankDescDoc -> docToTankDescriptor((Document) tankDescDoc)).collect(Collectors.toList());
+    }
+
+    private static List<TankDispatchedEntityDescriptor> docListToTankDispatchedDescriptors(BasicDBList list) {
+        return list.stream().map(dispatchedDesc -> docToDispatchedDescriptor((Document) dispatchedDesc)).collect(Collectors.toList());
     }
 
 }

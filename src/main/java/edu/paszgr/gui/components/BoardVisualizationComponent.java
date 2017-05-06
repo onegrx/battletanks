@@ -4,9 +4,11 @@ import edu.paszgr.board.Field;
 import edu.paszgr.gui.GUIConstants;
 import edu.paszgr.persistence.GameState;
 import edu.paszgr.persistence.TankDescriptor;
+import edu.paszgr.persistence.TankDispatchedEntityDescriptor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 public class BoardVisualizationComponent extends JScrollPane {
     private final JPanel content = new JPanel();
@@ -17,7 +19,6 @@ public class BoardVisualizationComponent extends JScrollPane {
         JLabel label = new JLabel("Empty Board");
         content.add(label);
         setViewportView(content);
-        setPreferredSize(GUIConstants.BOARD_MAX_SIZE.getSize());
     }
 
     public void setFields(Field[][] fields) {
@@ -25,9 +26,10 @@ public class BoardVisualizationComponent extends JScrollPane {
             throw new IllegalArgumentException("Passed null array of fields");
         }
 
+        content.getClass();
+
         int xSize = fields.length;
         int ySize = fields[0].length;
-        System.out.println("FIELDS: " + xSize + " " + ySize);
 
         content.removeAll();
         content.setLayout(new GridLayout(ySize, xSize, 0, 0));
@@ -35,13 +37,6 @@ public class BoardVisualizationComponent extends JScrollPane {
                 xSize * GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.width + getVerticalScrollBar().getMaximumSize().width,
                 ySize * GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.height + getHorizontalScrollBar().getMaximumSize().height
         );
-        if (preferredSize.width > GUIConstants.BOARD_MAX_SIZE.width) {
-            preferredSize.width = GUIConstants.BOARD_MAX_SIZE.width;
-        }
-        if (preferredSize.height > GUIConstants.BOARD_MAX_SIZE.height) {
-            preferredSize.height = GUIConstants.BOARD_MAX_SIZE.height;
-        }
-        setPreferredSize(preferredSize);
 
         squareComponents = new BoardSquareComponent[xSize][ySize];
         for (int y=0; y<ySize; y++) {
@@ -50,6 +45,22 @@ public class BoardVisualizationComponent extends JScrollPane {
                 squareComponents[x][y] = squareComponent;
                 content.add(squareComponent);
             }
+        }
+
+        int squaresWidth = xSize * GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.width;
+        int squaresHeight = ySize * GUIConstants.BOARD_SQUARE_PREFERRED_SIZE.height;
+        boolean setWidth = getSize().width > squaresWidth;
+        boolean setHeight = getSize().height > squaresHeight;
+        if (setWidth || setHeight) {
+            int width = getSize().width;
+            int height = getSize().height;
+            if (setHeight) {
+                height = squaresHeight;
+            }
+            if (setWidth) {
+                width = squaresWidth;
+            }
+            setPreferredSize(new Dimension(width, height));
         }
     }
 
@@ -60,6 +71,12 @@ public class BoardVisualizationComponent extends JScrollPane {
         try {
             resetSquareComponents();
             for (TankDescriptor tank : state.getAllTanks()) {
+                for (TankDispatchedEntityDescriptor entity : tank.getEntities()) {
+                    entity.setRgb(tank.getColor());
+                    int x = entity.getxPos();
+                    int y = entity.getyPos();
+                    squareComponents[x][y].getEntities().add(entity);
+                }
                 int x = tank.getxPos();
                 int y = tank.getyPos();
 
@@ -79,6 +96,8 @@ public class BoardVisualizationComponent extends JScrollPane {
         for (int i = 0; i < squareComponents.length; i++) {
             for (int j = 0; j < squareComponents[0].length; j++) {
                 squareComponents[i][j].setTank(null);
+                squareComponents[i][j].setEntities(new LinkedList<>());
+                repaint();
             }
         }
     }
